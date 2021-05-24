@@ -1,0 +1,93 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+def room_version = "2.2.0-rc01"
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api rootProject.ext.kotlinConfig["kotlin_stdlib"]
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["logger"]
+    api rootProject.ext.dependencies["MMKV"]
+    api rootProject.ext.dependencies["appdesign"]
+
+    api rootProject.ext.kotlinConfig["core"]
+    api rootProject.ext.kotlinConfig["activityktx"]
+    api rootProject.ext.kotlinConfig["fragmentktx"]
+    api rootProject.ext.kotlinConfig["kotlinxcoroutinescore"]
+    api rootProject.ext.kotlinConfig["kotlinxcoroutinesandroid"]
+    api rootProject.ext.kotlinConfig["workruntimektx"]
+
+    api rootProject.ext.dependencies["multidex"]
+
+    api rootProject.ext.viewConfig["constraintlayout"]
+
+    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
+    api rootProject.ext.jetpackConfig["lifecycleextensions"]
+    api rootProject.ext.jetpackConfig["livedata"]
+    api rootProject.ext.jetpackConfig["lifecycleruntimektx"]
+
+    api rootProject.ext.dependencies["ARouter-api"]
+    kapt rootProject.ext.dependencies["ARouter-compiler"]
+    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
+
+    api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["glide-compiler"]
+    api rootProject.ext.dependencies["glide-transformations"]
+
+    api rootProject.ext.dependencies["filedownloader"]
+    api ("com.lzy.net:okgo:3.0.4") {
+        exclude group: 'com.squareup.okhttp3',module: 'okhttp'
+    }
+
+    //  room
+    api "androidx.room:room-runtime:$room_version"
+    // For Kotlin use kapt instead of annotationProcessor (注意这个注释) 增加该行，否则无法编译时注解
+    kapt "androidx.room:room-compiler:$room_version"
+}
