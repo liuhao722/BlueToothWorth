@@ -16,7 +16,6 @@
         <meta-data
             android:name="com.baidu.speech.APP_ID"
             android:value="24239843"/>
-
         <meta-data
             android:name="com.baidu.speech.API_KEY"
             android:value="5CBiYPxtSk1bcpcQyKPlUI3D"/>
