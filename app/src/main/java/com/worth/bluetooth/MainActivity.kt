@@ -2,6 +2,7 @@ package com.worth.bluetooth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.worth.framework.business.VipAudioSdkHelper
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
