@@ -34,6 +34,12 @@ android {
         }
     }
 
+    // sdk-百度 - start
+    packagingOptions{
+        doNotStrip "*/*/libvad.dnn.so"
+        doNotStrip "*/*/libbd_easr_s1_merge_normal_20151216.dat.so"
+    }
+    // sdk-百度 - end
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -50,14 +56,16 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    api rootProject.ext.kotlinConfig["kotlin_stdlib"]
+//    api project(path: 'core')   //  已经将百度的资源移至当前目录
+
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["logger"]
     api rootProject.ext.dependencies["MMKV"]
     api rootProject.ext.dependencies["appdesign"]
 
-    api rootProject.ext.kotlinConfig["core"]
+    api rootProject.ext.kotlinConfig["kotlin_stdlib"]
+    api rootProject.ext.kotlinConfig["com.baidu.aip.asrwakeup3.core"]
     api rootProject.ext.kotlinConfig["activityktx"]
     api rootProject.ext.kotlinConfig["fragmentktx"]
     api rootProject.ext.kotlinConfig["kotlinxcoroutinescore"]
@@ -68,18 +76,14 @@ dependencies {
 
     api rootProject.ext.viewConfig["constraintlayout"]
 
-    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
-    api rootProject.ext.jetpackConfig["lifecycleextensions"]
-    api rootProject.ext.jetpackConfig["livedata"]
-    api rootProject.ext.jetpackConfig["lifecycleruntimektx"]
+//    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
+//    api rootProject.ext.jetpackConfig["lifecycleextensions"]
+//    api rootProject.ext.jetpackConfig["livedata"]
+//    api rootProject.ext.jetpackConfig["lifecycleruntimektx"]
 
-    api rootProject.ext.dependencies["ARouter-api"]
-    kapt rootProject.ext.dependencies["ARouter-compiler"]
-    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
-
-    api rootProject.ext.dependencies["glide"]
-    api rootProject.ext.dependencies["glide-compiler"]
-    api rootProject.ext.dependencies["glide-transformations"]
+//    api rootProject.ext.dependencies["ARouter-api"]
+//    kapt rootProject.ext.dependencies["ARouter-compiler"]
+//    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
 
     api rootProject.ext.dependencies["filedownloader"]
     api ("com.lzy.net:okgo:3.0.4") {

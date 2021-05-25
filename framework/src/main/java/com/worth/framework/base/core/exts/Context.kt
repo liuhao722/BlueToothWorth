@@ -3,14 +3,10 @@ package com.worth.framework.base.core.exts
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.*
-import com.alibaba.android.arouter.facade.Postcard
-import com.alibaba.android.arouter.launcher.ARouter
-import com.worth.framework.base.core.utils.L
 import com.worth.framework.base.core.utils.application
 
 fun Context.inflate(@LayoutRes layoutResId: Int): View {
@@ -98,13 +94,6 @@ fun Context?.showOrHideKeyboard(view: View?, isShow: Boolean = false) {
             }
         }
     }
-}
-
-fun Context?.navigation(path: String?): Postcard? = if (this != null && !TextUtils.isEmpty(path)) {
-    L.d("router path = $path")
-    ARouter.getInstance().build(path)
-} else {
-    null
 }
 
 
