@@ -5,7 +5,7 @@ def versionName = VERSION_LEVEL_1_2 + VERSION_TIME
 
 
 def SUPPORT_CODE = "1.2.0"
-def RETROFIT_CODE = "2.6.0"
+def RETROFIT_CODE = "2.9.0"
 def OKHTTP_CODE = "3.14.0"
 def lifecycle = "2.2.0"
 

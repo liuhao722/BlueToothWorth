@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SynthActivity"
+            android:label="@string/sync_button" />
+        <activity
+            android:name=".MiniActivity"
+            android:label="精简版合成" />
     </application>
 
 </manifest>

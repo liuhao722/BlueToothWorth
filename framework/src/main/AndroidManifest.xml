@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.worth.bluetooth">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- 1、全类型sdk   start -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- 蓝牙录音使用，不需要可以去除 -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 1、全类型sdk   end -->
+
+    <!-- 2、在线语音识别sdk部分  start-->
+    <!-- 测试完成后，您自己的appId appKey secretKey 请在 SynthActivity 和 MiniActivity 中修改 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 2、在线语音识别sdk部分  end-->
 
     <application>
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="24245974"/>
+            android:value="24245974" />
 
         <meta-data
             android:name="com.baidu.speech.API_KEY"
-            android:value="Qu3d83lWs3TdWuFgdGBLPMti"/>
+            android:value="Qu3d83lWs3TdWuFgdGBLPMti" />
 
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
-            android:value="GgNATjBNatsb3EfdILgkWSDVhh1W1usU"/>
+            android:value="GgNATjBNatsb3EfdILgkWSDVhh1W1usU" />
     </application>
 </manifest>

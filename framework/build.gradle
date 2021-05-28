@@ -62,6 +62,7 @@ android {
 }
 
 dependencies {
+    api fileTree(exclude: '*.bak', dir: 'libs')
     implementation fileTree(dir: "libs", include: ["*.jar"])
 //    api project(path: 'core')   //  已经将百度的资源移至当前目录
 
@@ -83,6 +84,8 @@ dependencies {
 
     api rootProject.ext.viewConfig["constraintlayout"]
 
+    api rootProject.ext.httpDependencies["retrofit"]
+
 //    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
 //    api rootProject.ext.jetpackConfig["lifecycleextensions"]
 //    api rootProject.ext.jetpackConfig["livedata"]
@@ -92,13 +95,12 @@ dependencies {
 //    kapt rootProject.ext.dependencies["ARouter-compiler"]
 //    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
 
-    api rootProject.ext.dependencies["filedownloader"]
-    api ("com.lzy.net:okgo:3.0.4") {
-        exclude group: 'com.squareup.okhttp3',module: 'okhttp'
-    }
+//    api ("com.lzy.net:okgo:3.0.4") {
+//        exclude group: 'com.squareup.okhttp3',module: 'okhttp'
+//    }
 
     //  room
-    api "androidx.room:room-runtime:$room_version"
-    // For Kotlin use kapt instead of annotationProcessor (注意这个注释) 增加该行，否则无法编译时注解
-    kapt "androidx.room:room-compiler:$room_version"
+//    api "androidx.room:room-runtime:$room_version"
+//    // For Kotlin use kapt instead of annotationProcessor (注意这个注释) 增加该行，否则无法编译时注解
+//    kapt "androidx.room:room-compiler:$room_version"
 }
