@@ -18,7 +18,7 @@ import com.baidu.speech.EventListener;
 import com.baidu.speech.EventManager;
 import com.baidu.speech.EventManagerFactory;
 import com.baidu.speech.asr.SpeechConstant;
-import com.worth.framework.R;
+import com.worth.bluetooth.R;
 
 import org.json.JSONObject;
 
