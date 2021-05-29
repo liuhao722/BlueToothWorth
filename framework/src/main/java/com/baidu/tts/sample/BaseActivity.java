@@ -19,7 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.worth.bluetooth.R;
+
+import com.worth.framework.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
