@@ -26,7 +26,7 @@ class VipAudioSdkHelper private constructor() {
     }
 
     /**
-     * 暂停实时 or 短音频模式
+     * 暂停实时 or 短音频模式--手动释放一直处于录音状态
      */
     fun stopRecord() {
 
