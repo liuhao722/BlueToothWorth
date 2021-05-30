@@ -1,6 +1,7 @@
 package com.worth.framework.business
 
-import com.worth.framework.WakeUpUtils
+import com.worth.framework.business.utils.SdkUtils
+import com.worth.framework.business.utils.WakeUpUtils
 
 /**
  * Author:  LiuHao

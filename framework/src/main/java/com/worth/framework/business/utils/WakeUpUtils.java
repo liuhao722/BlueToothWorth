@@ -1,4 +1,4 @@
-package com.worth.framework;
+package com.worth.framework.business.utils;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -10,9 +10,9 @@ import com.baidu.aip.asrwakeup3.core.wakeup.MyWakeup;
 import com.baidu.aip.asrwakeup3.core.wakeup.listener.IWakeupListener;
 import com.baidu.aip.asrwakeup3.core.wakeup.listener.RecogWakeupListener;
 import com.baidu.speech.asr.SpeechConstant;
+import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
-import com.worth.framework.business.SdkUtils;
 import com.worth.framework.business.VipAudioSdkHelper;
 
 import java.util.HashMap;
