@@ -29,31 +29,29 @@ import static com.baidu.aip.asrwakeup3.core.recog.IStatus.STATUS_WAKEUP_SUCCESS;
 public class WakeUpUtils {
     private static final String TAG = "WakeUpUtils";
     protected MyWakeup myWakeup;
+
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             L.e("WakeUpUtils-->handleMessage-->: " + msg.toString());
             switch (msg.what) {
-                case STATUS_WAKEUP_SUCCESS://   唤醒成功
+                case STATUS_WAKEUP_SUCCESS:         //  唤醒成功
                     wakeUp();
                     break;
             }
         }
     };
 
+    /**********************************************************************************************/
+
+    /**
+     * 唤醒
+     */
     public void wakeUp() {
         SpeakUtils.ins().speak(AppManagerKt.getApplication().getString(R.string.str_sdk_def_wakeup_ref));
         VipSdkHelper.Companion.getInstance().stopRecord();
         VipSdkHelper.Companion.getInstance().startRecord();
-    }
-
-    public void init() {
-        if (myWakeup == null) {
-            IWakeupListener listener = new RecogWakeupListener(mHandler);
-            myWakeup = new MyWakeup(AppManagerKt.getApplication(), listener);
-        }
-        startListener();
     }
 
     /**
@@ -75,6 +73,7 @@ public class WakeUpUtils {
         myWakeup.release();
     }
 
+    /**********************************************************************************************/
 
     private WakeUpUtils() {
     }
@@ -92,5 +91,15 @@ public class WakeUpUtils {
     public static WakeUpUtils ins() {
         return SingletonHolder.instance;
     }
+
+    public void init() {
+        if (myWakeup == null) {
+            IWakeupListener listener = new RecogWakeupListener(mHandler);
+            myWakeup = new MyWakeup(AppManagerKt.getApplication(), listener);
+        }
+        startListener();
+    }
+
+    /**********************************************************************************************/
 
 }
