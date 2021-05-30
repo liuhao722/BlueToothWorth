@@ -37,7 +37,7 @@ import java.util.Map;
  * Description: This is SpeakUtils 语音转换的辅助类
  */
 public class SpeakUtils {
-    private static final String TAG = "SdkUtils";
+    private static final String TAG = "SpeakUtils";
     public MySyntherizer synthesizer;
     public String appId;
     public String appKey;
@@ -53,11 +53,11 @@ public class SpeakUtils {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-//            L.e("mHandler--->msg.arg1" + msg.arg1 + "msg.what:" + msg.what);
+            RecordUtils.ins().stopRecord();
             switch (msg.what) {
                 case ContactsKt.PLAY_FINISH:
                     if (callBack != null) {
-                        L.e("语音播放结束，进行callBack.speakFinish() 回调");
+                        Log.e(TAG, "语音播放结束，进行callBack.speakFinish() 回调");
                         callBack.speakFinish();
                     }
                     break;
@@ -79,7 +79,6 @@ public class SpeakUtils {
         }
 
         int result = synthesizer.speak(text);
-        checkResult(result, "speak");
     }
 
     /**
@@ -87,7 +86,6 @@ public class SpeakUtils {
      */
     public void pause() {
         int result = synthesizer.pause();
-        checkResult(result, "pause");
     }
 
     /**
@@ -95,7 +93,6 @@ public class SpeakUtils {
      */
     public void resume() {
         int result = synthesizer.resume();
-        checkResult(result, "resume");
     }
 
     /**
@@ -103,7 +100,6 @@ public class SpeakUtils {
      */
     public void stop() {
         int result = synthesizer.stop();
-        checkResult(result, "stop");
     }
 
     /**
@@ -186,21 +182,6 @@ public class SpeakUtils {
         } else {
             initConfig = new InitConfig(appId, appKey, secretKey, sn, ttsMode, params, listener);
         }
-//        // 如果您集成中出错，请将下面一段代码放在和demo中相同的位置，并复制InitConfig 和 AutoCheck到您的项目中
-//        // 上线时请删除AutoCheck的调用
-//        AutoCheck.getInstance(context).check(initConfig, new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                if (msg.what == 100) {
-//                    AutoCheck autoCheck = (AutoCheck) msg.obj;
-//                    synchronized (autoCheck) {
-//                        String message = autoCheck.obtainDebugMessage();
-//                        log(message); // 可以用下面一行替代，在logcat中查看代码
-//                    }
-//                }
-//            }
-//
-//        });
         return initConfig;
     }
 
@@ -217,12 +198,6 @@ public class SpeakUtils {
     }
 
     /**********************************************************************************************/
-
-    private void checkResult(int result, String method) {
-//        if (result != 0) {
-//            log("error code :" + result + " method:" + method);
-//        }
-    }
 
     private void log(String msg) {
         L.e(msg);

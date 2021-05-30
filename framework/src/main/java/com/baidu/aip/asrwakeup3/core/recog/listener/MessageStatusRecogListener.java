@@ -65,7 +65,6 @@ public class MessageStatusRecogListener extends StatusRecogListener {
         super.onAsrPartialResult(results, recogResult);
     }
 
-    Message msg = new Message();
 
     /**
      * 识别整段文字后的回调，识别完后就结束了
@@ -77,6 +76,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
     public void onAsrFinalResult(String[] results, RecogResult recogResult) {
         super.onAsrFinalResult(results, recogResult);
         if (results != null && results.length > 0 && !results[0].isEmpty()) {
+            Message msg = new Message();
             msg.what = ContactsKt.SPEAK_FINISH;
             msg.obj = results[0];
             handler.sendMessage(msg);
@@ -177,7 +177,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
                 break;
 
         }
-        Log.e("sendStatusMessage", "liuhao:-->" + message);
+//        Log.e("sendStatusMessage", "liuhao:-->" + message);
         sendMessage(message, status);
     }
 
