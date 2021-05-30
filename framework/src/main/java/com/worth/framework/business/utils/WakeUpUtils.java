@@ -13,7 +13,7 @@ import com.baidu.speech.asr.SpeechConstant;
 import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
-import com.worth.framework.business.VipAudioSdkHelper;
+import com.worth.framework.business.VipSdkHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ import static com.baidu.aip.asrwakeup3.core.recog.IStatus.STATUS_WAKEUP_SUCCESS;
  * Author:  LiuHao
  * Email:   114650501@qq.com
  * TIME:    5/30/21 --> 12:10 PM
- * Description: This is WakeUpUtils
+ * Description: This is WakeUpUtils 唤醒的辅助类
  */
 public class WakeUpUtils {
     private static final String TAG = "WakeUpUtils";
@@ -43,9 +43,9 @@ public class WakeUpUtils {
     };
 
     public void wakeUp() {
-        SdkUtils.ins().speak(AppManagerKt.getApplication().getString(R.string.str_sdk_def_wakeup_ref));
-        VipAudioSdkHelper.Companion.getInstance().stopRecord();
-        VipAudioSdkHelper.Companion.getInstance().startRecord();
+        SpeakUtils.ins().speak(AppManagerKt.getApplication().getString(R.string.str_sdk_def_wakeup_ref));
+        VipSdkHelper.Companion.getInstance().stopRecord();
+        VipSdkHelper.Companion.getInstance().startRecord();
     }
 
     public void init() {

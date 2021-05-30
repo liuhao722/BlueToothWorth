@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
-import com.baidu.tts.client.SynthesizerTool;
 import com.baidu.tts.client.TtsMode;
 import com.baidu.tts.sample.control.InitConfig;
 import com.baidu.tts.sample.control.MySyntherizer;
@@ -30,34 +29,20 @@ import java.util.Map;
  * Author:  LiuHao
  * Email:   114650501@qq.com
  * TIME:    5/30/21 --> 10:59 AM
- * Description: This is SdkUtils
+ * Description: This is SpeakUtils 语音转换的辅助类
  */
-public class SdkUtils {
+public class SpeakUtils {
     private static final String TAG = "SdkUtils";
-
     public MySyntherizer synthesizer;
-
     public String appId;
-
     public String appKey;
-
     public String secretKey;
-
     public String sn; // 纯离线合成SDK授权码；离在线合成SDK没有此参数
-
     // TtsMode.MIX; 离在线融合，在线优先； TtsMode.ONLINE 纯在线； TtsMode.OFFLINE 纯离线合成，需要纯离线SDK
     public TtsMode ttsMode = IOfflineResourceConst.DEFAULT_SDK_TTS_MODE;
-
     public boolean isOnlineSDK = TtsMode.ONLINE.equals(IOfflineResourceConst.DEFAULT_SDK_TTS_MODE);
-
-    // 离线发音选择，VOICE_FEMALE即为离线女声发音。
-    // assets目录下bd_etts_common_speech_m15_mand_eng_high_am-mix_vXXXXXXX.dat为离线男声模型文件；
-    // assets目录下bd_etts_common_speech_f7_mand_eng_high_am-mix_vXXXXX.dat为离线女声模型文件;
-    // assets目录下bd_etts_common_speech_yyjw_mand_eng_high_am-mix_vXXXXX.dat 为度逍遥模型文件;
-    // assets目录下bd_etts_common_speech_as_mand_eng_high_am_vXXXX.dat 为度丫丫模型文件;
     // 在线合成sdk下面的参数不生效
     public String offlineVoice = OfflineResource.VOICE_MALE;
-
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     /**********************************************************************************************/
@@ -74,9 +59,6 @@ public class SdkUtils {
         secretKey = auth.getSecretKey();
         sn = auth.getSn(); // 离线合成SDK必须有此参数；在线合成SDK没有此参数
         initialTts(); // 初始化TTS引擎
-        if (!isOnlineSDK) {
-            log("SynthActivity", "so version:" + SynthesizerTool.getEngineInfo());
-        }
     }
 
     /**
@@ -114,18 +96,6 @@ public class SdkUtils {
         // 设置合成的语调，0-15 ，默认 5
         params.put(SpeechSynthesizer.PARAM_PITCH, "5");
         if (!isOnlineSDK) {
-            // 在线SDK版本没有此参数。
-
-            /*
-            params.put(SpeechSynthesizer.PARAM_MIX_MODE, SpeechSynthesizer.MIX_MODE_DEFAULT);
-            // 该参数设置为TtsMode.MIX生效。即纯在线模式不生效。
-            // MIX_MODE_DEFAULT 默认 ，wifi状态下使用在线，非wifi离线。在线状态下，请求超时6s自动转离线
-            // MIX_MODE_HIGH_SPEED_SYNTHESIZE_WIFI wifi状态下使用在线，非wifi离线。在线状态下， 请求超时1.2s自动转离线
-            // MIX_MODE_HIGH_SPEED_NETWORK ， 3G 4G wifi状态下使用在线，其它状态离线。在线状态下，请求超时1.2s自动转离线
-            // MIX_MODE_HIGH_SPEED_SYNTHESIZE, 2G 3G 4G wifi状态下使用在线，其它状态离线。在线状态下，请求超时1.2s自动转离线
-            // params.put(SpeechSynthesizer.PARAM_MIX_MODE_TIMEOUT, SpeechSynthesizer.PARAM_MIX_TIMEOUT_TWO_SECOND);
-            // 离在线模式，强制在线优先。在线请求后超时2秒后，转为离线合成。
-            */
             // 离线资源文件， 从assets目录中复制到临时目录，需要在initTTs方法前完成
             OfflineResource offlineResource = createOfflineResource(offlineVoice);
             // 声学模型文件路径 (离线引擎使用), 请确认下面两个文件存在
@@ -243,7 +213,7 @@ public class SdkUtils {
 
     /**********************************************************************************************/
 
-    private SdkUtils() {
+    private SpeakUtils() {
     }
 
     /**
@@ -253,10 +223,10 @@ public class SdkUtils {
      * 优点：达到了lazy loading的效果，即按需创建实例。
      */
     private static class SingletonHolder {
-        public static SdkUtils instance = new SdkUtils();
+        public static SpeakUtils instance = new SpeakUtils();
     }
 
-    public static SdkUtils ins() {
+    public static SpeakUtils ins() {
         return SingletonHolder.instance;
     }
 

@@ -1,20 +1,20 @@
 package com.worth.framework.business
 
-import com.worth.framework.business.utils.SdkUtils
+import com.worth.framework.business.utils.SpeakUtils
 import com.worth.framework.business.utils.WakeUpUtils
 
 /**
  * Author:  LiuHao
  * Email:   114650501@qq.com
  * TIME:    5/25/21 --> 4:45 PM
- * Description: This is VipAudioSdkHelper
+ * Description: This is VipSdkHelper
  */
-class VipAudioSdkHelper private constructor() {
+class VipSdkHelper private constructor() {
     /**
      * 初始化操作
      */
     init {
-        SdkUtils.ins().init()
+        SpeakUtils.ins().init()
         WakeUpUtils.ins().init()
     }
 
@@ -62,6 +62,6 @@ class VipAudioSdkHelper private constructor() {
     }
 
     private object SingletonHolder {
-        val holder = VipAudioSdkHelper()
+        val holder = VipSdkHelper()
     }
 }
