@@ -28,7 +28,7 @@ class VipSdkHelper private constructor() {
      * 启动实时 or 短音频模式--录音内容进行网络请求
      */
     fun startRecord() {
-        RecordUtils.ins().start()
+        RecordUtils.ins().startRecord()
     }
 
     /**

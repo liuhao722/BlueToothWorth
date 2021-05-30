@@ -10,16 +10,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.baidu.aip.asrwakeup3.core.inputstream.InFileStream;
-import com.baidu.aip.asrwakeup3.core.mini.AutoCheck;
 import com.baidu.aip.asrwakeup3.core.recog.MyRecognizer;
 import com.baidu.aip.asrwakeup3.core.recog.listener.IRecogListener;
 import com.baidu.aip.asrwakeup3.core.recog.listener.MessageStatusRecogListener;
 import com.baidu.aip.asrwakeup3.uiasr.params.CommonRecogParams;
-import com.baidu.aip.asrwakeup3.uiasr.params.OfflineRecogParams;
 import com.baidu.aip.asrwakeup3.uiasr.params.OnlineRecogParams;
 import com.worth.framework.base.core.utils.AppManagerKt;
-import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
 import java.util.Map;
@@ -38,10 +34,6 @@ public class RecordUtils {
      */
     protected MyRecognizer myRecognizer;
     /**
-     * 本Activity中是否需要调用离线命令词功能。根据此参数，判断是否需要调用SDK的ASR_KWS_LOAD_ENGINE事件
-     */
-    protected boolean enableOffline;
-    /**
      * Api的参数类，仅仅用于生成调用START的json字符串，本身与SDK的调用无关
      */
     private CommonRecogParams apiParams = new OnlineRecogParams();
@@ -55,7 +47,7 @@ public class RecordUtils {
                     if (msg.obj != null && !msg.obj.toString().trim().isEmpty()) {
                         Log.e(TAG, "结果：" + msg.obj);
 
-                        start();
+                        startRecord();
                     }
                     break;
             }
@@ -72,43 +64,16 @@ public class RecordUtils {
         IRecogListener listener = new MessageStatusRecogListener(mHandler);
         // DEMO集成步骤 1.1 1.3 初始化：new一个IRecogListener示例 & new 一个 MyRecognizer 示例,并注册输出事件
         myRecognizer = new MyRecognizer(context, listener);
-
-
-//        if (enableOffline) {
-//            // 基于DEMO集成1.4 加载离线资源步骤(离线时使用)。offlineParams是固定值，复制到您的代码里即可
-//            Map<String, Object> offlineParams = OfflineRecogParams.fetchOfflineParams();
-//            myRecognizer.loadOfflineEngine(offlineParams);
-//        }
-        // BluetoothUtil.start(this,BluetoothUtil.FULL_MODE); // 蓝牙耳机开始，注意一部分手机这段代码无效
     }
 
     /**
      * 开始录音，点击“开始”按钮后调用。
      * 基于DEMO集成2.1, 2.2 设置识别参数并发送开始事件
      */
-    public void start() {
+    public void startRecord() {
         // DEMO集成步骤2.1 拼接识别参数： 此处params可以打印出来，直接写到你的代码里去，最终的json一致即可。
         final Map<String, Object> params = fetchParams();
         // params 也可以根据文档此处手动修改，参数会以json的格式在界面和logcat日志中打印
-
-
-//        L.i("设置的start输入参数：" + params);
-//        // 复制此段可以自动检测常规错误
-//        (new AutoCheck(context, new Handler() {
-//            public void handleMessage(Message msg) {
-//                if (msg.what == 100) {
-//                    AutoCheck autoCheck = (AutoCheck) msg.obj;
-//                    synchronized (autoCheck) {
-//                        String message = autoCheck.obtainErrorMessage(); // autoCheck.obtainAllMessage();
-//                        L.e(message + "\n");
-//                    }
-//                }
-//            }
-//        }, enableOffline)).checkAsr(params);
-
-
-        // 这里打印出params， 填写至您自己的app中，直接调用下面这行代码即可。
-        // DEMO集成步骤2.2 开始识别
         myRecognizer.start(params);
     }
 
