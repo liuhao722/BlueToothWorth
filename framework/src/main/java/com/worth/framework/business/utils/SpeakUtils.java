@@ -2,12 +2,8 @@ package com.worth.framework.business.utils;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
@@ -16,7 +12,6 @@ import com.baidu.tts.sample.control.InitConfig;
 import com.baidu.tts.sample.control.MySyntherizer;
 import com.baidu.tts.sample.listener.FileSaveListener;
 import com.baidu.tts.sample.util.Auth;
-import com.baidu.tts.sample.util.AutoCheck;
 import com.baidu.tts.sample.util.FileUtil;
 import com.baidu.tts.sample.util.IOfflineResourceConst;
 import com.baidu.tts.sample.util.OfflineResource;
@@ -24,7 +19,6 @@ import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.callbacks.SpeakCallBack;
-import com.worth.framework.business.ext.ContactsKt;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,57 +43,40 @@ public class SpeakUtils {
     // 在线合成sdk下面的参数不生效
     public String offlineVoice = OfflineResource.VOICE_MALE;
     private SpeakCallBack callBack;
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            RecordUtils.ins().stopRecord();
-            switch (msg.what) {
-                case ContactsKt.PLAY_FINISH:
-                    if (callBack != null) {
-                        Log.e(TAG, "语音播放结束，进行callBack.speakFinish() 回调");
-                        callBack.speakFinish();
-                    }
-                    break;
-            }
-        }
-    };
-
+    private Handler mHandler = GlobalHandler.ins().mHandler.get();
     /**********************************************************************************************/
     /**
      * speak 实际上是调用 synthesize后，获取音频流，然后播放。
      * 获取音频流的方式见SaveFileActivity及FileSaveListener
      * 需要合成的文本text的长度不能超过1024个GBK字节。
      */
-    public void speak(String text, SpeakCallBack speakCallBack) {
-        this.callBack = speakCallBack;
+    public void speak(String text) {
         // 需要合成的文本text的长度不能超过1024个GBK字节。
         if (TextUtils.isEmpty(text)) {
             text = context.getString(R.string.str_sdk_def_ref);
         }
-
-        int result = synthesizer.speak(text);
+        synthesizer.speak(text);
     }
 
     /**
      * 暂停播放。仅调用speak后生效
      */
     public void pause() {
-        int result = synthesizer.pause();
+        synthesizer.pause();
     }
 
     /**
      * 继续播放。仅调用speak后生效，调用pause生效
      */
     public void resume() {
-        int result = synthesizer.resume();
+        synthesizer.resume();
     }
 
     /**
      * 停止合成引擎。即停止播放，合成，清空内部合成队列。
      */
     public void stop() {
-        int result = synthesizer.stop();
+        synthesizer.stop();
     }
 
     /**
@@ -201,10 +178,6 @@ public class SpeakUtils {
 
     private void log(String msg) {
         L.e(msg);
-    }
-
-    private void log(String tag, String msg) {
-        L.el(tag, msg);
     }
 
     /**********************************************************************************************/

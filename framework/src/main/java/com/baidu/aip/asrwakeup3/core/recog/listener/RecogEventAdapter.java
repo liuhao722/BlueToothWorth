@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
 import com.baidu.aip.asrwakeup3.core.util.MyLogger;
+import com.worth.framework.base.core.utils.L;
 
 /**
  * Created by fujiayi on 2017/6/14.
@@ -32,7 +33,7 @@ public class RecogEventAdapter implements EventListener {
         String logMessage = "name:" + name + "; params:" + params;
 
         // logcat 中 搜索RecogEventAdapter，即可以看见下面一行的日志
-        Log.i(TAG, logMessage);
+        L.i(TAG, logMessage);
         if (false) { // 可以调试，不需要后续逻辑
             return;
         }

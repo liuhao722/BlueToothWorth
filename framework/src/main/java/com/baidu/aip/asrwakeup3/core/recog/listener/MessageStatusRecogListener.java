@@ -8,6 +8,7 @@ import com.baidu.speech.asr.SpeechConstant;
 
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
 import com.worth.framework.base.core.base.constants.ConstantsKt;
+import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
 /**
@@ -57,8 +58,8 @@ public class MessageStatusRecogListener extends StatusRecogListener {
     @Override
     public void onAsrPartialResult(String[] results, RecogResult recogResult) {
 
-//        Log.e("onAsrPartialResult-1", "result:" + results[0]);
-//        Log.e("onAsrPartialResult-1", "原始json:" + recogResult.getOrigalJson());
+//        L.e("onAsrPartialResult-1", "result:" + results[0]);
+//        L.e("onAsrPartialResult-1", "原始json:" + recogResult.getOrigalJson());
 //
 //        sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL,
 //                "临时识别结果，结果是“" + results[0] + "”；原始json：" + recogResult.getOrigalJson());
@@ -81,8 +82,8 @@ public class MessageStatusRecogListener extends StatusRecogListener {
             msg.obj = results[0];
             handler.sendMessage(msg);
         }
-//        Log.e("onAsrFinalResult-2", "result:" + results[0]);
-//        Log.e("onAsrFinalResult-2", "原始json:" + recogResult.getOrigalJson());
+//        L.e("onAsrFinalResult-2", "result:" + results[0]);
+//        L.e("onAsrFinalResult-2", "原始json:" + recogResult.getOrigalJson());
 
 //
 //        String message = "识别结束，结果是”" + results[0] + "”";
@@ -177,7 +178,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
                 break;
 
         }
-//        Log.e("sendStatusMessage", "liuhao:-->" + message);
+//        L.e("sendStatusMessage", "liuhao:-->" + message);
         sendMessage(message, status);
     }
 
@@ -195,7 +196,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
             message += "  ;time=" + System.currentTimeMillis();
         }
         if (handler == null) {
-            Log.i(TAG, message);
+            L.i(TAG, message);
             return;
         }
         Message msg = Message.obtain();

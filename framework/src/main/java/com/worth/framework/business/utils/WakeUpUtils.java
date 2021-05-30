@@ -34,18 +34,7 @@ public class WakeUpUtils {
     private static final String TAG = "WakeUpUtils";
     protected MyWakeup myWakeup;
 
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            L.e("WakeUpUtils-->handleMessage-->: " + msg.toString());
-            switch (msg.what) {
-                case STATUS_WAKEUP_SUCCESS:         //  唤醒成功
-                    wakeUp();
-                    break;
-            }
-        }
-    };
+    private Handler mHandler = GlobalHandler.ins().mHandler.get();
 
     /**********************************************************************************************/
 
@@ -54,9 +43,7 @@ public class WakeUpUtils {
      */
     public void wakeUp() {
         VipSdkHelper.Companion.getInstance().stopRecord();
-        SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref),
-                () -> VipSdkHelper.Companion.getInstance().startRecord()
-        );
+        SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref));
     }
 
     /**

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.baidu.tts.client.SpeechError;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.sample.MainHandlerConstant;
+import com.worth.framework.base.core.utils.L;
 
 /**
  * SpeechSynthesizerListener 简单地实现，仅仅记录日志
@@ -34,7 +35,7 @@ public class MessageListener implements SpeechSynthesizerListener, MainHandlerCo
      */
 
     public void onSynthesizeDataArrived(String utteranceId, byte[] bytes, int progress) {
-//        Log.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
+//        L.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
         // + ";" + (engineType == 1? "离线合成":"在线合成"));
     }
 
@@ -67,7 +68,7 @@ public class MessageListener implements SpeechSynthesizerListener, MainHandlerCo
      */
     @Override
     public void onSpeechProgressChanged(String utteranceId, int progress) {
-        //  Log.i(TAG, "播放进度回调, progress：" + progress + ";序列号:" + utteranceId );
+        //  L.i(TAG, "播放进度回调, progress：" + progress + ";序列号:" + utteranceId );
     }
 
     /**
@@ -103,9 +104,9 @@ public class MessageListener implements SpeechSynthesizerListener, MainHandlerCo
 
     protected void sendMessage(String message, boolean isError) {
         if (isError) {
-            Log.e(TAG, message);
+            L.e(TAG, message);
         } else {
-            Log.i(TAG, message);
+            L.i(TAG, message);
         }
 
     }

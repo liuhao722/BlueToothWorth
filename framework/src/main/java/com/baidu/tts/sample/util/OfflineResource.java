@@ -2,7 +2,8 @@ package com.baidu.tts.sample.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
+
+import com.worth.framework.base.core.utils.L;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class OfflineResource implements IOfflineResourceConst {
             recover = true;
         }
         FileUtil.copyFromAssets(assets, sourceFilename, destFilename, recover);
-        Log.i(TAG, "文件复制成功：" + destFilename);
+        L.i(TAG, "文件复制成功：" + destFilename);
         return destFilename;
     }
 

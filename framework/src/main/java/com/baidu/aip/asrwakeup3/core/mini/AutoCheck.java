@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.core.content.ContextCompat;
 
 import com.baidu.speech.asr.SpeechConstant;
+import com.worth.framework.base.core.utils.L;
 
 import org.json.JSONObject;
 
@@ -99,7 +100,7 @@ public class AutoCheck {
                 }
 
                 sb.append("【错误】【").append(testName).append(" 】  ").append(check.getErrorMessage()).append("\n");
-                Log.e("AutoCheck", sb.toString());
+                L.e("AutoCheck", sb.toString());
                 if (check.hasFix()) {
                     sb.append("【修复方法】【").append(testName).append(" 】  ").append(check.getFixMessage()).append("\n");
                 }
@@ -143,7 +144,7 @@ public class AutoCheck {
             checks.put("检查AppId AppKey SecretKey", infoCheck);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            Log.e(TAG, "检查AppId AppKey SecretKey 错误", e);
+            L.e(TAG, "检查AppId AppKey SecretKey 错误" + e);
             return;
         }
         if (enableOffline) {
@@ -294,7 +295,7 @@ public class AutoCheck {
         public void checkOnline() throws Exception {
             String urlpath = "https://openapi.baidu.com/oauth/2.0/token?client_id="
                     + appKey + "&client_secret=" + secretKey + "&grant_type=client_credentials";
-            Log.i("AutoCheck", "Url is " + urlpath);
+            L.i("AutoCheck", "Url is " + urlpath);
             URL url = new URL(urlpath);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

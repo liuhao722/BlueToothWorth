@@ -3,12 +3,7 @@ package com.worth.framework.business.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.baidu.aip.asrwakeup3.core.recog.MyRecognizer;
 import com.baidu.aip.asrwakeup3.core.recog.listener.IRecogListener;
@@ -16,7 +11,6 @@ import com.baidu.aip.asrwakeup3.core.recog.listener.MessageStatusRecogListener;
 import com.baidu.aip.asrwakeup3.uiasr.params.CommonRecogParams;
 import com.baidu.aip.asrwakeup3.uiasr.params.OnlineRecogParams;
 import com.worth.framework.base.core.utils.AppManagerKt;
-import com.worth.framework.business.ext.ContactsKt;
 
 import java.util.Map;
 
@@ -38,21 +32,8 @@ public class RecordUtils {
      */
     private CommonRecogParams apiParams = new OnlineRecogParams();
 
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case ContactsKt.SPEAK_FINISH:           //  用户输入语言结束，并且有一定的有效结果检测出来
-                    if (msg.obj != null && !msg.obj.toString().trim().isEmpty()) {
-                        Log.e(TAG, "结果：" + msg.obj);
+    private Handler mHandler = GlobalHandler.ins().mHandler.get();
 
-                        startRecord();
-                    }
-                    break;
-            }
-        }
-    };
     private Context context;
 
     public void init() {
@@ -65,6 +46,7 @@ public class RecordUtils {
         // DEMO集成步骤 1.1 1.3 初始化：new一个IRecogListener示例 & new 一个 MyRecognizer 示例,并注册输出事件
         myRecognizer = new MyRecognizer(context, listener);
     }
+
 
     /**
      * 开始录音，点击“开始”按钮后调用。

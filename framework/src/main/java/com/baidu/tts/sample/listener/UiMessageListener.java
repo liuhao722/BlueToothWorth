@@ -2,8 +2,8 @@ package com.baidu.tts.sample.listener;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
+import com.baidu.tts.client.SpeechError;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
@@ -21,6 +21,16 @@ public class UiMessageListener extends MessageListener {
     public UiMessageListener(Handler mainHandler) {
         super();
         this.mainHandler = mainHandler;
+    }
+
+    @Override
+    public void onSynthesizeStart(String utteranceId) {
+        super.onSynthesizeStart(utteranceId);
+    }
+
+    @Override
+    public void onError(String utteranceId, SpeechError speechError) {
+        super.onError(utteranceId, speechError);
     }
 
     /**
@@ -77,7 +87,7 @@ public class UiMessageListener extends MessageListener {
             msg.what = action;
             msg.obj = message + "\n";
             mainHandler.sendMessage(msg);
-            Log.i(TAG, message);
+            L.i(TAG, message);
         }
     }
 }

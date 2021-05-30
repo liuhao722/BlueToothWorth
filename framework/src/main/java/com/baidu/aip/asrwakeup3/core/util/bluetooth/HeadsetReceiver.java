@@ -4,7 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.util.Log;
+
+import com.worth.framework.base.core.utils.L;
 
 public class HeadsetReceiver extends BroadcastReceiver {
     @Override
@@ -17,25 +18,25 @@ public class HeadsetReceiver extends BroadcastReceiver {
             int hasMicrophone = intent.getIntExtra("microphone", 0);
 
             if (state == 0) {
-                Log.i("HeadsetReceiver", "[Headset] Headset disconnected:" + name);
+                L.i("HeadsetReceiver", "[Headset] Headset disconnected:" + name);
             } else if (state == 1) {
-                Log.i("HeadsetReceiver", "[Headset] Headset connected:" + name);
+                L.i("HeadsetReceiver", "[Headset] Headset connected:" + name);
                 if (hasMicrophone == 1) {
-                    Log.i("HeadsetReceiver", "[Headset] Headset " + name + " has a microphone");
+                    L.i("HeadsetReceiver", "[Headset] Headset " + name + " has a microphone");
                 }
             } else {
-                Log.w("HeadsetReceiver", "[Headset] Unknown headset plugged state: " + state);
+                L.w("HeadsetReceiver", "[Headset] Unknown headset plugged state: " + state);
             }
 
             AndroidAudioManager.getInstance(context).routeAudioToEarPiece();
             // LinphoneManager.getCallManager().refreshInCallActions();
         } else if (action.equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
             // This happens when the user disconnect a headset, so we shouldn't play audio loudly
-            Log.i("HeadsetReceiver", "[Headset] Noisy state detected, most probably a headset has been disconnected");
+            L.i("HeadsetReceiver", "[Headset] Noisy state detected, most probably a headset has been disconnected");
             AndroidAudioManager.getInstance(context).routeAudioToEarPiece();
             // LinphoneManager.getCallManager().refreshInCallActions();
         } else {
-            Log.w("HeadsetReceiver", "[Headset] Unknown action: " + action);
+            L.w("HeadsetReceiver", "[Headset] Unknown action: " + action);
         }
     }
 }

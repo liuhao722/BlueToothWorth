@@ -16,6 +16,8 @@ android {
         versionName rootProject.ext.android["versionName"]
         flavorDimensions rootProject.ext.android["flavorDimensions"]
 
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

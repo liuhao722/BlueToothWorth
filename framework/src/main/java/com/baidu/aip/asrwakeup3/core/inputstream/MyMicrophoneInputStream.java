@@ -6,6 +6,8 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import com.worth.framework.base.core.utils.L;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -47,7 +49,7 @@ public class MyMicrophoneInputStream extends InputStream {
     }
 
     public void start() {
-        Log.i(TAG, " MyMicrophoneInputStream start recoding!");
+        L.i(TAG, " MyMicrophoneInputStream start recoding!");
         try {
             if (audioRecord == null
                     || audioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
@@ -60,9 +62,9 @@ public class MyMicrophoneInputStream extends InputStream {
             audioRecord.startRecording();
 
         } catch (Exception e) {
-            Log.e(TAG, e.getClass().getSimpleName(), e);
+            L.e(TAG, e.getClass().getSimpleName() + e);
         }
-        Log.i(TAG, " MyMicrophoneInputStream start recoding finished");
+        L.i(TAG, " MyMicrophoneInputStream start recoding finished");
     }
 
     @Override
@@ -81,7 +83,7 @@ public class MyMicrophoneInputStream extends InputStream {
             int count = audioRecord.read(b, off, len);
             return count;
         } catch (Exception e) {
-            Log.e(TAG, e.getClass().getSimpleName(), e);
+            L.e(TAG, e.getClass().getSimpleName()+ e);
             throw e;
         }
 
@@ -90,7 +92,7 @@ public class MyMicrophoneInputStream extends InputStream {
     // 建议在建议在CALLBACK_EVENT_ASR_EXIT事件中调用
     @Override
     public void close() throws IOException {
-        Log.i(TAG, " MyMicrophoneInputStream close");
+        L.i(TAG, " MyMicrophoneInputStream close");
         if (audioRecord != null) {
             audioRecord.stop();
             // audioRecord.release(); 程序结束别忘记自行释放

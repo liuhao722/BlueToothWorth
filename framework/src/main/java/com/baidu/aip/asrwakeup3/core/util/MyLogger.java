@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.worth.framework.base.core.utils.L;
+
 
 /**
  * 记录日志的时候， 顺带往handler记录一份
@@ -48,7 +50,7 @@ public class MyLogger {
             Log.i(tag, message);
 
         } else if (level.equals(ERROR)) {
-            Log.e(tag, message);
+            L.e(tag, message);
         }
         if (handler != null) {
             Message msg = Message.obtain();

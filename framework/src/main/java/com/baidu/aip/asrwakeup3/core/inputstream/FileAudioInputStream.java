@@ -2,6 +2,8 @@ package com.baidu.aip.asrwakeup3.core.inputstream;
 
 import android.util.Log;
 
+import com.worth.framework.base.core.utils.L;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,7 +53,7 @@ public class FileAudioInputStream extends InputStream {
             try {
                 long sleepMs = nextSleepTime - System.currentTimeMillis();
                 if (sleepMs > 0) {
-                    Log.i(TAG, "will sleep " + sleepMs);
+                    L.i(TAG, "will sleep " + sleepMs);
                     Thread.sleep(sleepMs); // 每20ms的音频 ，比如等待20ms传输下一批
                     totalSleepMs += sleepMs;
                 }
@@ -63,9 +65,9 @@ public class FileAudioInputStream extends InputStream {
 
         /*
         if (r >= 0) {
-            Log.i("FileAudioInputStream", "Debug:" + System.currentTimeMillis() + ": " + md5(buffer, byteOffset, r));
+            L.i("FileAudioInputStream", "Debug:" + System.currentTimeMillis() + ": " + md5(buffer, byteOffset, r));
         } else {
-            Log.i("FileAudioInputStream", "Debug:" + System.currentTimeMillis() + ": return " + r);
+            L.i("FileAudioInputStream", "Debug:" + System.currentTimeMillis() + ": return " + r);
         }
         */
         nextSleepTime = System.currentTimeMillis() + r / bytePerMs;
@@ -77,7 +79,7 @@ public class FileAudioInputStream extends InputStream {
     @Override
     public void close() throws IOException {
         super.close();
-        Log.i(TAG, "time sleeped " + totalSleepMs);
+        L.i(TAG, "time sleeped " + totalSleepMs);
         if (null != in) {
             in.close();
         }

@@ -3,8 +3,8 @@ package com.worth.framework.base.core.storage
 /**
  * 封装简化获取存储的数据
  */
-const val user_type = "me_kv_user_type"
-const val app_imei = "me_kv_app_imei"
+const val user_id = "me_kv_user_id"
+const val app_host = "me_kv_app_host"
 
 /**
  * 存储类
@@ -13,21 +13,21 @@ object MeKV {
     /**
      *
      */
-    fun setUserType(padType: Int) = MeKVUtil.set(user_type, padType)
+    fun setUserId(padType: String) = MeKVUtil.set(user_id, padType)
 
     /**
      *
      */
-    fun getUserType(): Int = MeKVUtil.get(user_type, 0)
+    fun getUserId(): String = MeKVUtil.get(user_id, "1001")
 
     /**
      * 获取当前的imei
      */
-    fun getImei() = MeKVUtil.get(app_imei, "")
+    fun getHost() = MeKVUtil.get(app_host, "http://192.168.0.103:8080")
 
     /**
      * 设置当前的imei
      */
-    fun setImei(imei: String) = MeKVUtil.set(app_imei, imei)
+    fun setHost(imei: String) = MeKVUtil.set(app_host, imei)
 
 }

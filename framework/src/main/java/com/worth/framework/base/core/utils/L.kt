@@ -14,18 +14,9 @@ object L {
         Logger.addLogAdapter(AndroidLogAdapter())
     }
 
-
+    @JvmOverloads
     @JvmStatic
-    fun v(msg: String? = null) {
-        if (isDebug) {
-            msg?.run {
-                Log.v(TAG, msg)
-            }
-        }
-    }
-
-    @JvmStatic
-    fun vl(tag: String = TAG, msg: String? = null) {
+    fun v(tag: String = TAG, msg: String? = null) {
         if (isDebug) {
             msg?.run {
                 Log.v(tag, msg)
@@ -33,22 +24,9 @@ object L {
         }
     }
 
+    @JvmOverloads
     @JvmStatic
-    fun d(msg: Any? = null) {
-        if (isDebug) {
-            msg?.run {
-                Log.d(TAG, msg.toString())
-            }
-        }
-    }
-
-    @JvmStatic
-    fun d(msg: String? = null) {
-        dl(TAG, msg)
-    }
-
-    @JvmStatic
-    fun dl(tag: String = TAG, msg: String? = null) {
+    fun d(tag: String = TAG, msg: String? = null) {
         if (isDebug) {
             msg?.run {
                 Log.d(tag, msg)
@@ -56,17 +34,9 @@ object L {
         }
     }
 
+    @JvmOverloads
     @JvmStatic
-    fun e(msg: String? = null) {
-        if (isDebug) {
-            msg?.run {
-                Logger.e(msg)
-            }
-        }
-    }
-
-    @JvmStatic
-    fun el(tag: String = TAG, msg: String? = null) {
+    fun e(tag: String = TAG, msg: String? = null) {
         if (isDebug) {
             msg?.run {
                 Log.e(tag, msg)
@@ -74,17 +44,9 @@ object L {
         }
     }
 
+    @JvmOverloads
     @JvmStatic
-    fun i(msg: String? = null) {
-        if (isDebug) {
-            msg?.run {
-                Logger.i(msg)
-            }
-        }
-    }
-
-    @JvmStatic
-    fun il(tag: String = TAG, msg: String? = null) {
+    fun i(tag: String = TAG, msg: String? = null) {
         if (isDebug) {
             msg?.run {
                 Log.i(tag, msg)
@@ -92,17 +54,9 @@ object L {
         }
     }
 
+    @JvmOverloads
     @JvmStatic
-    fun w(msg: String? = null) {
-        if (isDebug) {
-            msg?.run {
-                Logger.i(msg)
-            }
-        }
-    }
-
-    @JvmStatic
-    fun wl(tag: String = TAG, msg: String? = null) {
+    fun w(tag: String = TAG, msg: String? = null) {
         if (isDebug) {
             msg?.run {
                 Log.w(tag, msg)

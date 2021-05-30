@@ -10,6 +10,7 @@ import com.baidu.tts.client.SpeechSynthesizeBag;
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.sample.MainHandlerConstant;
+import com.worth.framework.base.core.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class MySyntherizer implements MainHandlerConstant {
             throw new RuntimeException("MySynthesizer 对象里面 SpeechSynthesizer还未释放，请勿新建一个新对象。" +
                     "如果需要新建，请先调用之前MySynthesizer对象的release()方法。");
         }
-        Log.i("MySyntherizer", "MySyntherizer new called");
+        L.i("MySyntherizer", "MySyntherizer new called");
         this.context = context;
         this.mainHandler = mainHandler;
         isInitied = true;
@@ -60,7 +61,7 @@ public class MySyntherizer implements MainHandlerConstant {
         mSpeechSynthesizer = SpeechSynthesizer.getInstance();
 
         mSpeechSynthesizer.setContext(context);
-        Log.i("MySyntherizer", "包名:" + context.getPackageName());
+        L.i("MySyntherizer", "包名:" + context.getPackageName());
 
         SpeechSynthesizerListener listener = config.getListener();
 
@@ -98,7 +99,7 @@ public class MySyntherizer implements MainHandlerConstant {
         if (!isInitied) {
             throw new RuntimeException("TTS 还未初始化");
         }
-        Log.i(TAG, "speak text:" + text);
+        L.i(TAG, "speak text:" + text);
         return mSpeechSynthesizer.speak(text);
     }
 
@@ -199,7 +200,7 @@ public class MySyntherizer implements MainHandlerConstant {
     }
 
     public void release() {
-        Log.i("MySyntherizer", "MySyntherizer release called");
+        L.i("MySyntherizer", "MySyntherizer release called");
         if (!isInitied) {
             // 这里报错是因为连续两次 new MySyntherizer。
             // 必须第一次new 之后，调用release方法
@@ -217,7 +218,7 @@ public class MySyntherizer implements MainHandlerConstant {
     }
 
     protected void sendToUiThread(int action, String message) {
-        Log.i(TAG, message);
+        L.i(TAG, message);
         if (mainHandler == null) { // 可以不依赖mainHandler
             return;
         }

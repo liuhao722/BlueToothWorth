@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.baidu.aip.asrwakeup3.core.recog.IStatus;
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
+import com.worth.framework.base.core.utils.L;
 
 /**
  * 根据回调，判断asr引擎的状态
@@ -73,7 +74,7 @@ public class StatusRecogListener implements IRecogListener, IStatus {
 
     @Override
     public void onAsrVolume(int volumePercent, int volume) {
-        Log.i(TAG, "音量百分比" + volumePercent + " ; 音量" + volume);
+        L.i(TAG, "音量百分比" + volumePercent + " ; 音量" + volume);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class StatusRecogListener implements IRecogListener, IStatus {
             data = actualData;
         }
 
-        Log.i(TAG, "音频数据回调, length:" + data.length);
+        L.i(TAG, "音频数据回调, length:" + data.length);
     }
 
     @Override

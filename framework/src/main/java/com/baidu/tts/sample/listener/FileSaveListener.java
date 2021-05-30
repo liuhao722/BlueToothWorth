@@ -1,9 +1,9 @@
 package com.baidu.tts.sample.listener;
 
 import android.os.Handler;
-import android.util.Log;
 
 import com.baidu.tts.client.SpeechError;
+import com.worth.framework.base.core.utils.L;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -57,7 +57,7 @@ public class FileSaveListener extends UiMessageListener {
         String filename = baseName + utteranceId + ".pcm";
         // 保存的语音文件是 16K采样率 16bits编码 单声道 pcm文件。
         ttsFile = new File(destDir, filename);
-        Log.i(TAG, "try to write audio file to " + ttsFile.getAbsolutePath());
+        L.i(TAG, "try to write audio file to " + ttsFile.getAbsolutePath());
         try {
             if (ttsFile.exists()) {
                 ttsFile.delete();
@@ -88,7 +88,7 @@ public class FileSaveListener extends UiMessageListener {
     @Override
     public void onSynthesizeDataArrived(String utteranceId, byte[] data, int progress, int engineType) {
         super.onSynthesizeDataArrived(utteranceId, data, progress, engineType);
-//        Log.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
+//        L.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
         try {
             ttsFileBufferedOutputStream.write(data);
         } catch (IOException e) {
