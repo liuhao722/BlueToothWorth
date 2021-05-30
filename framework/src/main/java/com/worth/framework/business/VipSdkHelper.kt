@@ -40,8 +40,12 @@ class VipSdkHelper private constructor() {
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
      */
     fun wakeUpWithInputText(text: String, block: (String) -> Unit) {
-        SpeakUtils.ins().speak("接口未通，直接返回内容：$text")
-        toNetWork(text, block)
+        if (text.isNullOrEmpty()) {
+            SpeakUtils.ins().speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
+        } else {
+            SpeakUtils.ins().speak("对不起查询不到您要搜索到服务内容：$text")
+            toNetWork(text, block)
+        }
     }
 
     /**
