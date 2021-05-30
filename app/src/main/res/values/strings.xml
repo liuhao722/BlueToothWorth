@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">BluetoothWorth</string>
-    <string name="sync_button">纯在线语音合成</string>
+    <string name="app_name">i会员-语音sdk</string>
 
+    <!-- 自定义配置语音助手回复部分，查不到服务端内容的话，默认回复的内容-->
+    <string name="str_sdk_def_ref">你好，你提问的问题我现在还无法理解，不过我在努力学习呢？试试其他问题看看...</string>
 
-    <!-- 自定义配置语音助手回复部分-->
-    <string name="str_sdk_def_ref">你好，美女，你看啥呢？</string>
+    <!-- 自定义配置语音助手回复部分,唤醒的语音助手的回复部分-->
     <string name="str_sdk_def_wakeup_ref">你好，小帮在呢，需要什么帮助？</string>
 
 </resources>
