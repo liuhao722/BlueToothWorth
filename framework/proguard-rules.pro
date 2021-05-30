@@ -29,7 +29,10 @@
 
 -keep class com.worth.framework.base.network.bean.**{*;}
 
-
+-keep class  com.worth.framework.base.core.utils.L{}
+-keep class  com.worth.framework.base.core.utils.LDBus{}
+-keep class  com.worth.framework.business.VipSdkHelper{}
+-keep class  com.worth.framework.business.ext.ContactsKt{}
 
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
