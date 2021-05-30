@@ -8,7 +8,22 @@ package com.worth.framework.business.utils;
  */
 public class RecordUtils {
     private static final String TAG = "RecordUtils";
+
     /**********************************************************************************************/
+
+    /**
+     * 启动实时 or 短音频模式--录音内容进行网络请求
+     */
+    public void startRecord() {
+
+    }
+
+    /**
+     * 暂停实时 or 短音频模式--手动释放一直处于录音状态
+     */
+    public void stopRecord() {
+
+    }
 
     /**********************************************************************************************/
 
