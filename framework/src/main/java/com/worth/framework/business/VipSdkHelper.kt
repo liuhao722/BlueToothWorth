@@ -1,5 +1,8 @@
 package com.worth.framework.business
 
+import com.baidu.aip.asrwakeup3.core.inputstream.InFileStream
+import com.worth.framework.R
+import com.worth.framework.base.core.utils.application
 import com.worth.framework.business.utils.SpeakUtils
 import com.worth.framework.business.utils.WakeUpUtils
 
@@ -14,6 +17,7 @@ class VipSdkHelper private constructor() {
      * 初始化操作
      */
     init {
+        InFileStream.setContext(application)
         SpeakUtils.ins().init()
         WakeUpUtils.ins().init()
     }
@@ -35,7 +39,8 @@ class VipSdkHelper private constructor() {
     /**
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
      */
-    fun wakeUpWithInputText(text: String, block: () -> Unit) {
+    fun wakeUpWithInputText(text: String, block: (String) -> Unit) {
+        SpeakUtils.ins().speak("接口未通，直接返回内容：$text")
         toNetWork(text, block)
     }
 
@@ -49,7 +54,7 @@ class VipSdkHelper private constructor() {
     /**
      * 网络请求具体的业务场景，进行一个回调，手动输入可以直接进行业务的返回，其他场景想办法看怎么传递回去
      */
-    private fun toNetWork(text: String, block: () -> Unit) {
+    private fun toNetWork(text: String, block: (String) -> Unit) {
 
     }
 

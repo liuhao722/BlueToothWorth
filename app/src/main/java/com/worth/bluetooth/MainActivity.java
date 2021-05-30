@@ -5,14 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.VipSdkHelper;
 
 import java.util.ArrayList;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /**
  * 注意区分在线SDK和纯离线SDK，在线SDK没有离线功能。其中纯离线SDK有在线SDK的所有功能。
@@ -23,6 +28,7 @@ import java.util.ArrayList;
  * SaveFileActivity 保存合成后的音频
  */
 public class MainActivity extends AppCompatActivity {
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +40,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initButtons() {
+        editText = findViewById(R.id.et_input);
         findViewById(R.id.playText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                VipSdkHelper.Companion.getInstance().wakeUpWithInputText(editText.getText().toString().trim(), s -> {
+                    L.d(s);
+                    //  业务逻辑处理
+                    return null;
+                });
+            }
+        });
 
+        findViewById(R.id.wakeUp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VipSdkHelper.Companion.getInstance().wakeUpWithClickBtn();
             }
         });
     }

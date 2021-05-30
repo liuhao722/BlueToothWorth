@@ -1,5 +1,6 @@
 package com.worth.framework.business.utils;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -55,7 +56,7 @@ public class SpeakUtils {
     public void speak(String text) {
         // 需要合成的文本text的长度不能超过1024个GBK字节。
         if (TextUtils.isEmpty(text)) {
-            text = AppManagerKt.getApplication().getString(R.string.str_sdk_def_ref);
+            text = context.getString(R.string.str_sdk_def_ref);
         }
 
         int result = synthesizer.speak(text);
@@ -95,11 +96,12 @@ public class SpeakUtils {
     }
 
     /**********************************************************************************************/
-
+    private Context context;
     public void init() {
+        context = AppManagerKt.getApplication();
         Auth auth;
         try {
-            auth = Auth.getInstance(AppManagerKt.getApplication());
+            auth = Auth.getInstance(context);
         } catch (Auth.AuthCheckException e) {
             return;
         }
@@ -116,7 +118,7 @@ public class SpeakUtils {
      * FileSaveListener 在UiMessageListener的基础上，使用 onSynthesizeDataArrived回调，获取音频流
      */
     private void initialTts() {
-        String tmpDir = FileUtil.createTmpDir(AppManagerKt.getApplication());
+        String tmpDir = FileUtil.createTmpDir(context);
         // 设置初始化参数
         // 此处可以改为 含有您业务逻辑的SpeechSynthesizerListener的实现类
         SpeechSynthesizerListener listener = new FileSaveListener(mHandler, tmpDir);
@@ -124,7 +126,7 @@ public class SpeakUtils {
         // appId appKey secretKey 网站上您申请的应用获取。注意使用离线合成功能的话，需要应用中填写您app的包名。包名在build.gradle中获取。
         InitConfig initConfig = getInitConfig(listener);
         if (synthesizer == null) {
-            synthesizer = new MySyntherizer(AppManagerKt.getApplication(), initConfig, mHandler); // 此处可以改为MySyntherizer 了解调用过程
+            synthesizer = new MySyntherizer(context, initConfig, mHandler); // 此处可以改为MySyntherizer 了解调用过程
         }
     }
 
@@ -166,7 +168,7 @@ public class SpeakUtils {
         }
         // 如果您集成中出错，请将下面一段代码放在和demo中相同的位置，并复制InitConfig 和 AutoCheck到您的项目中
         // 上线时请删除AutoCheck的调用
-        AutoCheck.getInstance(AppManagerKt.getApplication()).check(initConfig, new Handler() {
+        AutoCheck.getInstance(context).check(initConfig, new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 100) {
@@ -185,7 +187,7 @@ public class SpeakUtils {
     private OfflineResource createOfflineResource(String voiceType) {
         OfflineResource offlineResource = null;
         try {
-            offlineResource = new OfflineResource(AppManagerKt.getApplication(), voiceType);
+            offlineResource = new OfflineResource(context, voiceType);
         } catch (IOException e) {
             // IO 错误自行处理
             e.printStackTrace();

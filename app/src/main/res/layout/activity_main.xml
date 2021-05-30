@@ -3,26 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp" />
 
     <Button
         android:id="@+id/playText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:text="直接输入语音内容"
         android:textSize="16sp" />
 
     <Button
         android:id="@+id/wakeUp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="唤醒语音助手"
+        android:layout_height="64dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginRight="24dp"
+        android:text="手动唤醒语音助手"
         android:textSize="16sp" />
 </LinearLayout>

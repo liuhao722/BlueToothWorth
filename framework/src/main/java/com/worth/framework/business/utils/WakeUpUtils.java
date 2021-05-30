@@ -1,5 +1,6 @@
 package com.worth.framework.business.utils;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -49,7 +50,7 @@ public class WakeUpUtils {
      * 唤醒
      */
     public void wakeUp() {
-        SpeakUtils.ins().speak(AppManagerKt.getApplication().getString(R.string.str_sdk_def_wakeup_ref));
+        SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref));
         VipSdkHelper.Companion.getInstance().stopRecord();
         VipSdkHelper.Companion.getInstance().startRecord();
     }
@@ -91,11 +92,12 @@ public class WakeUpUtils {
     public static WakeUpUtils ins() {
         return SingletonHolder.instance;
     }
-
+    private Context context;
     public void init() {
+        context = AppManagerKt.getApplication();
         if (myWakeup == null) {
             IWakeupListener listener = new RecogWakeupListener(mHandler);
-            myWakeup = new MyWakeup(AppManagerKt.getApplication(), listener);
+            myWakeup = new MyWakeup(context, listener);
         }
         startListener();
     }

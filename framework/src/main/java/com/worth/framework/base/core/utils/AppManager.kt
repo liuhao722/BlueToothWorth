@@ -1,6 +1,5 @@
 package com.worth.framework.base.core.utils
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
@@ -8,16 +7,8 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
-import android.os.Build
-import android.provider.Settings
-import android.telephony.TelephonyManager
-import android.text.TextUtils
-import androidx.core.app.ActivityCompat
 import com.worth.framework.base.core.exts.nullTo
-import com.worth.framework.base.core.storage.MeKV
-import com.worth.framework.base.core.storage.MeKVUtil
 import java.lang.reflect.InvocationTargetException
-import java.util.*
 
 var application: Application? = getApplicationBySelf()
 
@@ -107,39 +98,6 @@ fun getAppMetaDataByBoolean(key: String): Boolean = application?.packageName?.le
     val meta = application?.packageManager?.getApplicationInfo(it, PackageManager.GET_META_DATA)
     meta?.metaData?.getBoolean(key, false) ?: false
 } ?: false
-
-/**
- * 获取设备唯一标识码
- */
-@SuppressLint("HardwareIds")
-fun getPhoneIMEI(): String {
-    var deviceId  = "unknown"
-    val context = application?.applicationContext
-    context?.run {
-        if (ActivityCompat.checkSelfPermission(
-                        context, Manifest.permission.READ_PHONE_STATE
-                ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            deviceId = Settings.System.getString(
-                    context.contentResolver, Settings.System.ANDROID_ID
-            )
-        } else {
-            (getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?)?.run {
-                deviceId = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                    getDeviceId() ?: UUID.randomUUID().toString()
-                } else {
-                    UUID.randomUUID().toString()
-                }
-            }
-            MeKVUtil.initMMKV()
-            MeKV.setImei(deviceId)
-        }
-        if (TextUtils.equals(deviceId, "unknown")) {
-            deviceId = UUID.randomUUID().toString()
-        }
-    }
-    return deviceId
-}
 
 /**
  * 获取当前应用版本号
