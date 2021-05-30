@@ -7,6 +7,8 @@ import android.util.Log;
 import com.baidu.speech.asr.SpeechConstant;
 
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
+import com.worth.framework.base.core.base.constants.ConstantsKt;
+import com.worth.framework.business.ext.ContactsKt;
 
 /**
  * Created by fujiayi on 2017/6/16.
@@ -46,27 +48,54 @@ public class MessageStatusRecogListener extends StatusRecogListener {
         sendMessage("【asr.end事件】检测到用户说话结束");
     }
 
+    /**
+     * 识别过程中每个字的回调
+     *
+     * @param results
+     * @param recogResult
+     */
     @Override
     public void onAsrPartialResult(String[] results, RecogResult recogResult) {
-        sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL,
-                "临时识别结果，结果是“" + results[0] + "”；原始json：" + recogResult.getOrigalJson());
+
+//        Log.e("onAsrPartialResult-1", "result:" + results[0]);
+//        Log.e("onAsrPartialResult-1", "原始json:" + recogResult.getOrigalJson());
+//
+//        sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL,
+//                "临时识别结果，结果是“" + results[0] + "”；原始json：" + recogResult.getOrigalJson());
         super.onAsrPartialResult(results, recogResult);
     }
 
+    Message msg = new Message();
+
+    /**
+     * 识别整段文字后的回调，识别完后就结束了
+     *
+     * @param results
+     * @param recogResult
+     */
     @Override
     public void onAsrFinalResult(String[] results, RecogResult recogResult) {
         super.onAsrFinalResult(results, recogResult);
-        String message = "识别结束，结果是”" + results[0] + "”";
-        sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL,
-                message + "；原始json：" + recogResult.getOrigalJson());
-        if (speechEndTime > 0) {
-            long currentTime = System.currentTimeMillis();
-            long diffTime = currentTime - speechEndTime;
-            message += "；说话结束到识别结束耗时【" + diffTime + "ms】" + currentTime;
-
+        if (results != null && results.length > 0 && !results[0].isEmpty()) {
+            msg.what = ContactsKt.SPEAK_FINISH;
+            msg.obj = results[0];
+            handler.sendMessage(msg);
         }
-        speechEndTime = 0;
-        sendMessage(message, status, true);
+//        Log.e("onAsrFinalResult-2", "result:" + results[0]);
+//        Log.e("onAsrFinalResult-2", "原始json:" + recogResult.getOrigalJson());
+
+//
+//        String message = "识别结束，结果是”" + results[0] + "”";
+//        sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL,
+//                message + "；原始json：" + recogResult.getOrigalJson());
+//        if (speechEndTime > 0) {
+//            long currentTime = System.currentTimeMillis();
+//            long diffTime = currentTime - speechEndTime;
+//            message += "；说话结束到识别结束耗时【" + diffTime + "ms】" + currentTime;
+//
+//        }
+//        speechEndTime = 0;
+//        sendMessage(message, status, true);
     }
 
     @Override
@@ -133,6 +162,22 @@ public class MessageStatusRecogListener extends StatusRecogListener {
 
     private void sendStatusMessage(String eventName, String message) {
         message = "[" + eventName + "]" + message;
+        switch (eventName) {
+            case "asr.begin":           //  检测到用户说话
+
+                break;
+            case "asr.partial":         //  临时识别结果
+
+                break;
+            case "asr.finish":          //  识别一段话结束。
+
+                break;
+            case "asr.exit":            //  识别引擎结束并空闲中
+
+                break;
+
+        }
+        Log.e("sendStatusMessage", "liuhao:-->" + message);
         sendMessage(message, status);
     }
 
@@ -146,8 +191,6 @@ public class MessageStatusRecogListener extends StatusRecogListener {
 
 
     private void sendMessage(String message, int what, boolean highlight) {
-
-
         if (needTime && what != STATUS_FINISHED) {
             message += "  ;time=" + System.currentTimeMillis();
         }

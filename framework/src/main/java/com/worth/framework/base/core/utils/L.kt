@@ -6,7 +6,8 @@ import com.orhanobut.logger.Logger
 
 
 object L {
-    private val isDebug: Boolean = loggerEnable == 1
+    private val isDebug: Boolean = true
+//    private val isDebug: Boolean = loggerEnable == 1
     private val TAG = L.javaClass.name
 
     init {

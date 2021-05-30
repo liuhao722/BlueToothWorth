@@ -34,7 +34,7 @@ public class MessageListener implements SpeechSynthesizerListener, MainHandlerCo
      */
 
     public void onSynthesizeDataArrived(String utteranceId, byte[] bytes, int progress) {
-        Log.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
+//        Log.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
         // + ";" + (engineType == 1? "离线合成":"在线合成"));
     }
 

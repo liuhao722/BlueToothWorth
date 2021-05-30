@@ -88,7 +88,7 @@ public class FileSaveListener extends UiMessageListener {
     @Override
     public void onSynthesizeDataArrived(String utteranceId, byte[] data, int progress, int engineType) {
         super.onSynthesizeDataArrived(utteranceId, data, progress, engineType);
-        Log.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
+//        Log.i(TAG, "合成进度回调, progress：" + progress + ";序列号:" + utteranceId);
         try {
             ttsFileBufferedOutputStream.write(data);
         } catch (IOException e) {

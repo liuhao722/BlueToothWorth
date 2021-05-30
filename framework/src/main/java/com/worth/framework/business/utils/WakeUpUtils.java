@@ -15,9 +15,12 @@ import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.VipSdkHelper;
+import com.worth.framework.business.callbacks.SpeakCallBack;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import kotlin.jvm.functions.Function0;
 
 import static com.baidu.aip.asrwakeup3.core.recog.IStatus.STATUS_WAKEUP_SUCCESS;
 
@@ -50,9 +53,10 @@ public class WakeUpUtils {
      * 唤醒
      */
     public void wakeUp() {
-        SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref));
         VipSdkHelper.Companion.getInstance().stopRecord();
-        VipSdkHelper.Companion.getInstance().startRecord();
+        SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref),
+                () -> VipSdkHelper.Companion.getInstance().startRecord()
+        );
     }
 
     /**
@@ -92,7 +96,9 @@ public class WakeUpUtils {
     public static WakeUpUtils ins() {
         return SingletonHolder.instance;
     }
+
     private Context context;
+
     public void init() {
         context = AppManagerKt.getApplication();
         if (myWakeup == null) {

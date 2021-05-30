@@ -44,8 +44,8 @@ public class MyWakeup {
     }
 
     public void start(Map<String, Object> params) {
+        if (params == null || params.isEmpty()) return;
         String json = new JSONObject(params).toString();
-        MyLogger.info(TAG + ".Debug", "wakeup params(反馈请带上此行日志):" + json);
         wp.send(SpeechConstant.WAKEUP_START, json, null, 0, 0);
     }
 
@@ -59,7 +59,7 @@ public class MyWakeup {
     }
 
     public void setEventListener(IWakeupListener eventListener) {
-        this.eventListener =  new WakeupEventAdapter(eventListener);
+        this.eventListener = new WakeupEventAdapter(eventListener);
     }
 
     public void release() {

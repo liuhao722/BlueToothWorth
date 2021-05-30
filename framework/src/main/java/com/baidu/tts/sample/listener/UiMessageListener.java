@@ -4,6 +4,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.worth.framework.base.core.utils.L;
+import com.worth.framework.business.ext.ContactsKt;
+
 /**
  * 在 MessageListener的基础上，和UI配合。
  * Created by fujiayi on 2017/9/14.
@@ -49,6 +52,12 @@ public class UiMessageListener extends MessageListener {
     public void onSpeechProgressChanged(String utteranceId, int progress) {
         // sendMessage("onSpeechProgressChanged");
         mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_INPUT_TEXT_SELECTION, progress, 0));
+    }
+
+    @Override
+    public void onSpeechFinish(String utteranceId) {
+        super.onSpeechFinish(utteranceId);
+        mainHandler.sendEmptyMessage(ContactsKt.PLAY_FINISH);
     }
 
     protected void sendMessage(String message) {

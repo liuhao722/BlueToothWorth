@@ -7,6 +7,8 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
@@ -21,6 +23,8 @@ import com.baidu.tts.sample.util.OfflineResource;
 import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
+import com.worth.framework.business.callbacks.SpeakCallBack;
+import com.worth.framework.business.ext.ContactsKt;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,7 +38,6 @@ import java.util.Map;
  */
 public class SpeakUtils {
     private static final String TAG = "SdkUtils";
-
     public MySyntherizer synthesizer;
     public String appId;
     public String appKey;
@@ -45,7 +48,22 @@ public class SpeakUtils {
     public boolean isOnlineSDK = TtsMode.ONLINE.equals(IOfflineResourceConst.DEFAULT_SDK_TTS_MODE);
     // 在线合成sdk下面的参数不生效
     public String offlineVoice = OfflineResource.VOICE_MALE;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private SpeakCallBack callBack;
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+//            L.e("mHandler--->msg.arg1" + msg.arg1 + "msg.what:" + msg.what);
+            switch (msg.what) {
+                case ContactsKt.PLAY_FINISH:
+                    if (callBack != null) {
+                        L.e("语音播放结束，进行callBack.speakFinish() 回调");
+                        callBack.speakFinish();
+                    }
+                    break;
+            }
+        }
+    };
 
     /**********************************************************************************************/
     /**
@@ -53,7 +71,8 @@ public class SpeakUtils {
      * 获取音频流的方式见SaveFileActivity及FileSaveListener
      * 需要合成的文本text的长度不能超过1024个GBK字节。
      */
-    public void speak(String text) {
+    public void speak(String text, SpeakCallBack speakCallBack) {
+        this.callBack = speakCallBack;
         // 需要合成的文本text的长度不能超过1024个GBK字节。
         if (TextUtils.isEmpty(text)) {
             text = context.getString(R.string.str_sdk_def_ref);
@@ -97,6 +116,7 @@ public class SpeakUtils {
 
     /**********************************************************************************************/
     private Context context;
+
     public void init() {
         context = AppManagerKt.getApplication();
         Auth auth;
@@ -166,21 +186,21 @@ public class SpeakUtils {
         } else {
             initConfig = new InitConfig(appId, appKey, secretKey, sn, ttsMode, params, listener);
         }
-        // 如果您集成中出错，请将下面一段代码放在和demo中相同的位置，并复制InitConfig 和 AutoCheck到您的项目中
-        // 上线时请删除AutoCheck的调用
-        AutoCheck.getInstance(context).check(initConfig, new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 100) {
-                    AutoCheck autoCheck = (AutoCheck) msg.obj;
-                    synchronized (autoCheck) {
-                        String message = autoCheck.obtainDebugMessage();
-                        log(message); // 可以用下面一行替代，在logcat中查看代码
-                    }
-                }
-            }
-
-        });
+//        // 如果您集成中出错，请将下面一段代码放在和demo中相同的位置，并复制InitConfig 和 AutoCheck到您的项目中
+//        // 上线时请删除AutoCheck的调用
+//        AutoCheck.getInstance(context).check(initConfig, new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                if (msg.what == 100) {
+//                    AutoCheck autoCheck = (AutoCheck) msg.obj;
+//                    synchronized (autoCheck) {
+//                        String message = autoCheck.obtainDebugMessage();
+//                        log(message); // 可以用下面一行替代，在logcat中查看代码
+//                    }
+//                }
+//            }
+//
+//        });
         return initConfig;
     }
 
@@ -199,9 +219,9 @@ public class SpeakUtils {
     /**********************************************************************************************/
 
     private void checkResult(int result, String method) {
-        if (result != 0) {
-            log("error code :" + result + " method:" + method);
-        }
+//        if (result != 0) {
+//            log("error code :" + result + " method:" + method);
+//        }
     }
 
     private void log(String msg) {

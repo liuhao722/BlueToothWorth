@@ -3,6 +3,7 @@ package com.worth.framework.business
 import com.baidu.aip.asrwakeup3.core.inputstream.InFileStream
 import com.worth.framework.R
 import com.worth.framework.base.core.utils.application
+import com.worth.framework.business.utils.RecordUtils
 import com.worth.framework.business.utils.SpeakUtils
 import com.worth.framework.business.utils.WakeUpUtils
 
@@ -20,30 +21,36 @@ class VipSdkHelper private constructor() {
         InFileStream.setContext(application)
         SpeakUtils.ins().init()
         WakeUpUtils.ins().init()
+        RecordUtils.ins().init()
     }
 
     /**
      * 启动实时 or 短音频模式--录音内容进行网络请求
      */
     fun startRecord() {
-
+        RecordUtils.ins().start()
     }
 
     /**
      * 暂停实时 or 短音频模式--手动释放一直处于录音状态
      */
     fun stopRecord() {
-
+        RecordUtils.ins().stopRecord()
     }
 
     /**
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
      */
     fun wakeUpWithInputText(text: String, block: (String) -> Unit) {
+        stopRecord()    //  先停止录音内容
         if (text.isNullOrEmpty()) {
-            SpeakUtils.ins().speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
+            SpeakUtils.ins().speak(application?.getString(R.string.str_sdk_def_check_input_is_empty)) {
+                startRecord()   //  播放完默认的回复后自动再开启录音内容
+            }
         } else {
-            SpeakUtils.ins().speak("对不起查询不到您要搜索到服务内容：$text")
+            SpeakUtils.ins().speak("搜索内容为：$text ，正在为您努力的搜索中") {
+
+            }
             toNetWork(text, block)
         }
     }
