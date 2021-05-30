@@ -33,6 +33,7 @@ import java.util.Map;
  */
 public class SpeakUtils {
     private static final String TAG = "SdkUtils";
+
     public MySyntherizer synthesizer;
     public String appId;
     public String appKey;
@@ -44,6 +45,54 @@ public class SpeakUtils {
     // 在线合成sdk下面的参数不生效
     public String offlineVoice = OfflineResource.VOICE_MALE;
     private Handler mHandler = new Handler(Looper.getMainLooper());
+
+    /**********************************************************************************************/
+    /**
+     * speak 实际上是调用 synthesize后，获取音频流，然后播放。
+     * 获取音频流的方式见SaveFileActivity及FileSaveListener
+     * 需要合成的文本text的长度不能超过1024个GBK字节。
+     */
+    public void speak(String text) {
+        // 需要合成的文本text的长度不能超过1024个GBK字节。
+        if (TextUtils.isEmpty(text)) {
+            text = AppManagerKt.getApplication().getString(R.string.str_sdk_def_ref);
+        }
+
+        int result = synthesizer.speak(text);
+        checkResult(result, "speak");
+    }
+
+    /**
+     * 暂停播放。仅调用speak后生效
+     */
+    public void pause() {
+        int result = synthesizer.pause();
+        checkResult(result, "pause");
+    }
+
+    /**
+     * 继续播放。仅调用speak后生效，调用pause生效
+     */
+    public void resume() {
+        int result = synthesizer.resume();
+        checkResult(result, "resume");
+    }
+
+    /**
+     * 停止合成引擎。即停止播放，合成，清空内部合成队列。
+     */
+    public void stop() {
+        int result = synthesizer.stop();
+        checkResult(result, "stop");
+    }
+
+    /**
+     * 释放资源成功
+     */
+    public void release() {
+        synthesizer.release();
+        Log.i(TAG, "释放资源成功");
+    }
 
     /**********************************************************************************************/
 
@@ -74,7 +123,7 @@ public class SpeakUtils {
 
         // appId appKey secretKey 网站上您申请的应用获取。注意使用离线合成功能的话，需要应用中填写您app的包名。包名在build.gradle中获取。
         InitConfig initConfig = getInitConfig(listener);
-        if (synthesizer == null){
+        if (synthesizer == null) {
             synthesizer = new MySyntherizer(AppManagerKt.getApplication(), initConfig, mHandler); // 此处可以改为MySyntherizer 了解调用过程
         }
     }
@@ -143,56 +192,6 @@ public class SpeakUtils {
             log("【error】:copy files from assets failed." + e.getMessage());
         }
         return offlineResource;
-    }
-
-    /**
-     * 暂停播放。仅调用speak后生效
-     */
-    public void pause() {
-        int result = synthesizer.pause();
-        checkResult(result, "pause");
-    }
-
-    /**
-     * 继续播放。仅调用speak后生效，调用pause生效
-     */
-    public void resume() {
-        int result = synthesizer.resume();
-        checkResult(result, "resume");
-    }
-
-    /**
-     * 停止合成引擎。即停止播放，合成，清空内部合成队列。
-     */
-    public void stop() {
-        int result = synthesizer.stop();
-        checkResult(result, "stop");
-    }
-    /**
-     * 释放资源成功
-     */
-    public void release() {
-        synthesizer.release();
-        Log.i(TAG, "释放资源成功");
-    }
-
-    /**
-     * speak 实际上是调用 synthesize后，获取音频流，然后播放。
-     * 获取音频流的方式见SaveFileActivity及FileSaveListener
-     * 需要合成的文本text的长度不能超过1024个GBK字节。
-     */
-    public void speak(String text) {
-        // 需要合成的文本text的长度不能超过1024个GBK字节。
-        if (TextUtils.isEmpty(text)) {
-            text = AppManagerKt.getApplication().getString(R.string.str_sdk_def_ref);
-        }
-
-        // 合成前可以修改参数：
-        // Map<String, String> params = getParams();
-        // params.put(SpeechSynthesizer.PARAM_SPEAKER, "3"); // 设置为度逍遥
-        // synthesizer.setParams(params);
-        int result = synthesizer.speak(text);
-        checkResult(result, "speak");
     }
 
     /**********************************************************************************************/
