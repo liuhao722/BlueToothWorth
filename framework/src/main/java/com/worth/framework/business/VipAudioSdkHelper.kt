@@ -1,5 +1,7 @@
 package com.worth.framework.business
 
+import com.worth.framework.WakeUpUtils
+
 /**
  * Author:  LiuHao
  * Email:   114650501@qq.com
@@ -10,12 +12,13 @@ class VipAudioSdkHelper private constructor() {
     /**
      * 初始化操作
      */
-    fun init() {
-
+    init {
+        SdkUtils.ins().init()
+        WakeUpUtils.ins().init()
     }
 
     /**
-     * 启动实时 or 短音频模式
+     * 启动实时 or 短音频模式--录音内容进行网络请求
      */
     fun startRecord() {
 
@@ -31,30 +34,24 @@ class VipAudioSdkHelper private constructor() {
     /**
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
      */
-    fun wakeUpWithInputText(text: String) {
-
+    fun wakeUpWithInputText(text: String, block: () -> Unit) {
+        toNetWork(text, block)
     }
 
     /**
      * 唤醒语音助手-用户点击了界面
      */
     fun wakeUpWithClickBtn() {
-        startRecord()
+        WakeUpUtils.ins().wakeUp()
     }
 
     /**
-     * 百度云返回的文字信息
+     * 网络请求具体的业务场景，进行一个回调，手动输入可以直接进行业务的返回，其他场景想办法看怎么传递回去
      */
-    fun setBaiDuYunResult(): String {
-        return "百度云返回的文字信息"
-    }
-
-    /**
-     * 文本转音频,转换完成直接播放
-     */
-    fun textToAudio(text: String) {
+    private fun toNetWork(text: String, block: () -> Unit) {
 
     }
+
 
     /**
      * 对象单例

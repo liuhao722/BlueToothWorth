@@ -19,7 +19,8 @@ ext {
             versionName      : versionName,
             flavorDimensions : "default",
             lifecycle        : '2.0.0',
-            applicationId    : "com.worth.bluetooth",
+            applicationId    : "com.bbyx.darwin",
+//            applicationId    : "com.worth.bluetooth",
 
     ]
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_sdk_def_ref">你好，老板，我在呢，请问有什么能帮到你的？</string>
+    <string name="str_sdk_def_wakeup_ref">你好，小帮在呢，需要什么帮助？</string>
+
+</resources>

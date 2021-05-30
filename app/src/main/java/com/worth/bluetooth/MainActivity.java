@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.worth.framework.business.VipAudioSdkHelper;
+
 import java.util.ArrayList;
 
 /**
  * 注意区分在线SDK和纯离线SDK，在线SDK没有离线功能。其中纯离线SDK有在线SDK的所有功能。
  * 界面启动时会看见本次使用的是在线SDK还是纯离线SDK，在线SDK是不需要序列号的
- *
+ * <p>
  * SynthActivity 完整合成
  * MiniActivity 精简版合成
  * SaveFileActivity 保存合成后的音频
@@ -29,31 +31,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initButtons();
         initPermission();
+        VipAudioSdkHelper.Companion.getInstance();
     }
 
     private void initButtons() {
-        Button b1 = findViewById(R.id.synthButton);
-        Button b2 = findViewById(R.id.miniButton);
-        Button b3 = findViewById(R.id.saveTtsFileButton);
+        findViewById(R.id.playText).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startAct(SynthActivity.class);
             }
-        }); // 语音合成
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startAct(MiniActivity.class);
-            }
-        }); // 精简版合成
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startAct(SaveFileActivity.class);
-            }
-        }); // 保存合成后的音频
+        });
     }
 
     /**
@@ -66,7 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.MODIFY_AUDIO_SETTINGS,
                 Manifest.permission.WRITE_SETTINGS,
                 Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE // demo使用
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, // demo使用
+
+                Manifest.permission.RECORD_AUDIO,
+                /* 下面是蓝牙用的，可以不申请
+                Manifest.permission.BROADCAST_STICKY,
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN
+                */
         };
 
         ArrayList<String> toApplyList = new ArrayList<String>();
