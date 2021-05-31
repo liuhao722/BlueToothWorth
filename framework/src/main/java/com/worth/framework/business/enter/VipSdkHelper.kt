@@ -24,7 +24,6 @@ class VipSdkHelper private constructor() {
      */
     init {
         MeKVUtil.initMMKV()
-//        InFileStream.setContext(application)
         SpeakUtils.ins().init()
         WakeUpUtils.ins().init()
         RecordUtils.ins().init()
