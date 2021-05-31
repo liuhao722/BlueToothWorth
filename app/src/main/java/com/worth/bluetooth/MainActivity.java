@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat;
 
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
-import com.worth.framework.business.VipSdkHelper;
+import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ContactsKt;
 
 import java.util.ArrayList;

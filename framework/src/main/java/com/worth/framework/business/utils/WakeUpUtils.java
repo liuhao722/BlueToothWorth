@@ -2,10 +2,6 @@ package com.worth.framework.business.utils;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-
-import androidx.annotation.NonNull;
 
 import com.baidu.aip.asrwakeup3.core.wakeup.MyWakeup;
 import com.baidu.aip.asrwakeup3.core.wakeup.listener.IWakeupListener;
@@ -13,16 +9,10 @@ import com.baidu.aip.asrwakeup3.core.wakeup.listener.RecogWakeupListener;
 import com.baidu.speech.asr.SpeechConstant;
 import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
-import com.worth.framework.base.core.utils.L;
-import com.worth.framework.business.VipSdkHelper;
-import com.worth.framework.business.callbacks.SpeakCallBack;
+import com.worth.framework.business.enter.VipSdkHelper;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import kotlin.jvm.functions.Function0;
-
-import static com.baidu.aip.asrwakeup3.core.recog.IStatus.STATUS_WAKEUP_SUCCESS;
 
 /**
  * Author:  LiuHao

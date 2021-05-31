@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.network.RetrofitUtils;
-import com.worth.framework.business.VipSdkHelper;
+import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ContactsKt;
 
 import java.lang.ref.WeakReference;
@@ -51,12 +51,9 @@ public class GlobalHandler {
                     break;
 
                 case ContactsKt.PLAY_START:                                                         //  播放开始
-                    RecordUtils.ins().stopRecord();
-                    break;
-
                 case ContactsKt.PLAY_ERROR:                                                         //  播放过程中失败-停止录音再次开启录音
+                case ContactsKt.PLAY_PROCESS:                                                       //  播放过程中
                     RecordUtils.ins().stopRecord();
-                    RecordUtils.ins().startRecord();
                     break;
 
             }

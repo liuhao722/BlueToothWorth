@@ -4,6 +4,7 @@ import android.util.Log
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.L
 import com.worth.framework.base.network.apiServices.ApiServices
+import com.worth.framework.business.enter.VipSdkHelper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -23,7 +24,7 @@ import kotlin.collections.HashMap
  * Description: This is RetrofitUtils
  */
 class RetrofitUtils private constructor() {
-    private val baseUrl = MeKV.getHost()
+    private val baseUrl = VipSdkHelper.instance.mHost
     private val json = MediaType.parse("application/json; charset=utf-8")
 
     /**
@@ -39,7 +40,7 @@ class RetrofitUtils private constructor() {
             var map: HashMap<String, Any?> = HashMap<String, Any?>()
             map["logId"] = UUID.randomUUID()
             map["query"] = queryWord
-            map["userId"] = MeKV.getUserId()
+            map["userId"] = VipSdkHelper.instance.mUid
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)

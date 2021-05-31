@@ -1,18 +1,12 @@
 package com.worth.framework.base.core.utils
 
 import android.util.Log
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 
 
 object L {
     private val isDebug: Boolean = true
 //    private val isDebug: Boolean = loggerEnable == 1
     private val TAG = L.javaClass.name
-
-    init {
-        Logger.addLogAdapter(AndroidLogAdapter())
-    }
 
     @JvmOverloads
     @JvmStatic

@@ -18,7 +18,6 @@ import com.baidu.tts.sample.util.OfflineResource;
 import com.worth.framework.R;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
-import com.worth.framework.business.callbacks.SpeakCallBack;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,7 +41,6 @@ public class SpeakUtils {
     public boolean isOnlineSDK = TtsMode.ONLINE.equals(IOfflineResourceConst.DEFAULT_SDK_TTS_MODE);
     // 在线合成sdk下面的参数不生效
     public String offlineVoice = OfflineResource.VOICE_MALE;
-    private SpeakCallBack callBack;
     private Handler mHandler = GlobalHandler.ins().mHandler.get();
     /**********************************************************************************************/
     /**
@@ -134,7 +132,7 @@ public class SpeakUtils {
         // 设置在线发声音人： 0 普通女声（默认） 1 普通男声 3 情感男声<度逍遥> 4 情感儿童声<度丫丫>, 其它发音人见文档
         params.put(SpeechSynthesizer.PARAM_SPEAKER, "0");
         // 设置合成的音量，0-15 ，默认 5
-        params.put(SpeechSynthesizer.PARAM_VOLUME, "15");
+        params.put(SpeechSynthesizer.PARAM_VOLUME, "1");
         // 设置合成的语速，0-15 ，默认 5
         params.put(SpeechSynthesizer.PARAM_SPEED, "5");
         // 设置合成的语调，0-15 ，默认 5

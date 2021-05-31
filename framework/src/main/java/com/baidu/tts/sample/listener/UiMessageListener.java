@@ -26,11 +26,13 @@ public class UiMessageListener extends MessageListener {
     @Override
     public void onSynthesizeStart(String utteranceId) {
         super.onSynthesizeStart(utteranceId);
+        mainHandler.sendEmptyMessage(ContactsKt.PLAY_START);
     }
 
     @Override
     public void onError(String utteranceId, SpeechError speechError) {
         super.onError(utteranceId, speechError);
+        mainHandler.sendEmptyMessage(ContactsKt.PLAY_ERROR);
     }
 
     /**
@@ -62,6 +64,8 @@ public class UiMessageListener extends MessageListener {
     public void onSpeechProgressChanged(String utteranceId, int progress) {
         // sendMessage("onSpeechProgressChanged");
         mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_INPUT_TEXT_SELECTION, progress, 0));
+        mainHandler.sendEmptyMessage(ContactsKt.PLAY_PROCESS);
+
     }
 
     @Override
@@ -82,12 +86,12 @@ public class UiMessageListener extends MessageListener {
 
     protected void sendMessage(String message, boolean isError, int action) {
         super.sendMessage(message, isError);
-        if (mainHandler != null) {
-            Message msg = Message.obtain();
-            msg.what = action;
-            msg.obj = message + "\n";
-            mainHandler.sendMessage(msg);
-            L.i(TAG, message);
-        }
+//        if (mainHandler != null) {
+//            Message msg = Message.obtain();
+//            msg.what = action;
+//            msg.obj = message + "\n";
+//            mainHandler.sendMessage(msg);
+//            L.i(TAG, message);
+//        }
     }
 }
