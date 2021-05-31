@@ -30,7 +30,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 //            /**
 //             * 是否支持zipAlign压缩
@@ -47,6 +47,7 @@ android {
     packagingOptions {
         doNotStrip "*/*/libvad.dnn.so"
         doNotStrip "*/*/libbd_easr_s1_merge_normal_20151216.dat.so"
+        exclude 'META-INF/Lokhttp3/MediaType'
     }
     // sdk-百度 - end
     compileOptions {
@@ -66,12 +67,12 @@ android {
 dependencies {
 //    api fileTree(exclude: '*.bak', dir: 'libs')//在线语音
     implementation fileTree(dir: "libs", include: ["*.jar"])
-//    api project(path: 'core')   //  已经将百度的资源移至当前目录
-
+    api files('libs/bdasr_V3_20201116_93b546d.jar')
+    api files('libs/com.baidu.tts_2.6.2.2.20200629_44818d4.jar')
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["logger"]
-    implementation rootProject.ext.dependencies["MMKV"]
+    api rootProject.ext.dependencies["MMKV"]
     api rootProject.ext.dependencies["appdesign"]
 
     api rootProject.ext.kotlinConfig["kotlin_stdlib"]
@@ -87,10 +88,9 @@ dependencies {
     api rootProject.ext.viewConfig["constraintlayout"]
 
     api rootProject.ext.httpDependencies["retrofit"]
+    api rootProject.ext.httpDependencies["okhttp"]
     api rootProject.ext.httpDependencies["converter-gson"]
     api rootProject.ext.httpDependencies["adapter-rxjava2"]
-    api files('libs/bdasr_V3_20201116_93b546d.jar')
-    api files('libs/com.baidu.tts_2.6.2.2.20200629_44818d4.jar')
 //    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
 //    api rootProject.ext.jetpackConfig["lifecycleextensions"]
 //    api rootProject.ext.jetpackConfig["livedata"]

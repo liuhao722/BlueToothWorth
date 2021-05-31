@@ -22,14 +22,14 @@
 
 #-------------------------------------------基本不用动区域--------------------------------------------
 #---------------------------------基本指令区----------------------------------
--optimizationpasses 5  #代码混淆的压缩比例，值在0-7之间
+-optimizationpasses 5  #代码混淆的压缩比例，值在0-7之间 5
 -ignorewarnings
 -dontusemixedcaseclassnames #混淆后类名都为小写
 -dontskipnonpubliclibraryclasses #指定不去忽略非公共的库的类
 -dontskipnonpubliclibraryclassmembers #指定不去忽略非公共的库的类的成员
 -dontpreverify #不做预校验的操作
 -verbose #生成原类名和混淆后的类名的映射文件
--printmapping proguardMapping.txt #生成原类名和混淆后的类名的映射文件
+#-printmapping proguardMapping.txt #生成原类名和混淆后的类名的映射文件
 -optimizations !code/simplification/cast,!field/*,!class/merging/* #指定混淆是采用的算法
 -keepattributes *Annotation*,InnerClasses #不混淆Annotation
 -keepattributes Signature #不混淆泛型
@@ -110,7 +110,7 @@
 -keep class com.baidu.speechsynthesizer.**{*;}
 -keep class com.baidu.aip.**{*;}
 
--keep class com.worth.framework.**{*;}
+#-keep class com.worth.framework.**{*;}
 -keep class com.worth.framework.base.network.bean.**{*;}
 
 -keep class  com.worth.framework.base.core.utils.**{*;}

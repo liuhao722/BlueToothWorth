@@ -84,14 +84,14 @@ public class RecordUtils {
      * SDK会取消本次识别，回到原始状态。
      * 基于DEMO集成4.2 发送取消事件 取消本次识别
      */
-    protected void cancel() {
+    public void cancel() {
         myRecognizer.cancel();
     }
 
     /**
      * 销毁时需要释放识别资源。
      */
-    protected void release() {
+    public void release() {
         // 如果之前调用过myRecognizer.loadOfflineEngine()， release()里会自动调用释放离线资源
         // 基于DEMO5.1 卸载离线资源(离线时使用) release()方法中封装了卸载离线资源的过程
         // 基于DEMO的5.2 退出事件管理器

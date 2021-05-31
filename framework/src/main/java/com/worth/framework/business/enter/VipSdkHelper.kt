@@ -1,6 +1,8 @@
 package com.worth.framework.business.enter
 
 import com.worth.framework.R
+import com.worth.framework.base.core.storage.MeKV
+import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.LDBus
 import com.worth.framework.base.core.utils.application
 import com.worth.framework.business.ext.EVENT_WITH_INPUT_RESULT
@@ -21,7 +23,7 @@ class VipSdkHelper private constructor() {
      * 初始化操作
      */
     init {
-//        MeKVUtil.initMMKV()
+        MeKVUtil.initMMKV()
 //        InFileStream.setContext(application)
         SpeakUtils.ins().init()
         WakeUpUtils.ins().init()
@@ -32,8 +34,8 @@ class VipSdkHelper private constructor() {
     fun initSdk(host: String?, uid: String?) {
         mHost = host
         mUid = uid
-//        mHost?.run { MeKV.setHost(this) }
-//        mUid?.run { MeKV.setUserId(this) }
+        mHost?.run { MeKV.setHost(this) }
+        mUid?.run { MeKV.setUserId(this) }
 
     }
 
@@ -49,6 +51,8 @@ class VipSdkHelper private constructor() {
      */
     fun stopRecord() {
         RecordUtils.ins().stopRecord()
+        RecordUtils.ins().cancel()
+
     }
 
     fun netWorkResult(result: String) {
@@ -59,7 +63,7 @@ class VipSdkHelper private constructor() {
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
      */
     fun wakeUpWithInputText(text: String) {
-        stopRecord()                //  先停止录音内容
+        SpeakUtils.ins().stop()
         if (text.isNullOrEmpty()) {
             SpeakUtils.ins()
                 .speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
@@ -72,6 +76,7 @@ class VipSdkHelper private constructor() {
      * 唤醒语音助手-用户点击了界面
      */
     fun wakeUpWithClickBtn() {
+        SpeakUtils.ins().stop()
         WakeUpUtils.ins().wakeUp()
     }
 

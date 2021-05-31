@@ -24,7 +24,7 @@ import kotlin.collections.HashMap
  * Description: This is RetrofitUtils
  */
 class RetrofitUtils private constructor() {
-    private val baseUrl = VipSdkHelper.instance.mHost
+    private val baseUrl = MeKV.getHost()
     private val json = MediaType.parse("application/json; charset=utf-8")
 
     /**
@@ -40,7 +40,7 @@ class RetrofitUtils private constructor() {
             var map: HashMap<String, Any?> = HashMap<String, Any?>()
             map["logId"] = UUID.randomUUID()
             map["query"] = queryWord
-            map["userId"] = VipSdkHelper.instance.mUid
+            map["userId"] = MeKV.getUserId()
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
