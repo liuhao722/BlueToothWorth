@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE, // demo使用
 
                 Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.SYSTEM_ALERT_WINDOW,
                 /* 下面是蓝牙用的，可以不申请
                 Manifest.permission.BROADCAST_STICKY,
                 Manifest.permission.BLUETOOTH,

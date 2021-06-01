@@ -23,6 +23,9 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 2、在线语音识别sdk部分  end-->
 
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application>
         <meta-data
             android:name="com.baidu.speech.APP_ID"
@@ -35,5 +38,11 @@
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
             android:value="GgNATjBNatsb3EfdILgkWSDVhh1W1usU" />
+
+        <activity
+            android:name=".base.view.activity.DialogActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/ProjectDialogTheme" />
     </application>
 </manifest>
