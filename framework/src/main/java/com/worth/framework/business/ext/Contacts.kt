@@ -15,4 +15,4 @@ const val SPEAK_FINISH = 0x1000_100                                         //  
 
 const val NETWORK_RESULT = 0x1000_200                                       //  根据用户请求的数据返回结果了
 
-const val EVENT_WITH_INPUT_RESULT = "event_with_input_result" //  网络请求返回后发送LDBus进行事件的回调
+const val EVENT_WITH_INPUT_RESULT = "event_with_input_result"               //  网络请求返回后发送LDBus进行事件的回调
