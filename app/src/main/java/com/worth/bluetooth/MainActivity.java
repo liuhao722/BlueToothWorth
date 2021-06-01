@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initObserver() {
-        LDBus.INSTANCE.observer(ContactsKt.EVENT_WITH_INPUT_RESULT, objResult -> {
+        LDBus.INSTANCE.observer(ContactsKt.EVENT_WITH_USER_INPUT_RESULT, objResult -> {
             if (objResult != null && !objResult.toString().isEmpty()) {
                 L.e(TAG, "sdk返回网络查询结果：" + objResult.toString());
                 {

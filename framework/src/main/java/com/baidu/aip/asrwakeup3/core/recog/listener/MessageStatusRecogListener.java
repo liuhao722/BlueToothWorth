@@ -2,12 +2,10 @@ package com.baidu.aip.asrwakeup3.core.recog.listener;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.baidu.speech.asr.SpeechConstant;
 
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
-import com.worth.framework.base.core.base.constants.ConstantsKt;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
@@ -78,7 +76,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
         super.onAsrFinalResult(results, recogResult);
         if (results != null && results.length > 0 && !results[0].isEmpty()) {
             Message msg = new Message();
-            msg.what = ContactsKt.SPEAK_FINISH;
+            msg.what = ContactsKt.USER_INPUT_SPEAK_ASR_FINISH;
             msg.obj = results[0];
             handler.sendMessage(msg);
         }

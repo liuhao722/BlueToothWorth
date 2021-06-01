@@ -1,10 +1,8 @@
 package com.baidu.tts.sample.listener;
 
 import android.os.Handler;
-import android.os.Message;
 
 import com.baidu.tts.client.SpeechError;
-import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
 /**
@@ -26,13 +24,13 @@ public class UiMessageListener extends MessageListener {
     @Override
     public void onSynthesizeStart(String utteranceId) {
         super.onSynthesizeStart(utteranceId);
-        mainHandler.sendEmptyMessage(ContactsKt.PLAY_START);
+        mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_START);
     }
 
     @Override
     public void onError(String utteranceId, SpeechError speechError) {
         super.onError(utteranceId, speechError);
-        mainHandler.sendEmptyMessage(ContactsKt.PLAY_ERROR);
+        mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_ERROR);
     }
 
     /**
@@ -64,14 +62,14 @@ public class UiMessageListener extends MessageListener {
     public void onSpeechProgressChanged(String utteranceId, int progress) {
         // sendMessage("onSpeechProgressChanged");
         mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_INPUT_TEXT_SELECTION, progress, 0));
-        mainHandler.sendEmptyMessage(ContactsKt.PLAY_PROCESS);
+        mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_PROCESS);
 
     }
 
     @Override
     public void onSpeechFinish(String utteranceId) {
         super.onSpeechFinish(utteranceId);
-        mainHandler.sendEmptyMessage(ContactsKt.PLAY_FINISH);
+        mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_FINISH);
     }
 
     protected void sendMessage(String message) {

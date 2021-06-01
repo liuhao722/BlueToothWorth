@@ -13,7 +13,7 @@ import com.worth.framework.business.ext.ContactsKt;
 
 import java.lang.ref.WeakReference;
 
-import static com.baidu.aip.asrwakeup3.core.recog.IStatus.STATUS_WAKEUP_SUCCESS;
+import static com.baidu.aip.asrwakeup3.core.recog.IStatus.WAKEUP_XIAO_BANG_SDK_SUCCESS;
 
 /**
  * Author:  LiuHao
@@ -28,14 +28,16 @@ public class GlobalHandler {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case STATUS_WAKEUP_SUCCESS:                                                         //  唤醒成功
+                case WAKEUP_XIAO_BANG_SDK_SUCCESS:                                                  //  唤醒sdk小帮成功
                     WakeUpUtils.ins().wakeUp();
                     break;
 
-                case ContactsKt.SPEAK_FINISH:                                                       //  用户输入语言结束，并且有一定的有效结果检测出来
+                case ContactsKt.USER_INPUT_SPEAK_ASR_FINISH:                                              //  用户输入语言结束，并且有一定的有效结果检测出来
                     if (msg.obj != null && !msg.obj.toString().trim().isEmpty()) {
                         L.e(TAG, "语音识别结果：" + msg.obj);
+
                         requestServer(msg.obj.toString());
+
                     }
                     break;
 
@@ -45,13 +47,13 @@ public class GlobalHandler {
                     VipSdkHelper.Companion.getInstance().netWorkResult(result);
                     break;
 
-                case ContactsKt.PLAY_FINISH:                                                        //  播放结束后
+                case ContactsKt.SPEAK_UTILS_PLAY_FINISH:                                                        //  播放结束后
                     RecordUtils.ins().startRecord();
                     break;
 
-                case ContactsKt.PLAY_START:                                                         //  播放开始
-                case ContactsKt.PLAY_ERROR:                                                         //  播放过程中失败-停止录音再次开启录音
-                case ContactsKt.PLAY_PROCESS:                                                       //  播放过程中
+                case ContactsKt.SPEAK_UTILS_PLAY_START:                                                         //  播放开始
+                case ContactsKt.SPEAK_UTILS_PLAY_ERROR:                                                         //  播放过程中失败-停止录音再次开启录音
+                case ContactsKt.SPEAK_UTILS_PLAY_PROCESS:                                                       //  播放过程中
                     RecordUtils.ins().stopRecord();
                     break;
 

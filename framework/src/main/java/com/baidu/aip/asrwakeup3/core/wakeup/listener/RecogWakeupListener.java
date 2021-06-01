@@ -22,6 +22,6 @@ public class RecogWakeupListener extends SimpleWakeupListener implements IStatus
     @Override
     public void onSuccess(String word, WakeUpResult result) {
         super.onSuccess(word, result);
-        handler.sendMessage(handler.obtainMessage(STATUS_WAKEUP_SUCCESS));
+        handler.sendMessage(handler.obtainMessage(WAKEUP_XIAO_BANG_SDK_SUCCESS));
     }
 }

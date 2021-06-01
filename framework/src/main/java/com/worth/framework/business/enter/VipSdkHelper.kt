@@ -5,7 +5,7 @@ import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.LDBus
 import com.worth.framework.base.core.utils.application
-import com.worth.framework.business.ext.EVENT_WITH_INPUT_RESULT
+import com.worth.framework.business.ext.EVENT_WITH_USER_INPUT_RESULT
 import com.worth.framework.business.utils.GlobalHandler
 import com.worth.framework.business.utils.RecordUtils
 import com.worth.framework.business.utils.SpeakUtils
@@ -40,7 +40,7 @@ class VipSdkHelper private constructor() {
      * 查询的网络数据返回后
      */
     fun netWorkResult(result: String) {
-        LDBus.sendSpecial(EVENT_WITH_INPUT_RESULT, result)
+        LDBus.sendSpecial(EVENT_WITH_USER_INPUT_RESULT, result)
     }
 
     /**

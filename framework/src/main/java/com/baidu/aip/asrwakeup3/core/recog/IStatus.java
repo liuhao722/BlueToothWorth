@@ -19,6 +19,6 @@ public interface IStatus {
     int STATUS_WAITING_READY = 8001;
     int WHAT_MESSAGE_STATUS = 9001;
 
-    int STATUS_WAKEUP_SUCCESS = 7001;
+    int WAKEUP_XIAO_BANG_SDK_SUCCESS = 7001;
     int STATUS_WAKEUP_EXIT = 7003;
 }
