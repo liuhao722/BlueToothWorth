@@ -36,8 +36,8 @@ public class RecordUtils {
 
     private Context context;
 
-    public void init() {
-        context = AppManagerKt.getApplication();
+    public void init(Context applicationContext) {
+        context = applicationContext;
         apiParams.initSamplePath(context);
 
         // 基于DEMO集成第1.1, 1.2, 1.3 步骤 初始化EventManager类并注册自定义输出事件

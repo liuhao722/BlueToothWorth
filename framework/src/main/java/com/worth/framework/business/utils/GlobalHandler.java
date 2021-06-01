@@ -40,7 +40,6 @@ public class GlobalHandler {
                     break;
 
                 case ContactsKt.NETWORK_RESULT:                                                     //  网络返回结果
-                    RecordUtils.ins().startRecord();
                     String result = msg.obj == null ? null : msg.obj.toString();
                     SpeakUtils.ins().speak(result);
                     VipSdkHelper.Companion.getInstance().netWorkResult(result);

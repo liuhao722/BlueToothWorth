@@ -39,14 +39,14 @@ public class WakeUpUtils {
     /**
      * 开启监听
      */
-    private void startListener() {
+    public void startListener() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SpeechConstant.WP_WORDS_FILE, "assets:///WakeUp.bin");
         myWakeup.start(params);
     }
 
     // 基于DEMO唤醒词集成第4.1 发送停止事件
-    public void stop() {
+    public void stopListener() {
         myWakeup.stop();
     }
 
@@ -76,8 +76,8 @@ public class WakeUpUtils {
 
     private Context context;
 
-    public void init() {
-        context = AppManagerKt.getApplication();
+    public void init(Context applicationContext) {
+        context = applicationContext;
         if (myWakeup == null) {
             IWakeupListener listener = new RecogWakeupListener(mHandler);
             myWakeup = new MyWakeup(context, listener);

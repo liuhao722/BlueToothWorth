@@ -17,8 +17,8 @@ object MeKVUtil {
     /**
      * 初始化mmkv
      */
-    fun initMMKV() {
-        val rootDir: String = MMKV.initialize(application?.applicationContext)
+    fun initMMKV(context: Context) {
+        val rootDir: String = MMKV.initialize(context)
         println("mmkv root: $rootDir")
         isInit = true
     }

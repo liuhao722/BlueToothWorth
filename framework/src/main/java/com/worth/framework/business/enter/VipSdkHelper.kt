@@ -18,30 +18,37 @@ import com.worth.framework.business.utils.WakeUpUtils
  * Description: This is VipSdkHelper
  */
 class VipSdkHelper private constructor() {
-
     /**
      * 初始化操作
      */
     init {
-        MeKVUtil.initMMKV()
-        SpeakUtils.ins().init()
-        WakeUpUtils.ins().init()
-        RecordUtils.ins().init()
+        application?.let {
+            MeKVUtil.initMMKV(it)
+            SpeakUtils.ins().init(it)
+            WakeUpUtils.ins().init(it)
+            RecordUtils.ins().init(it)
+        }
     }
 
     @JvmOverloads
     fun initSdk(host: String?, uid: String?) {
-        mHost = host
-        mUid = uid
-        mHost?.run { MeKV.setHost(this) }
-        mUid?.run { MeKV.setUserId(this) }
+        host?.run { MeKV.setHost(this) }
+        uid?.run { MeKV.setUserId(this) }
+    }
 
+    /**
+     * 查询的网络数据返回后
+     */
+    fun netWorkResult(result: String) {
+        LDBus.sendSpecial(EVENT_WITH_INPUT_RESULT, result)
     }
 
     /**
      * 启动实时 or 短音频模式--录音内容进行网络请求
      */
     fun startRecord() {
+        SpeakUtils.ins().stopSpeak()
+        WakeUpUtils.ins().stopListener()
         RecordUtils.ins().startRecord()
     }
 
@@ -49,20 +56,16 @@ class VipSdkHelper private constructor() {
      * 暂停实时 or 短音频模式--手动释放一直处于录音状态
      */
     fun stopRecord() {
+        WakeUpUtils.ins().startListener()
         RecordUtils.ins().stopRecord()
         RecordUtils.ins().cancel()
-
-    }
-
-    fun netWorkResult(result: String) {
-        LDBus.sendSpecial(EVENT_WITH_INPUT_RESULT, result)
     }
 
     /**
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
      */
     fun wakeUpWithInputText(text: String) {
-        SpeakUtils.ins().stop()
+        SpeakUtils.ins().stopSpeak()
         if (text.isNullOrEmpty()) {
             SpeakUtils.ins()
                 .speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
@@ -75,7 +78,7 @@ class VipSdkHelper private constructor() {
      * 唤醒语音助手-用户点击了界面
      */
     fun wakeUpWithClickBtn() {
-        SpeakUtils.ins().stop()
+        SpeakUtils.ins().stopSpeak()
         WakeUpUtils.ins().wakeUp()
     }
 
@@ -97,7 +100,4 @@ class VipSdkHelper private constructor() {
     private object SingletonHolder {
         val holder = VipSdkHelper()
     }
-
-    var mUid: String? = null
-    var mHost: String? = null
 }

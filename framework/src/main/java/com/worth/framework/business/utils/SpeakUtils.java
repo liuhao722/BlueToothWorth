@@ -73,7 +73,7 @@ public class SpeakUtils {
     /**
      * 停止合成引擎。即停止播放，合成，清空内部合成队列。
      */
-    public void stop() {
+    public void stopSpeak() {
         synthesizer.stop();
     }
 
@@ -88,8 +88,8 @@ public class SpeakUtils {
     /**********************************************************************************************/
     private Context context;
 
-    public void init() {
-        context = AppManagerKt.getApplication();
+    public void init(Context applicationContext) {
+        context = applicationContext;
         Auth auth;
         try {
             auth = Auth.getInstance(context);
