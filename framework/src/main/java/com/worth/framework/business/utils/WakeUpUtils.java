@@ -32,9 +32,11 @@ public class WakeUpUtils {
      * 唤醒
      */
     public void wakeUp() {
-        WakeUpUtils.ins().startListener();
         RecordUtils.ins().stopRecord();
         RecordUtils.ins().cancel();
+        stopListener();
+        SpeakUtils.ins().stopSpeak();
+
         SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref));
     }
 

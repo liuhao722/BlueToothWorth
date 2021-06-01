@@ -66,9 +66,11 @@ class VipSdkHelper private constructor() {
      */
     fun wakeUpWithInputText(text: String) {
         SpeakUtils.ins().stopSpeak()
+        WakeUpUtils.ins().startListener()
+        RecordUtils.ins().stopRecord()
+        RecordUtils.ins().cancel()
         if (text.isNullOrEmpty()) {
-            SpeakUtils.ins()
-                .speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
+            SpeakUtils.ins().speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
         } else {
             toNetWork(text)
         }
@@ -78,7 +80,6 @@ class VipSdkHelper private constructor() {
      * 唤醒语音助手-用户点击了界面
      */
     fun wakeUpWithClickBtn() {
-        SpeakUtils.ins().stopSpeak()
         WakeUpUtils.ins().wakeUp()
     }
 
@@ -89,6 +90,16 @@ class VipSdkHelper private constructor() {
         GlobalHandler.ins().requestServer(text)
     }
 
+    /**
+     * 消亡方法进行数据的清理和对象的释放
+     */
+    fun destroy() {
+        RecordUtils.ins().release()
+        SpeakUtils.ins().release()
+        WakeUpUtils.ins().release()
+        GlobalHandler.ins().mHandler.get()?.removeCallbacksAndMessages(null)
+        GlobalHandler.ins().mHandler.clear()
+    }
 
     /**
      * 对象单例

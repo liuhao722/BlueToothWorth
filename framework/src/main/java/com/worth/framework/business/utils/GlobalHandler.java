@@ -32,7 +32,7 @@ public class GlobalHandler {
                     WakeUpUtils.ins().wakeUp();
                     break;
 
-                case ContactsKt.USER_INPUT_SPEAK_ASR_FINISH:                                              //  用户输入语言结束，并且有一定的有效结果检测出来
+                case ContactsKt.USER_INPUT_SPEAK_ASR_FINISH:                                        //  用户输入语言结束，并且有一定的有效结果检测出来
                     if (msg.obj != null && !msg.obj.toString().trim().isEmpty()) {
                         L.e(TAG, "语音识别结果：" + msg.obj);
 
@@ -47,13 +47,13 @@ public class GlobalHandler {
                     VipSdkHelper.Companion.getInstance().netWorkResult(result);
                     break;
 
-                case ContactsKt.SPEAK_UTILS_PLAY_FINISH:                                                        //  播放结束后
+                case ContactsKt.SPEAK_UTILS_PLAY_FINISH:                                            //  播放结束后
                     RecordUtils.ins().startRecord();
                     break;
 
-                case ContactsKt.SPEAK_UTILS_PLAY_START:                                                         //  播放开始
-                case ContactsKt.SPEAK_UTILS_PLAY_ERROR:                                                         //  播放过程中失败-停止录音再次开启录音
-                case ContactsKt.SPEAK_UTILS_PLAY_PROCESS:                                                       //  播放过程中
+                case ContactsKt.SPEAK_UTILS_PLAY_START:                                             //  播放开始
+                case ContactsKt.SPEAK_UTILS_PLAY_ERROR:                                             //  播放过程中失败-停止录音再次开启录音
+                case ContactsKt.SPEAK_UTILS_PLAY_PROCESS:                                           //  播放过程中
                     RecordUtils.ins().stopRecord();
                     break;
 
