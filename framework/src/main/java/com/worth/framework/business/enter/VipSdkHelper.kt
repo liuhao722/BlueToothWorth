@@ -1,6 +1,5 @@
 package com.worth.framework.business.enter
 
-import com.worth.framework.R
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.LDBus
@@ -31,14 +30,30 @@ class VipSdkHelper private constructor() {
     }
 
     @JvmOverloads
-    fun initSdk(host: String?, uid: String?, isOpenSdk: Boolean) {
-        if(!isOpenSdk) {
+    fun initSdk(host: String?, uid: String?) {
+        host?.run { MeKV.setHost(this) }
+        uid?.run { MeKV.setUserId(this) }
+    }
+
+    /**
+     * 开启 or 关闭语音服务 对应关闭所有的服务
+     */
+    fun switchSdkWakeUp(switchOn: Boolean) {
+        MeKV.setWakeUpSwitch(switchOn)
+        if (!switchOn) {
             SpeakUtils.ins().stopSpeak()
             WakeUpUtils.ins().stopListener()
             RecordUtils.ins().stopRecord()
         }
-        host?.run { MeKV.setHost(this) }
-        uid?.run { MeKV.setUserId(this) }
+    }
+
+    /**
+     * 设置快捷入口的list数据
+     */
+    fun setQuickEnterList(list: MutableList<String>?) {
+        list?.run { MeKV.setQuickEnterList(this) } ?: run {
+            MeKV.setQuickEnterList(mutableListOf())
+        }
     }
 
     /**

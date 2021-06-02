@@ -6,6 +6,7 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
+import com.worth.framework.base.core.storage.MeKV;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.network.RetrofitUtils;
 import com.worth.framework.business.enter.VipSdkHelper;
@@ -28,6 +29,7 @@ public class GlobalHandler {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            if (!MeKV.INSTANCE.wakeUpSwitchIsOpen()) return;
             switch (msg.what) {
                 case WAKEUP_XIAO_BANG_SDK_SUCCESS:                                                  //  唤醒sdk小帮成功
                     WakeUpUtils.ins().wakeUp();

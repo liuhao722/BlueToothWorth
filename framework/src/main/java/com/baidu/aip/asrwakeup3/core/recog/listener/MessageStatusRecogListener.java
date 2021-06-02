@@ -6,6 +6,7 @@ import android.os.Message;
 import com.baidu.speech.asr.SpeechConstant;
 
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
+import com.worth.framework.base.core.storage.MeKV;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
@@ -74,6 +75,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
     @Override
     public void onAsrFinalResult(String[] results, RecogResult recogResult) {
         super.onAsrFinalResult(results, recogResult);
+        if (!MeKV.INSTANCE.wakeUpSwitchIsOpen()) return;
         if (results != null && results.length > 0 && !results[0].isEmpty()) {
             Message msg = new Message();
             msg.what = ContactsKt.USER_INPUT_SPEAK_ASR_FINISH;

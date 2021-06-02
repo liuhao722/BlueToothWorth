@@ -1,8 +1,11 @@
 package com.baidu.tts.sample.listener;
 
 import android.os.Handler;
+import android.os.Message;
 
 import com.baidu.tts.client.SpeechError;
+import com.worth.framework.base.core.storage.MeKV;
+import com.worth.framework.base.core.utils.L;
 import com.worth.framework.business.ext.ContactsKt;
 
 /**
@@ -46,7 +49,6 @@ public class UiMessageListener extends MessageListener {
      */
     @Override
     public void onSynthesizeDataArrived(String utteranceId, byte[] data, int progress) {
-        // sendMessage("onSynthesizeDataArrived");
         super.onSynthesizeDataArrived(utteranceId, data, progress);
         mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_SYNTHES_TEXT_SELECTION, progress, 0));
     }
@@ -60,7 +62,6 @@ public class UiMessageListener extends MessageListener {
      */
     @Override
     public void onSpeechProgressChanged(String utteranceId, int progress) {
-        // sendMessage("onSpeechProgressChanged");
         mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_INPUT_TEXT_SELECTION, progress, 0));
         mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_PROCESS);
 
@@ -84,12 +85,12 @@ public class UiMessageListener extends MessageListener {
 
     protected void sendMessage(String message, boolean isError, int action) {
         super.sendMessage(message, isError);
-//        if (mainHandler != null) {
-//            Message msg = Message.obtain();
-//            msg.what = action;
-//            msg.obj = message + "\n";
-//            mainHandler.sendMessage(msg);
-//            L.i(TAG, message);
-//        }
+        if (mainHandler != null) {
+            Message msg = Message.obtain();
+            msg.what = action;
+            msg.obj = message + "\n";
+            mainHandler.sendMessage(msg);
+            L.i(TAG, message);
+        }
     }
 }

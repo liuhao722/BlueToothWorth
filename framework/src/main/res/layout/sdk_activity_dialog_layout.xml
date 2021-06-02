@@ -12,6 +12,31 @@
             android:layout_centerInParent="true"
             android:text="123456789"
             android:textSize="22dp" />
+
+        <RelativeLayout
+            android:id="@+id/sdk_rl_dialog_root"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/sdk_shape_bg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="26dp"
+                android:background="@drawable/sdk_shape_bg_line_bg" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/sdk_shape_bg_line" />
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </layout>

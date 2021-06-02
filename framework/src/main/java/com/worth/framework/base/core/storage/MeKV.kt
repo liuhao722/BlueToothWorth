@@ -3,31 +3,62 @@ package com.worth.framework.base.core.storage
 /**
  * 封装简化获取存储的数据
  */
-const val user_id = "me_kv_user_id"
-const val app_host = "me_kv_app_host"
+const val USER_ID = "me_kv_user_id"
+const val APP_HOST = "me_kv_app_host"
+const val WAKE_UP_SWITCH = "app_set_wake_up_switch"
+const val QUICK_ENTER_LIST = "app_set_quick_enter_list"
 
 /**
  * 存储类
  */
 object MeKV {
     /**
-     *
+     *设置用户id
      */
-    fun setUserId(padType: String) = MeKVUtil.set(user_id, padType)
+    fun setUserId(padType: String) = MeKVUtil.set(USER_ID, padType)
 
     /**
-     *
+     *获取用户id
      */
-    fun getUserId(): String = MeKVUtil.get(user_id, "1001")
+    fun getUserId(): String = MeKVUtil.get(USER_ID, "1001")
+
+
+    /**********************************************************************************************/
+    /**
+     * 获取当前的host
+     */
+    fun getHost() = MeKVUtil.get(APP_HOST, "http://192.168.0.103:8080")
 
     /**
-     * 获取当前的imei
+     * 设置当前的host
      */
-    fun getHost() = MeKVUtil.get(app_host, "http://192.168.0.103:8080")
+    fun setHost(host: String) = MeKVUtil.set(APP_HOST, host)
+
+
+    /**********************************************************************************************/
+    /**
+     * 用户设置唤醒的开关状态
+     */
+    fun setWakeUpSwitch(switch: Boolean) = MeKVUtil.set(WAKE_UP_SWITCH, switch)
 
     /**
-     * 设置当前的imei
+     * 获取用户设置的唤醒开关状态
      */
-    fun setHost(imei: String) = MeKVUtil.set(app_host, imei)
+    fun wakeUpSwitchIsOpen() = MeKVUtil.get(WAKE_UP_SWITCH, false)
+
+
+    /**********************************************************************************************/
+    /**
+     * 用户设置快接入口
+     */
+    fun setQuickEnterList(list: MutableList<String>) = MeKVUtil.set(QUICK_ENTER_LIST, list)
+
+    /**
+     * 获取用户设置的快捷入口
+     */
+    fun getQuickEnterList() = MeKVUtil.get(QUICK_ENTER_LIST, mutableListOf<String>())
+
+    /**********************************************************************************************/
+
 
 }
