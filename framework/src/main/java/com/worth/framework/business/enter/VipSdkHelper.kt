@@ -31,7 +31,12 @@ class VipSdkHelper private constructor() {
     }
 
     @JvmOverloads
-    fun initSdk(host: String?, uid: String?) {
+    fun initSdk(host: String?, uid: String?, isOpenSdk: Boolean) {
+        if(!isOpenSdk) {
+            SpeakUtils.ins().stopSpeak()
+            WakeUpUtils.ins().stopListener()
+            RecordUtils.ins().stopRecord()
+        }
         host?.run { MeKV.setHost(this) }
         uid?.run { MeKV.setUserId(this) }
     }
@@ -69,11 +74,7 @@ class VipSdkHelper private constructor() {
         WakeUpUtils.ins().startListener()
         RecordUtils.ins().stopRecord()
         RecordUtils.ins().cancel()
-        if (text.isNullOrEmpty()) {
-            SpeakUtils.ins().speak(application?.getString(R.string.str_sdk_def_check_input_is_empty))
-        } else {
-            toNetWork(text)
-        }
+        toNetWork(text)
     }
 
     /**

@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private void initSdk() {
         String host = "http://192.168.0.103:8080";
         String uid = "1001";
-        VipSdkHelper.Companion.getInstance().initSdk(host, uid);
+        VipSdkHelper.Companion.getInstance().initSdk(host, uid,true);
     }
 
     private void initObserver() {

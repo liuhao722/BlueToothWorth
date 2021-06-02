@@ -14,6 +14,7 @@ import com.worth.framework.business.ext.ContactsKt;
 import java.lang.ref.WeakReference;
 
 import static com.baidu.aip.asrwakeup3.core.recog.IStatus.WAKEUP_XIAO_BANG_SDK_SUCCESS;
+import static com.worth.framework.business.global.GlobalVarKt.speakFinishWhenWakeUpCall;
 
 /**
  * Author:  LiuHao
@@ -43,12 +44,21 @@ public class GlobalHandler {
 
                 case ContactsKt.NETWORK_RESULT:                                                     //  网络返回结果
                     String result = msg.obj == null ? null : msg.obj.toString();
-                    SpeakUtils.ins().speak(result);
+                    SpeakUtils.ins().speak(result, false);
+                    WakeUpUtils.ins().startListener();
                     VipSdkHelper.Companion.getInstance().netWorkResult(result);
                     break;
 
                 case ContactsKt.SPEAK_UTILS_PLAY_FINISH:                                            //  播放结束后
-                    RecordUtils.ins().startRecord();
+                    if (speakFinishWhenWakeUpCall) {                                                //  是被wakeUp唤醒
+                        WakeUpUtils.ins().stopListener();
+                        SpeakUtils.ins().stopSpeak();
+                        RecordUtils.ins().startRecord();
+                    } else {                                                                        //  网络返回的发声
+                        SpeakUtils.ins().stopSpeak();
+                        RecordUtils.ins().stopRecord();
+                        WakeUpUtils.ins().startListener();
+                    }
                     break;
 
                 case ContactsKt.SPEAK_UTILS_PLAY_START:                                             //  播放开始

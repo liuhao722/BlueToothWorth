@@ -16,8 +16,8 @@ import com.baidu.tts.sample.util.FileUtil;
 import com.baidu.tts.sample.util.IOfflineResourceConst;
 import com.baidu.tts.sample.util.OfflineResource;
 import com.worth.framework.R;
-import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.L;
+import com.worth.framework.business.global.GlobalVarKt;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -48,7 +48,8 @@ public class SpeakUtils {
      * 获取音频流的方式见SaveFileActivity及FileSaveListener
      * 需要合成的文本text的长度不能超过1024个GBK字节。
      */
-    public void speak(String text) {
+    public void speak(String text, boolean isWakeUp) {
+        GlobalVarKt.speakFinishWhenWakeUpCall = isWakeUp;
         // 需要合成的文本text的长度不能超过1024个GBK字节。
         if (TextUtils.isEmpty(text)) {
             text = context.getString(R.string.str_sdk_def_ref);
