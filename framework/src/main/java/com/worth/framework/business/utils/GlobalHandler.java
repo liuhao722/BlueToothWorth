@@ -14,7 +14,8 @@ import com.worth.framework.business.ext.ContactsKt;
 
 import java.lang.ref.WeakReference;
 
-import static com.baidu.aip.asrwakeup3.core.recog.IStatus.WAKEUP_XIAO_BANG_SDK_SUCCESS;
+import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_EROOR;
+import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_SUCCESS;
 import static com.worth.framework.business.global.GlobalVarKt.speakFinishWhenWakeUpCall;
 
 /**
@@ -29,10 +30,14 @@ public class GlobalHandler {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            if (!MeKV.INSTANCE.wakeUpSwitchIsOpen()) return;
             switch (msg.what) {
                 case WAKEUP_XIAO_BANG_SDK_SUCCESS:                                                  //  唤醒sdk小帮成功
-                    WakeUpUtils.ins().wakeUp();
+                    if (MeKV.INSTANCE.wakeUpSwitchIsOpen()){
+                        WakeUpUtils.ins().wakeUp();
+                    }
+                    break;
+                case WAKEUP_XIAO_BANG_SDK_EROOR:                                                    //  唤醒sdk小帮失败
+
                     break;
 
                 case ContactsKt.USER_INPUT_SPEAK_ASR_FINISH:                                        //  用户输入语言结束，并且有一定的有效结果检测出来

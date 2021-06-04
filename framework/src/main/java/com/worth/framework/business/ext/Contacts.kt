@@ -15,4 +15,8 @@ const val USER_INPUT_SPEAK_ASR_FINISH = 0x1000_100                              
 
 const val NETWORK_RESULT = 0x1000_200                                                               //  根据用户请求的数据返回结果了
 
+const val WAKEUP_XIAO_BANG_SDK_SUCCESS = 0x1000_300                                                 //  唤醒成功
+
+const val WAKEUP_XIAO_BANG_SDK_EROOR = 0x1000_301                                                   //  唤醒失败
+
 const val EVENT_WITH_USER_INPUT_RESULT = "event_with_input_result"                                  //  网络请求返回后发送LDBus进行事件的回调
