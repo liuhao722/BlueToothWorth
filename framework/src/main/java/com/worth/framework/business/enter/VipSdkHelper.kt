@@ -32,7 +32,12 @@ class VipSdkHelper private constructor() {
     }
 
     @JvmOverloads
-    fun initSdk(host: String?, uid: String?): VipSdkHelper {
+    fun initSdk(
+        host: String?,
+        uid: String?,
+        httpHeaders: Map<String, Any>?,
+        httpBody: Map<String, Any>?
+    ): VipSdkHelper {
         host?.run { MeKV.setHost(this) }
         uid?.run { MeKV.setUserId(this) }
         return this
