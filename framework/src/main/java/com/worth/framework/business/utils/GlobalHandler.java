@@ -8,13 +8,17 @@ import androidx.annotation.NonNull;
 
 import com.worth.framework.base.core.storage.MeKV;
 import com.worth.framework.base.core.utils.L;
+import com.worth.framework.base.core.utils.LDBus;
+import com.worth.framework.base.core.utils.NetworkUrilsKt;
 import com.worth.framework.base.network.RetrofitUtils;
 import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ContactsKt;
 
 import java.lang.ref.WeakReference;
 
-import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_EROOR;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
+import static com.worth.framework.business.ext.ContactsKt.ERROR_CALL_BACK;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_WAKE_UP_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_SUCCESS;
 import static com.worth.framework.business.global.GlobalVarKt.speakFinishWhenWakeUpCall;
 
@@ -36,8 +40,8 @@ public class GlobalHandler {
                         WakeUpUtils.ins().wakeUp();
                     }
                     break;
-                case WAKEUP_XIAO_BANG_SDK_EROOR:                                                    //  唤醒sdk小帮失败
-
+                case CALL_BACK_SDK_WAKE_UP_ERROR:                                                             //  唤醒sdk小帮失败
+                    LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_SDK_WAKE_UP_ERROR);
                     break;
 
                 case ContactsKt.USER_INPUT_SPEAK_ASR_FINISH:                                        //  用户输入语言结束，并且有一定的有效结果检测出来
@@ -81,11 +85,15 @@ public class GlobalHandler {
     public WeakReference<Handler> mHandler = new WeakReference<>(handler);
 
     public void requestServer(String msg) {
-        RetrofitUtils.ins().requestServer(msg, result -> {
-            Message resultMsg = mHandler.get().obtainMessage(ContactsKt.NETWORK_RESULT, result);
-            mHandler.get().sendMessage(resultMsg);
-            return null;
-        });
+        if (NetworkUrilsKt.isNetConnected()){
+            RetrofitUtils.ins().requestServer(msg, result -> {
+                Message resultMsg = mHandler.get().obtainMessage(ContactsKt.NETWORK_RESULT, result);
+                mHandler.get().sendMessage(resultMsg);
+                return null;
+            });
+        } else {
+            LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_NET_WORKER_ERROR);
+        }
     }
 
 

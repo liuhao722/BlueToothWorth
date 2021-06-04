@@ -30,30 +30,33 @@ class VipSdkHelper private constructor() {
     }
 
     @JvmOverloads
-    fun initSdk(host: String?, uid: String?) {
+    fun initSdk(host: String?, uid: String?): VipSdkHelper {
         host?.run { MeKV.setHost(this) }
         uid?.run { MeKV.setUserId(this) }
+        return this
     }
 
     /**
      * 开启 or 关闭语音服务 对应关闭所有的服务
      */
-    fun switchSdkWakeUp(switchOn: Boolean) {
+    fun switchSdkWakeUp(switchOn: Boolean): VipSdkHelper {
         MeKV.setWakeUpSwitch(switchOn)
         if (!switchOn) {
             SpeakUtils.ins().stopSpeak()
             WakeUpUtils.ins().stopListener()
             RecordUtils.ins().stopRecord()
         }
+        return this
     }
 
     /**
      * 设置快捷入口的list数据
      */
-    fun setQuickEnterList(list: MutableList<String>?) {
+    fun setQuickEnterList(list: MutableList<String>?): VipSdkHelper {
         list?.run { MeKV.setQuickEnterList(this) } ?: run {
             MeKV.setQuickEnterList(mutableListOf())
         }
+        return this
     }
 
     /**

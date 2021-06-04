@@ -3,12 +3,14 @@ package com.baidu.aip.asrwakeup3.core.recog.listener;
 import android.os.Handler;
 import android.os.Message;
 
-import com.baidu.speech.asr.SpeechConstant;
-
 import com.baidu.aip.asrwakeup3.core.recog.RecogResult;
-import com.worth.framework.base.core.storage.MeKV;
+import com.baidu.speech.asr.SpeechConstant;
 import com.worth.framework.base.core.utils.L;
+import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.ext.ContactsKt;
+
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
+import static com.worth.framework.business.ext.ContactsKt.ERROR_CALL_BACK;
 
 /**
  * Created by fujiayi on 2017/6/16.
@@ -50,9 +52,6 @@ public class MessageStatusRecogListener extends StatusRecogListener {
 
     /**
      * 识别过程中每个字的回调
-     *
-     * @param results
-     * @param recogResult
      */
     @Override
     public void onAsrPartialResult(String[] results, RecogResult recogResult) {
@@ -68,14 +67,10 @@ public class MessageStatusRecogListener extends StatusRecogListener {
 
     /**
      * 识别整段文字后的回调，识别完后就结束了
-     *
-     * @param results
-     * @param recogResult
      */
     @Override
     public void onAsrFinalResult(String[] results, RecogResult recogResult) {
         super.onAsrFinalResult(results, recogResult);
-        if (!MeKV.INSTANCE.wakeUpSwitchIsOpen()) return;
         if (results != null && results.length > 0 && !results[0].isEmpty()) {
             Message msg = new Message();
             msg.what = ContactsKt.USER_INPUT_SPEAK_ASR_FINISH;
@@ -103,6 +98,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
     public void onAsrFinishError(int errorCode, int subErrorCode, String descMessage,
                                  RecogResult recogResult) {
         super.onAsrFinishError(errorCode, subErrorCode, descMessage, recogResult);
+        LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_SDK_RECORD_ERROR);
         String message = "【asr.finish事件】识别错误, 错误码：" + errorCode + " ," + subErrorCode + " ; " + descMessage;
         sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL, message);
         if (speechEndTime > 0) {
@@ -112,6 +108,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
         speechEndTime = 0;
         sendMessage(message, status, true);
         speechEndTime = 0;
+
     }
 
     @Override

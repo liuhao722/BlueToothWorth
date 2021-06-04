@@ -15,11 +15,18 @@ import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ContactsKt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_SPEAK_ERROR;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_WAKE_UP_ERROR;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private EditText editText;
-
+    private final int PERMISSION_REQUEST_CODE = 1000;
+    private VipSdkHelper vipSdkHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +44,33 @@ public class MainActivity extends AppCompatActivity {
     private void initSdk() {
         String host = "http://192.168.0.103:8080";
         String uid = "1001";
-        VipSdkHelper.Companion.getInstance().initSdk(host, uid,true);
+        vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, uid)
+                .switchSdkWakeUp(true)
+                .setQuickEnterList(Arrays.asList("呼叫服务员", "点餐", "结账"));
     }
 
     private void initObserver() {
-        LDBus.INSTANCE.observer(ContactsKt.EVENT_WITH_USER_INPUT_RESULT, objResult -> {
-            if (objResult != null && !objResult.toString().isEmpty()) {
-                L.e(TAG, "sdk返回网络查询结果：" + objResult.toString());
-                {
-                    //TO-DO   进行页面数据的展示，检测到返回结果进行数据的更新。sdk会继续检测下一句的输入
+        LDBus.INSTANCE.observer(ContactsKt.ERROR_CALL_BACK, objResult -> {
+            if (objResult != null) {
+                L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
+                int code = (int) objResult;
+                switch (code) {
+                    case CALL_BACK_NET_WORKER_ERROR:
+                        //TO-DO   网络监测错误返回的回调code
+
+                        break;
+                    case CALL_BACK_SDK_SPEAK_ERROR:
+                        //TO-DO   语音合成过程中出错回调
+
+                        break;
+                    case CALL_BACK_SDK_RECORD_ERROR:
+                        //TO-DO   语音识别过程中，asr识别错误
+
+                        break;
+                    case CALL_BACK_SDK_WAKE_UP_ERROR:
+                        //TO-DO   唤醒失败
+
+                        break;
                 }
             }
             return null;
@@ -56,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.et_input);
 
         findViewById(R.id.playText).setOnClickListener(v -> {
-            VipSdkHelper.Companion.getInstance().wakeUpWithInputText(editText.getText().toString().trim());
+            vipSdkHelper.wakeUpWithInputText(editText.getText().toString().trim());
             {
                 // 网络查询输入结果后 会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }
         });
 
         findViewById(R.id.wakeUp).setOnClickListener(v -> {
-            VipSdkHelper.Companion.getInstance().wakeUpWithClickBtn();
+            vipSdkHelper.wakeUpWithClickBtn();
             {
                 // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }
@@ -101,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         }
         String[] tmpList = new String[toApplyList.size()];
         if (!toApplyList.isEmpty()) {
-            ActivityCompat.requestPermissions(this, toApplyList.toArray(tmpList), 123);
+            ActivityCompat.requestPermissions(this, toApplyList.toArray(tmpList), PERMISSION_REQUEST_CODE);
         }
 
     }
@@ -110,5 +135,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // 此处为android 6.0以上动态授权的回调，用户自行实现。
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        vipSdkHelper.destroy();
+        super.onDestroy();
     }
 }
