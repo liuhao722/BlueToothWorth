@@ -133,7 +133,7 @@ public class SpeakUtils {
         // 设置在线发声音人： 0 普通女声（默认） 1 普通男声 3 情感男声<度逍遥> 4 情感儿童声<度丫丫>, 其它发音人见文档
         params.put(SpeechSynthesizer.PARAM_SPEAKER, "0");
         // 设置合成的音量，0-15 ，默认 5
-        params.put(SpeechSynthesizer.PARAM_VOLUME, "1");
+        params.put(SpeechSynthesizer.PARAM_VOLUME, "8");
         // 设置合成的语速，0-15 ，默认 5
         params.put(SpeechSynthesizer.PARAM_SPEED, "5");
         // 设置合成的语调，0-15 ，默认 5

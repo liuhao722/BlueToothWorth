@@ -1,5 +1,6 @@
 package com.worth.framework.business.enter
 
+import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.LDBus
@@ -22,6 +23,7 @@ class VipSdkHelper private constructor() {
      */
     init {
         application?.let {
+            ARouter.init(it)
             MeKVUtil.initMMKV(it)
             SpeakUtils.ins().init(it)
             WakeUpUtils.ins().init(it)
@@ -57,13 +59,6 @@ class VipSdkHelper private constructor() {
             MeKV.setQuickEnterList(mutableListOf())
         }
         return this
-    }
-
-    /**
-     * 查询的网络数据返回后
-     */
-    fun netWorkResult(result: String) {
-        LDBus.sendSpecial(EVENT_WITH_USER_INPUT_RESULT, result)
     }
 
     /**

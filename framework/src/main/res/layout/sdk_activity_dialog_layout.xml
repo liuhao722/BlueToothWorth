@@ -26,15 +26,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="26dp"
-                android:background="@drawable/sdk_shape_bg_line_bg" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/sdk_shape_bg_line" />
+                android:background="@drawable/sdk_res_icon_dialog_bottom_bg" />
 
         </RelativeLayout>
     </RelativeLayout>
