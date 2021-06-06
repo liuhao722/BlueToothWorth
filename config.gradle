@@ -95,6 +95,7 @@ ext {
 
             "ARouter-api"                  : "com.alibaba:arouter-api:1.5.0",//阿里路由框架
             "ARouter-compiler"             : "com.alibaba:arouter-compiler:1.2.2",
+            "tagCloudView"             : "com.github.kingideayou:tagcloudview:1.0.2",
 
     ]
 

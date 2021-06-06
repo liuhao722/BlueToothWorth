@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,7 +74,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:drawableRight="@drawable/sdk_img_navigation_right"
                 android:drawablePadding="2dp"
                 android:maxLines="4"
                 android:text="“你快听，滴答滴，滴答滴，滴答滴，窗外又在下雨。难道这，不是你最爱的天气？该继续猜测，直接就开口吗？纠结如何说破，可越想了解的越是无法琢磨。爱就是爱着，不爱就不爱了。”"
@@ -100,5 +100,6 @@
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/sdk_res_icon_dialog_bottom_bg" />
         </RelativeLayout>
+
     </LinearLayout>
 </layout>
