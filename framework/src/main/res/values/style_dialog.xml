@@ -8,10 +8,28 @@
 
     <!-- 对话框样式 -->
     <style name="dialog_bottom_full" parent="android:style/Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item><!-- Activity无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!-- dialog外无背景-->
+        <item name="android:windowCloseOnTouchOutside">false</item><!-- dialog外点击无效果-->
+
+        <item name="android:windowFullscreen">true</item>
+        <!--设置dialog的背景-->
+        <!--设置Dialog的windowFrame框为无-->
+        <item name="android:windowFrame">@null</item>
+        <!--设置无标题-->
+        <item name="windowNoTitle">true</item>
+        <!--是否浮现在activity之上设置居中还是说顶部-->
         <item name="android:windowIsFloating">true</item>
+        <!--是否半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--设置窗口内容不覆盖-->
         <item name="android:windowContentOverlay">@null</item>
+        <!--背景是否模糊显示-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
 </resources>

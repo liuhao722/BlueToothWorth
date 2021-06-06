@@ -28,12 +28,6 @@ android {
         }
 
         resConfigs "en", "zh"
-
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
     }
 
     buildTypes {
@@ -77,8 +71,8 @@ dependencies {
     api rootProject.ext.kotlinConfig["kotlin_stdlib"]
     api rootProject.ext.kotlinConfig["core"]
     api rootProject.ext.kotlinConfig["activityktx"]
-
-    api rootProject.ext.dependencies["ARouter-api"]
-    kapt rootProject.ext.dependencies["ARouter-compiler"]
-    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
+//
+//    api rootProject.ext.dependencies["ARouter-api"]
+//    kapt rootProject.ext.dependencies["ARouter-compiler"]
+//    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
 }

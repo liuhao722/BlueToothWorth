@@ -3,13 +3,11 @@ package com.worth.bluetooth;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.enter.VipSdkHelper;
@@ -20,7 +18,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.worth.framework.base.core.base.constants.ARouterPath.DIALOG_ACTIVITY;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_SPEAK_ERROR;
@@ -28,7 +25,6 @@ import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_WAKE_UP_
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private EditText editText;
     private final int PERMISSION_REQUEST_CODE = 1000;
     private VipSdkHelper vipSdkHelper;
 
@@ -48,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSdk() {
         String host = "http://192.168.0.103:8080";
-        String uid = "1001";
+        String uid = "testUid_1001";
         Map header = new HashMap<>();
-        header.put("pid","1234");
+        header.put("testHeader", "1234");
         Map body = new HashMap<>();
-        body.put("userName","lili");
+        body.put("testBody", "lili");
         vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, uid, header, body)
                 .switchSdkWakeUp(true)
                 .setQuickEnterList(Arrays.asList("点餐", "催菜", "结账", "呼叫服务员", "猜谜语", "叫老板"));
@@ -93,17 +89,30 @@ public class MainActivity extends AppCompatActivity {
                 // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }
         });
-        findViewById(R.id.btn_open).setOnClickListener(v -> {
-            ARouter.getInstance().build(DIALOG_ACTIVITY).navigation(this);
-            {
-                // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
-            }
-        });
     }
 
+    /**
+     * 开启or关闭语音唤醒功能，但不会关闭语音识别功能
+     *
+     * @param openRecord
+     */
+    private void switchSdkWakeUp(boolean openRecord) {
+        vipSdkHelper.switchSdkWakeUp(openRecord);
+    }
+
+    /**
+     * app端中有对应的录音写作功能时候可以选择关闭，传false，当写心情或者其他写作录音完毕之后记得重置状态传true；
+     *
+     * @param openRecord 当前sdk的录音开启状态
+     */
     private void switchRecord(boolean openRecord) {
-
+        if (openRecord) {
+            vipSdkHelper.startRecord();
+        } else {
+            vipSdkHelper.stopRecord();
+        }
     }
+
 
     /**
      * android 6.0 以上需要动态申请权限

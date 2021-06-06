@@ -1,5 +1,6 @@
 package com.worth.framework.business.enter
 
+import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.application
@@ -24,6 +25,7 @@ class VipSdkHelper private constructor() {
      */
     init {
         application?.let {
+            ARouter.init(it)
             MeKVUtil.initMMKV(it)
             SpeakUtils.ins().init(it)
             WakeUpUtils.ins().init(it)
@@ -110,7 +112,7 @@ class VipSdkHelper private constructor() {
     /**
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回--sdk内部调用
      */
-    protected fun wakeUpWithInputText(text: String) {
+    private fun wakeUpWithInputText(text: String) {
         SpeakUtils.ins().stopSpeak()
         WakeUpUtils.ins().stopListener()
         RecordUtils.ins().stopRecord()

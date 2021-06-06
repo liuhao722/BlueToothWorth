@@ -1,8 +1,11 @@
 package com.worth.framework.base.view.activity
 
+import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.ColorDrawable
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.R
@@ -17,7 +20,6 @@ import com.worth.framework.databinding.SdkActivityDialogLayoutBinding
 @Route(path = DIALOG_ACTIVITY, name = "全局的弹窗dialogActivity")
 class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
     override fun initBefore() {
-
     }
 
     override fun injectARouter() {
@@ -44,8 +46,6 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
                 binding?.sdkTvCenterRef?.text = ""
                 binding?.sdkTvCenterContent?.visibility = View.GONE
                 binding?.sdkTvCenterContent?.text = ""
-
-
             }
         }
         LDBus.observer(NET_WORK_REQUEST_START) {                    //  网络请求开始
