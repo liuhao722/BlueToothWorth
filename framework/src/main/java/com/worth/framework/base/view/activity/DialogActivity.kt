@@ -1,5 +1,9 @@
 package com.worth.framework.base.view.activity
 
+import android.graphics.drawable.AnimationDrawable
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.TypedValue
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.R
@@ -31,7 +35,7 @@ class DialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
     override fun initObserve() {
         LDBus.observer(EVENT_WITH_USER_INPUT_RESULT) {
             if (!isFinishing && !isDestroyed) {
-                it?.run {                                   //  网络返回的查询结果
+                it?.run {                                   //  网络请求返回后发送LDBus进行事件的回调
 
                 }
             }
@@ -39,7 +43,7 @@ class DialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
 
         LDBus.observer(EVENT_WITH_INPUT_ASR_RESULT) {
             if (!isFinishing && !isDestroyed) {
-                it?.run {                                   //  网络返回的查询结果
+                it?.run {                                   //  网络请求ASR的返回结果
 
                 }
             }
@@ -47,12 +51,36 @@ class DialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
     }
 
     override fun initViewAndListener() {
-//        binding.ok.setOnClickListener { finish() }
+
+        binding?.run {
+            (sdkIvLoading?.background as AnimationDrawable).start()
+
+            setContent("我曾经跨过山和大海，也曾经穿过人山人")
+            setContent("我曾经跨过山和大海，也曾经穿过人山人,我曾经跨过山和大海，也曾经穿过人山人")
+            setContent("我曾经跨过山和大海，也曾经穿过人山人,我曾经跨过山和大海，也曾经穿过人山人我曾经跨过山和大海，也曾经穿过人山人")
+        }
+
+    }
+
+    private fun setContent(text: String) {
+        binding?.run {
+            sdkTvCenterContent.text = text
+            val len = sdkTvCenterContent.length()
+            when {
+                len < 28 -> {
+                    sdkTvCenterContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
+                }
+                len in 28..54 -> {
+                    sdkTvCenterContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
+                }
+                else -> {
+                    sdkTvCenterContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                }
+            }
+        }
     }
 
     override fun initData() {
 
     }
-
-
 }

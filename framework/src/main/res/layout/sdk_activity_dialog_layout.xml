@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,14 +15,89 @@
             android:layout_marginTop="69dp"
             android:background="@drawable/sdk_shape_bg">
 
+
             <ImageView
+                android:id="@+id/sdk_iv_top_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/sdk_img_ai_logo" />
+
+            <TextView
+                android:id="@+id/sdk_tv_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="43.5dp"
+                android:layout_marginTop="20dp"
+                android:text="服务员 小帮 正在听"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/sdk_iv_top_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="21dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/sdk_img_close_white" />
+
+            <TextView
+                android:id="@+id/sdk_tv_center_def"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="43.5dp"
+                android:layout_marginTop="63dp"
+                android:text="@string/sdk_str_def_wake_up_tip_1"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/sdk_tv_center_def_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="53dp"
+                android:text="@string/sdk_str_def_wake_up_tip"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/sdk_tv_center_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sdk_tv_top"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:drawableRight="@drawable/sdk_img_navigation_right"
+                android:drawablePadding="2dp"
+                android:maxLines="4"
+                android:text="“你快听，滴答滴，滴答滴，滴答滴，窗外又在下雨。难道这，不是你最爱的天气？该继续猜测，直接就开口吗？纠结如何说破，可越想了解的越是无法琢磨。爱就是爱着，不爱就不爱了。”"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/sdk_iv_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="22dp"
+                android:layout_marginBottom="49dp"
+                android:background="@drawable/sdk_loading_list" />
+
+            <ImageView
+                android:id="@+id/iv_bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="17.5dp"
                 android:layout_marginRight="17.5dp"
-                android:layout_marginBottom="26dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/sdk_res_icon_dialog_bottom_bg" />
         </RelativeLayout>
     </LinearLayout>
