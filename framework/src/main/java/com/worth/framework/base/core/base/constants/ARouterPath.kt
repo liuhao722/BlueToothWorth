@@ -8,4 +8,6 @@ package com.worth.framework.base.core.base.constants
  */
 
 //  dialogActivity的路径
-const val DIALOG_ACTIVITY = "/sdk/dialog_activity"
+object ARouterPath {
+    const val DIALOG_ACTIVITY = "/sdk/activity/dialogActivity"
+}

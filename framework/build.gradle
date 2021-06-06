@@ -20,12 +20,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
             }
         }
-
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi-v7a'//, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -100,6 +99,10 @@ dependencies {
     api rootProject.ext.dependencies["ARouter-api"]
     kapt rootProject.ext.dependencies["ARouter-compiler"]
     annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
+
+    implementation autosize
+
+
 //    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
 //    api rootProject.ext.jetpackConfig["lifecycleextensions"]
 //    api rootProject.ext.jetpackConfig["livedata"]

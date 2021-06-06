@@ -103,4 +103,7 @@ ext {
             "androidx-junit"   : "androidx.test.ext:junit:1.1.1",
             "androidx-espresso": "androidx.test.espresso:espresso-core:3.2.0",
     ]
+
+    // 屏幕适配
+    autosize = 'me.jessyan:autosize:1.2.1'
 }

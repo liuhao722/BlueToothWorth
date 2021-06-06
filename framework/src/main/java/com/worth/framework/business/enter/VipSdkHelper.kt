@@ -23,7 +23,6 @@ class VipSdkHelper private constructor() {
      */
     init {
         application?.let {
-            ARouter.init(it)
             MeKVUtil.initMMKV(it)
             SpeakUtils.ins().init(it)
             WakeUpUtils.ins().init(it)

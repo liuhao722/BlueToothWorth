@@ -1,6 +1,8 @@
 package com.worth.bluetooth;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -9,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
+import com.worth.framework.base.view.activity.DialogActivity;
 import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ContactsKt;
 
@@ -19,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.worth.framework.base.core.base.constants.ARouterPath.DIALOG_ACTIVITY;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_SPEAK_ERROR;
@@ -85,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         findViewById(R.id.wakeUp).setOnClickListener(v -> {
             vipSdkHelper.wakeUpWithClickBtn();
+            {
+                // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
+            }
+        });
+        findViewById(R.id.btn_open).setOnClickListener(v -> {
+            ARouter.getInstance().build(DIALOG_ACTIVITY).navigation(this);
             {
                 // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }

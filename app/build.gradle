@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -26,6 +28,12 @@ android {
         }
 
         resConfigs "en", "zh"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -43,15 +51,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding = true
     }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation project(':framework')
+    api project(':framework')
 //    api files('libs/framework-release.aar')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -64,4 +77,8 @@ dependencies {
     api rootProject.ext.kotlinConfig["kotlin_stdlib"]
     api rootProject.ext.kotlinConfig["core"]
     api rootProject.ext.kotlinConfig["activityktx"]
+
+    api rootProject.ext.dependencies["ARouter-api"]
+    kapt rootProject.ext.dependencies["ARouter-compiler"]
+    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
 }
