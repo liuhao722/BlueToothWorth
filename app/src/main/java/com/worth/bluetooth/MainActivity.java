@@ -16,6 +16,8 @@ import com.worth.framework.business.ext.ContactsKt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private final int PERMISSION_REQUEST_CODE = 1000;
     private VipSdkHelper vipSdkHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private void initSdk() {
         String host = "http://192.168.0.103:8080";
         String uid = "1001";
-        vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, uid)
+        Map header = new HashMap<>();
+        Map body = new HashMap<>();
+        vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, uid, header, body)
                 .switchSdkWakeUp(true)
                 .setQuickEnterList(Arrays.asList("呼叫服务员", "点餐", "结账"));
     }
@@ -78,21 +83,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        editText = findViewById(R.id.et_input);
-
-        findViewById(R.id.playText).setOnClickListener(v -> {
-            vipSdkHelper.wakeUpWithInputText(editText.getText().toString().trim());
-            {
-                // 网络查询输入结果后 会在上面的initObserver返回对应的网络结果，进行检测并展示即可
-            }
-        });
-
         findViewById(R.id.wakeUp).setOnClickListener(v -> {
             vipSdkHelper.wakeUpWithClickBtn();
             {
                 // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }
         });
+    }
+
+    private void switchRecord(boolean openRecord){
+
     }
 
     /**

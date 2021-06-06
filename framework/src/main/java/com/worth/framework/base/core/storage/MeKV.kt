@@ -7,6 +7,8 @@ const val USER_ID = "me_kv_user_id"
 const val APP_HOST = "me_kv_app_host"
 const val WAKE_UP_SWITCH = "app_set_wake_up_switch"
 const val QUICK_ENTER_LIST = "app_set_quick_enter_list"
+const val SDK_HTTP_HEADER = "sdk_http_header"
+const val SDK_HTTP_BODY = "sdk_http_body"
 
 /**
  * 存储类
@@ -60,5 +62,30 @@ object MeKV {
 
     /**********************************************************************************************/
 
+    /**********************************************************************************************/
+    /**
+     * 用户设置header
+     */
+    fun setHttpHeader(header: MutableMap<String, Any>) = MeKVUtil.set(SDK_HTTP_HEADER, header)
+
+    /**
+     * 获取用户设置的header
+     */
+    fun getHttpHeader() = MeKVUtil.get(SDK_HTTP_HEADER, mutableMapOf<String, Any>())
+
+    /**********************************************************************************************/
+
+    /**********************************************************************************************/
+    /**
+     * 用户设置body
+     */
+    fun setHttpBody(body: MutableMap<String, Any>) = MeKVUtil.set(SDK_HTTP_BODY, body)
+
+    /**
+     * 获取用户设置的body
+     */
+    fun getHttpBody() = MeKVUtil.get(SDK_HTTP_BODY, mutableMapOf<String, Any>())
+
+    /**********************************************************************************************/
 
 }

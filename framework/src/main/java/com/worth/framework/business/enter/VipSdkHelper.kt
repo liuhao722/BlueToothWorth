@@ -31,20 +31,44 @@ class VipSdkHelper private constructor() {
         }
     }
 
+    /**
+     * 初始化sdk
+     * @param host  域名地址
+     * @param uid   userId
+     * @param httpHeaders httpHeader要在app中设置的内容
+     * @param httpBody  body要设置的内容
+     */
     @JvmOverloads
     fun initSdk(
         host: String?,
         uid: String?,
-        httpHeaders: Map<String, Any>?,
-        httpBody: Map<String, Any>?
+        httpHeaders: MutableMap<String, Any>?,
+        httpBody: MutableMap<String, Any>?
     ): VipSdkHelper {
         host?.run { MeKV.setHost(this) }
         uid?.run { MeKV.setUserId(this) }
+        httpHeaders?.run { MeKV.setHttpHeader(this) }
+        httpBody?.run { MeKV.setHttpBody(this) }
         return this
     }
 
     /**
+     * 单独设置uid or 初始化时候设置
+     */
+    fun setUserId(uid: String?) {
+        uid?.run { MeKV.setUserId(this) }
+    }
+
+    /**
+     * 单独设置host or 初始化时候设置
+     */
+    fun setHost(host: String?) {
+        host?.run { MeKV.setHost(this) }
+    }
+
+    /**
      * 开启 or 关闭语音服务 对应关闭所有的服务
+     * @param   switchOn 开启 or 关闭
      */
     fun switchSdkWakeUp(switchOn: Boolean): VipSdkHelper {
         MeKV.setWakeUpSwitch(switchOn)
@@ -67,7 +91,7 @@ class VipSdkHelper private constructor() {
     }
 
     /**
-     * 启动实时 or 短音频模式--录音内容进行网络请求
+     * 启动实时 or 短音频模式--录音内容进行网络请求---对外提供：开启后 仅做唤醒的功能开启
      */
     fun startRecord() {
         SpeakUtils.ins().stopSpeak()
@@ -76,27 +100,28 @@ class VipSdkHelper private constructor() {
     }
 
     /**
-     * 暂停实时 or 短音频模式--手动释放一直处于录音状态
+     * 暂停实时 or 短音频模式--手动释放一直处于录音状态---提供给app调用--所有的状态都关闭
      */
     fun stopRecord() {
-        WakeUpUtils.ins().startListener()
+        WakeUpUtils.ins().stopListener()
+        SpeakUtils.ins().stopSpeak()
         RecordUtils.ins().stopRecord()
         RecordUtils.ins().cancel()
     }
 
     /**
-     * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回
+     * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回--sdk内部调用
      */
-    fun wakeUpWithInputText(text: String) {
+    protected fun wakeUpWithInputText(text: String) {
         SpeakUtils.ins().stopSpeak()
-        WakeUpUtils.ins().startListener()
+        WakeUpUtils.ins().stopListener()
         RecordUtils.ins().stopRecord()
         RecordUtils.ins().cancel()
         toNetWork(text)
     }
 
     /**
-     * 唤醒语音助手-用户点击了界面
+     * 唤醒语音助手-用户点击了界面--app调用
      */
     fun wakeUpWithClickBtn() {
         WakeUpUtils.ins().wakeUp()
@@ -110,7 +135,7 @@ class VipSdkHelper private constructor() {
     }
 
     /**
-     * 消亡方法进行数据的清理和对象的释放
+     * 消亡方法进行数据的清理和对象的释放--app调用
      */
     fun destroy() {
         RecordUtils.ins().release()
