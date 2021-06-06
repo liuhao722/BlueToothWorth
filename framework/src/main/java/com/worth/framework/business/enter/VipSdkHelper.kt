@@ -45,10 +45,10 @@ class VipSdkHelper private constructor() {
         httpHeaders: MutableMap<String, Any>?,
         httpBody: MutableMap<String, Any>?
     ): VipSdkHelper {
-        host?.run { MeKV.setHost(this) }
-        uid?.run { MeKV.setUserId(this) }
-        httpHeaders?.run { MeKV.setHttpHeader(this) }
-        httpBody?.run { MeKV.setHttpBody(this) }
+        host?.run { MeKV.setHost(this) }?:run{MeKV.setHost("")}
+        uid?.run { MeKV.setUserId(this) }?:run{MeKV.setUserId("")}
+        httpHeaders?.run { MeKV.setHttpHeader(this) }?:run{MeKV.setHttpHeader(mutableMapOf())}
+        httpBody?.run { MeKV.setHttpBody(this) }?:run{MeKV.setHttpBody(mutableMapOf())}
         return this
     }
 
@@ -56,14 +56,14 @@ class VipSdkHelper private constructor() {
      * 单独设置uid or 初始化时候设置
      */
     fun setUserId(uid: String?) {
-        uid?.run { MeKV.setUserId(this) }
+        uid?.run { MeKV.setUserId(this) }?:run{MeKV.setUserId("")}
     }
 
     /**
      * 单独设置host or 初始化时候设置
      */
     fun setHost(host: String?) {
-        host?.run { MeKV.setHost(this) }
+        host?.run { MeKV.setHost(this) }?:run{MeKV.setHost("")}
     }
 
     /**

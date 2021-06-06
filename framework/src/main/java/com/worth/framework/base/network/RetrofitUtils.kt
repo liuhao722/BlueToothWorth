@@ -1,19 +1,17 @@
 package com.worth.framework.base.network
 
-import android.util.Log
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.L
 import com.worth.framework.base.network.apiServices.ApiServices
-import com.worth.framework.business.enter.VipSdkHelper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -35,12 +33,19 @@ class RetrofitUtils private constructor() {
             val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(addHeaders())
                 .build()
             val retrofitApi = retrofit.create(ApiServices::class.java)
-            var map: HashMap<String, Any?> = HashMap<String, Any?>()
+            var map: HashMap<String, Any?> = HashMap()
+
             map["logId"] = UUID.randomUUID()
             map["query"] = queryWord
             map["userId"] = MeKV.getUserId()
+
+            MeKV.getHttpBody()?.mapKeys {
+                map.put(it.key, it.value)
+            }
+
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
@@ -54,6 +59,24 @@ class RetrofitUtils private constructor() {
                 block.invoke("")
             }
         }
+    }
+
+    /**
+     * 对头部进行操作
+     */
+    private fun addHeaders(): OkHttpClient {
+        val header = MeKV.getHttpHeader()
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor { chain ->
+            val original = chain.request()
+            val request = original.newBuilder()
+            header?.mapKeys {
+                request.header(it.key, it?.value as String)
+            }
+            request.method(original.method(), original.body())
+            chain.proceed(request.build())
+        }
+        return httpClient.build()
     }
 
     private object SingletonHolder {
