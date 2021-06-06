@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +65,7 @@
                 android:layout_marginBottom="53dp"
                 android:text="@string/sdk_str_def_wake_up_tip"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/sdk_tv_center_content"
@@ -74,11 +75,23 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:drawablePadding="2dp"
                 android:maxLines="4"
-                android:text="“你快听，滴答滴，滴答滴，滴答滴，窗外又在下雨。难道这，不是你最爱的天气？该继续猜测，直接就开口吗？纠结如何说破，可越想了解的越是无法琢磨。爱就是爱着，不爱就不爱了。”"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="20sp"
+                tools:text="“你快听，滴答滴，滴答滴，滴答滴，窗外又在下雨。难道这，不是你最爱的天气？该继续猜测，直接就开口吗？纠结如何说破，可越想了解的越是无法琢磨。爱就是爱着，不爱就不爱了。”" />
+
+            <TextView
+                android:id="@+id/sdk_tv_center_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sdk_tv_center_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="18dp"
+                android:gravity="left|center_vertical"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="“你快听，滴答滴，滴答滴，滴答滴，窗外又在下雨。难道这，不是你最爱的天气？该继续猜测，直接就开口吗？纠结如何说破，可越想了解的越是无法琢磨。爱就是爱着，不爱就不爱了。”" />
 
             <ImageView
                 android:id="@+id/sdk_iv_loading"
@@ -87,7 +100,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="22dp"
                 android:layout_marginBottom="49dp"
-                android:background="@drawable/sdk_loading_list" />
+                android:background="@drawable/sdk_loading_list"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_bottom"

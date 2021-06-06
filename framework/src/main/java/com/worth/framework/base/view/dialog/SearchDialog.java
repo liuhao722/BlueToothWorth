@@ -12,15 +12,23 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.worth.framework.R;
+import com.worth.framework.base.core.utils.LDBus;
+import com.worth.framework.business.utils.GlobalHandler;
+import com.worth.framework.business.utils.RecordUtils;
+import com.worth.framework.business.utils.SpeakUtils;
+import com.worth.framework.business.utils.WakeUpUtils;
 
 import java.util.List;
 
 import me.next.tagview.TagCloudView;
+
+import static com.worth.framework.business.ext.ContactsKt.EVENT_WITH_INPUT_ASR_RESULT;
 
 /**
  * Author:  LiuHao
@@ -28,8 +36,10 @@ import me.next.tagview.TagCloudView;
  * TIME:    6/6/21 --> 8:30 PM
  * Description: This is SearchDialog
  */
-public class SearchDialog extends Dialog implements TextView.OnEditorActionListener {
+public class SearchDialog extends Dialog implements TextView.OnEditorActionListener, TagCloudView.OnTagClickListener {
     private Context mContext;
+    private TagCloudView tagView;
+    private List<String> mTags;
 
     public SearchDialog(@NonNull Context context) {
         super(context, R.style.dialog_bottom_full);
@@ -71,6 +81,7 @@ public class SearchDialog extends Dialog implements TextView.OnEditorActionListe
         sdk_et_input = findViewById(R.id.sdk_et_input);
         sdk_tv_guess_say = findViewById(R.id.sdk_tv_guess_say);
         tagCloudView = findViewById(R.id.sdk_rl_search_view);
+        tagView = findViewById(R.id.sdk_rl_search_view);
 
         //设置软键盘回车键事件监听
         sdk_et_input.setOnEditorActionListener(this);
@@ -80,10 +91,12 @@ public class SearchDialog extends Dialog implements TextView.OnEditorActionListe
                 dismiss();
             }
         });
+        tagView.setOnTagClickListener(this);
     }
 
+
     public void setTags(List<String> tags) {
-        TagCloudView tagView = findViewById(R.id.sdk_rl_search_view);
+        mTags = tags;
         tagView.setTags(tags);
     }
 
@@ -100,9 +113,37 @@ public class SearchDialog extends Dialog implements TextView.OnEditorActionListe
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
                 Log.e("onEditorAction:", "IME_ACTION_SEND");
-                dismiss();
+                String content = sdk_et_input.getText().toString();
+                toNetWork(content);
                 break;
         }
         return false;
+    }
+
+    /**
+     * 获取内容 请求服务
+     */
+    private void toNetWork(String content) {
+        if (!content.isEmpty()) {
+            SpeakUtils.ins().stopSpeak();
+            WakeUpUtils.ins().stopListener();
+            RecordUtils.ins().stopRecord();
+            RecordUtils.ins().cancel();
+            GlobalHandler.ins().requestServer(content);
+            LDBus.INSTANCE.sendSpecial(EVENT_WITH_INPUT_ASR_RESULT, content);            //  发送ars识别的结果给页面进行展示
+            dismiss();
+        }else {
+            Toast.makeText(mContext,"输入内容为空，请重新输入",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onTagClick(int position) {
+        if (position != -1) {
+            if (mTags != null && mTags.size() > position) {
+                toNetWork(mTags.get(position));
+            }
+        }
     }
 }

@@ -29,5 +29,10 @@ const val CALL_BACK_SDK_RECORD_ERROR = 0x1000_402                               
 const val CALL_BACK_SDK_WAKE_UP_ERROR = 0x1000_403                                                  //  唤醒失败Sdk失败
 
 
+const val NET_WORK_REQUEST_START = "net_work_request_start"                                         //  网络请求开始
+const val NET_WORK_REQUEST_FINISH = "net_work_request_finish"                                       //  网络请求结束
+const val MAIN_DIALOG_RE_WAKE_UP = "main_dialog_re_wake_up"                                         //  再次呼叫
+
+
 
 

@@ -60,7 +60,7 @@
         app:tcvItemBorderHorizontal="8dp"
         app:tcvItemBorderVertical="6dp"
         app:tcvTextColor="#716FF2"
-        app:tcvTextSize="6sp" />
+        app:tcvTextSize="5sp" />
 
     <View
         android:layout_width="0dp"

@@ -37,8 +37,9 @@
             android:value="GgNATjBNatsb3EfdILgkWSDVhh1W1usU" />
 
         <activity
-            android:name=".base.view.activity.DialogActivity"
+            android:name=".base.view.activity.MainDialogActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/TransparentDialog" />
 
         <meta-data

@@ -3,6 +3,7 @@ package com.worth.framework.base.network
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.L
 import com.worth.framework.base.network.apiServices.ApiServices
+import com.worth.framework.business.enter.VipSdkHelper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -42,7 +43,7 @@ class RetrofitUtils private constructor() {
             map["query"] = queryWord
             map["userId"] = MeKV.getUserId()
 
-            MeKV.getHttpBody()?.mapKeys {
+            VipSdkHelper.instance.mHttpBody?.mapKeys {
                 map.put(it.key, it.value)
             }
 
@@ -65,7 +66,7 @@ class RetrofitUtils private constructor() {
      * 对头部进行操作
      */
     private fun addHeaders(): OkHttpClient {
-        val header = MeKV.getHttpHeader()
+        val header = VipSdkHelper.instance.mHttpHeaders
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor { chain ->
             val original = chain.request()

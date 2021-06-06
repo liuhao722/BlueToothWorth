@@ -1,11 +1,8 @@
 package com.worth.framework.business.enter
 
-import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
-import com.worth.framework.base.core.utils.LDBus
 import com.worth.framework.base.core.utils.application
-import com.worth.framework.business.ext.EVENT_WITH_USER_INPUT_RESULT
 import com.worth.framework.business.utils.GlobalHandler
 import com.worth.framework.business.utils.RecordUtils
 import com.worth.framework.business.utils.SpeakUtils
@@ -18,6 +15,10 @@ import com.worth.framework.business.utils.WakeUpUtils
  * Description: This is VipSdkHelper
  */
 class VipSdkHelper private constructor() {
+    var mHttpHeaders: MutableMap<String, Any>? = null   //  获取用户设置的header
+    var mHttpBody: MutableMap<String, Any>? = null      //  获取用户设置的body
+    var mQuickList: MutableList<String>? = null         //  获取用户设置的快捷入口
+
     /**
      * 初始化操作
      */
@@ -44,10 +45,10 @@ class VipSdkHelper private constructor() {
         httpHeaders: MutableMap<String, Any>?,
         httpBody: MutableMap<String, Any>?
     ): VipSdkHelper {
-        host?.run { MeKV.setHost(this) }?:run{MeKV.setHost("")}
-        uid?.run { MeKV.setUserId(this) }?:run{MeKV.setUserId("")}
-        httpHeaders?.run { MeKV.setHttpHeader(this) }?:run{MeKV.setHttpHeader(mutableMapOf())}
-        httpBody?.run { MeKV.setHttpBody(this) }?:run{MeKV.setHttpBody(mutableMapOf())}
+        host?.run { MeKV.setHost(this) } ?: run { MeKV.setHost("") }
+        uid?.run { MeKV.setUserId(this) } ?: run { MeKV.setUserId("") }
+        mHttpHeaders = httpHeaders
+        mHttpBody = httpBody
         return this
     }
 
@@ -55,14 +56,14 @@ class VipSdkHelper private constructor() {
      * 单独设置uid or 初始化时候设置
      */
     fun setUserId(uid: String?) {
-        uid?.run { MeKV.setUserId(this) }?:run{MeKV.setUserId("")}
+        uid?.run { MeKV.setUserId(this) } ?: run { MeKV.setUserId("") }
     }
 
     /**
      * 单独设置host or 初始化时候设置
      */
     fun setHost(host: String?) {
-        host?.run { MeKV.setHost(this) }?:run{MeKV.setHost("")}
+        host?.run { MeKV.setHost(this) } ?: run { MeKV.setHost("") }
     }
 
     /**
@@ -83,9 +84,7 @@ class VipSdkHelper private constructor() {
      * 设置快捷入口的list数据
      */
     fun setQuickEnterList(list: MutableList<String>?): VipSdkHelper {
-        list?.run { MeKV.setQuickEnterList(this) } ?: run {
-            MeKV.setQuickEnterList(mutableListOf())
-        }
+        mQuickList = list
         return this
     }
 

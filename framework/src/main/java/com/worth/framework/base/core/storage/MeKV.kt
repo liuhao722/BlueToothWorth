@@ -50,42 +50,5 @@ object MeKV {
 
 
     /**********************************************************************************************/
-    /**
-     * 用户设置快接入口
-     */
-    fun setQuickEnterList(list: MutableList<String>) = MeKVUtil.set(QUICK_ENTER_LIST, list)
-
-    /**
-     * 获取用户设置的快捷入口
-     */
-    fun getQuickEnterList() = MeKVUtil.get(QUICK_ENTER_LIST, mutableListOf<String>())
-
-    /**********************************************************************************************/
-
-    /**********************************************************************************************/
-    /**
-     * 用户设置header
-     */
-    fun setHttpHeader(header: MutableMap<String, Any>) = MeKVUtil.set(SDK_HTTP_HEADER, header)
-
-    /**
-     * 获取用户设置的header
-     */
-    fun getHttpHeader() = MeKVUtil.get(SDK_HTTP_HEADER, mutableMapOf<String, Any>())
-
-    /**********************************************************************************************/
-
-    /**********************************************************************************************/
-    /**
-     * 用户设置body
-     */
-    fun setHttpBody(body: MutableMap<String, Any>) = MeKVUtil.set(SDK_HTTP_BODY, body)
-
-    /**
-     * 获取用户设置的body
-     */
-    fun getHttpBody() = MeKVUtil.get(SDK_HTTP_BODY, mutableMapOf<String, Any>())
-
-    /**********************************************************************************************/
 
 }

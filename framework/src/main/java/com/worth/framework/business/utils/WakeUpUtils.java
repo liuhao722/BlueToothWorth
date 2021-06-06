@@ -3,16 +3,22 @@ package com.worth.framework.business.utils;
 import android.content.Context;
 import android.os.Handler;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.baidu.aip.asrwakeup3.core.wakeup.MyWakeup;
 import com.baidu.aip.asrwakeup3.core.wakeup.listener.IWakeupListener;
 import com.baidu.aip.asrwakeup3.core.wakeup.listener.RecogWakeupListener;
 import com.baidu.speech.asr.SpeechConstant;
 import com.worth.framework.R;
+import com.worth.framework.base.core.base.constants.ARouterPath;
+import com.worth.framework.base.core.utils.ARouterUtilsKt;
 import com.worth.framework.base.core.utils.AppManagerKt;
+import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.enter.VipSdkHelper;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.worth.framework.business.ext.ContactsKt.MAIN_DIALOG_RE_WAKE_UP;
 
 /**
  * Author:  LiuHao
@@ -32,11 +38,12 @@ public class WakeUpUtils {
      * 唤醒
      */
     public void wakeUp() {
+        LDBus.INSTANCE.sendSpecial(MAIN_DIALOG_RE_WAKE_UP,"");
         RecordUtils.ins().stopRecord();
         RecordUtils.ins().cancel();
         stopListener();
         SpeakUtils.ins().stopSpeak();
-
+        ARouter.getInstance().build(ARouterPath.DIALOG_ACTIVITY).navigation();
         SpeakUtils.ins().speak(context.getString(R.string.str_sdk_def_wakeup_ref), true);
     }
 

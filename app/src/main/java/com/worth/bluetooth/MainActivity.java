@@ -1,8 +1,6 @@
 package com.worth.bluetooth;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -14,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
-import com.worth.framework.base.view.activity.DialogActivity;
 import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ContactsKt;
 
@@ -53,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
         String host = "http://192.168.0.103:8080";
         String uid = "1001";
         Map header = new HashMap<>();
+        header.put("pid","1234");
         Map body = new HashMap<>();
+        body.put("userName","lili");
         vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, uid, header, body)
                 .switchSdkWakeUp(true)
-                .setQuickEnterList(Arrays.asList("呼叫服务员", "点餐", "结账"));
+                .setQuickEnterList(Arrays.asList("点餐", "催菜", "结账", "呼叫服务员", "猜谜语", "叫老板"));
     }
 
     private void initObserver() {
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void switchRecord(boolean openRecord){
+    private void switchRecord(boolean openRecord) {
 
     }
 
