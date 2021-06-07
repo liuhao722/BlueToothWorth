@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initPermission();
+        initPermission();       //  初始化百度sdk依赖的权限
 
         initView();
 
-        initSdk();
+        initSdk();              //  初始化sdk
 
-        initObserver();
+        initObserver();         //  监听sdk错误的返回
     }
 
     private void initSdk() {
