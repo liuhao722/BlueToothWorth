@@ -19,7 +19,7 @@ interface ApiServices {
      * 获取网络查询内容的返回值
      */
     @POST
-    fun getRefResult(@Body map: RequestBody?): Call<ResultData?>?
+    fun getRefResult(@Body requestBody: RequestBody?): Call<ResultData?>?
 //    @POST("/api/v1/service/chat")
-//    fun getRefResult(@Body map: RequestBody?): Call<ResultData?>?
+//    fun getRefResult(@Body requestBody: RequestBody?): Call<ResultData?>?
 }
