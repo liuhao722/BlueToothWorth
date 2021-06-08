@@ -18,7 +18,7 @@ import com.worth.framework.business.ext.ContactsKt;
 import java.lang.ref.WeakReference;
 
 import static com.worth.framework.base.core.utils.ResourceUtils.getString;
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_DISCONNECT;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_SPEAK_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_WAKE_UP_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.ERROR_CALL_BACK;
@@ -26,7 +26,7 @@ import static com.worth.framework.business.ext.ContactsKt.EVENT_WITH_INPUT_ASR_R
 import static com.worth.framework.business.ext.ContactsKt.EVENT_WITH_USER_INPUT_RESULT;
 import static com.worth.framework.business.ext.ContactsKt.NET_WORK_REQUEST_FINISH;
 import static com.worth.framework.business.ext.ContactsKt.NET_WORK_REQUEST_START;
-import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_EROOR;
+import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_SUCCESS;
 import static com.worth.framework.business.global.GlobalVarKt.speakFinishWhenWakeUpCall;
 
@@ -49,7 +49,7 @@ public class GlobalHandler {
 
                     }
                     break;
-                case WAKEUP_XIAO_BANG_SDK_EROOR:                                                    //  唤醒sdk小帮失败
+                case WAKEUP_XIAO_BANG_SDK_ERROR:                                                    //  唤醒sdk小帮失败
                     //  自己处理一些自己的业务
 
                     //  发送失败信息到app端自行处理自己的一部分业务
@@ -114,7 +114,7 @@ public class GlobalHandler {
             });
         } else {
             LDBus.INSTANCE.sendSpecial(NET_WORK_REQUEST_FINISH,"");
-            LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_NET_WORKER_ERROR);
+            LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_NET_WORKER_DISCONNECT);
         }
     }
 

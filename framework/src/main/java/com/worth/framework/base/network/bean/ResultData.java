@@ -1,7 +1,5 @@
 package com.worth.framework.base.network.bean;
 
-import java.util.Arrays;
-
 /**
  * Author:  LiuHao
  * Email:   114650501@qq.com
@@ -9,28 +7,12 @@ import java.util.Arrays;
  * Description: This is ResultData
  */
 public class ResultData {
-    public ResultData(){}
-    private String sessionId;
-    private String logId;
-    private String result;
-    private String actionType;
-    private Object slotOriginalWords;
-
-    public String getSessionId() {
-        return sessionId;
+    public ResultData() {
     }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getLogId() {
-        return logId;
-    }
-
-    public void setLogId(String logId) {
-        this.logId = logId;
-    }
+    private String result;      //  返回结果
+    private boolean success;    //  返回是否成功
+    private int code;           //  200  500
+    private long timestamp;     //  时间戳
 
     public String getResult() {
         return result;
@@ -40,30 +22,37 @@ public class ResultData {
         this.result = result;
     }
 
-    public String getActionType() {
-        return actionType;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setActionType(String actionType) {
-        this.actionType = actionType;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public Object getSlotOriginalWords() {
-        return slotOriginalWords;
+    public int getCode() {
+        return code;
     }
 
-    public void setSlotOriginalWords(Object slotOriginalWords) {
-        this.slotOriginalWords = slotOriginalWords;
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
     public String toString() {
         return "ResultData{" +
-                "sessionId='" + sessionId + '\'' +
-                ", logId='" + logId + '\'' +
-                ", result='" + result + '\'' +
-                ", actionType='" + actionType + '\'' +
-                ", slotOriginalWords=" + slotOriginalWords +
+                "result='" + result + '\'' +
+                ", success=" + success +
+                ", code=" + code +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }

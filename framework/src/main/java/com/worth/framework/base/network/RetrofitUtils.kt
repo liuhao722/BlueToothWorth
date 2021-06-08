@@ -2,8 +2,11 @@ package com.worth.framework.base.network
 
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.L
+import com.worth.framework.base.core.utils.LDBus
 import com.worth.framework.base.network.apiServices.ApiServices
 import com.worth.framework.business.enter.VipSdkHelper
+import com.worth.framework.business.ext.CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR
+import com.worth.framework.business.ext.ERROR_CALL_BACK
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -51,9 +54,22 @@ class RetrofitUtils private constructor() {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
                 val result = retrofitApi.getRefResult(body)?.await()
-                result?.run {
-                    L.e(TAG, result.toString())
-                    block.invoke(result.result)
+                result?.run {           //  返回结果不为空
+                    L.e(TAG, toString())
+                    when (code) {
+                        200 -> {
+                            block.invoke(result.result)
+                        }
+                        else -> {
+                            LDBus.sendSpecial(
+                                ERROR_CALL_BACK,
+                                CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR
+                            )
+                            block.invoke("")
+                        }
+                    }
+                } ?: run {
+                    block.invoke("")
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

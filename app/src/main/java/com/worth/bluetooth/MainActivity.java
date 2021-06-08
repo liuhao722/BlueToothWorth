@@ -19,7 +19,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_ERROR;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
+
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_DISCONNECT;
+import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_SPEAK_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_WAKE_UP_ERROR;
@@ -61,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
                 int code = (int) objResult;
                 switch (code) {
-                    case CALL_BACK_NET_WORKER_ERROR:
+                    case CALL_BACK_NET_WORKER_DISCONNECT:
                         //TO-DO   网络监测错误返回的回调code
-                        Log.e("Error","initObserver-1");
+                        Log.e("Error", "initObserver-1");
                         break;
                     case CALL_BACK_SDK_SPEAK_ERROR:
                         //TO-DO   语音合成过程中出错回调
@@ -87,21 +91,24 @@ public class MainActivity extends AppCompatActivity {
                 L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
                 int code = (int) objResult;
                 switch (code) {
-                    case CALL_BACK_NET_WORKER_ERROR:
-                        //TO-DO   网络监测错误返回的回调code
-                        Log.e("Error","initObserver-2");
+                    case CALL_BACK_NET_WORKER_DISCONNECT:
+                        //TO-DO     网络监测错误返回的回调code-未连接网络
+                        Log.e("Error", "initObserver-2");
                         break;
                     case CALL_BACK_SDK_SPEAK_ERROR:
-                        //TO-DO   语音合成过程中出错回调
+                        //TO-DO     语音合成过程中出错回调
 
                         break;
                     case CALL_BACK_SDK_RECORD_ERROR:
-                        //TO-DO   语音识别过程中，asr识别错误
+                        //TO-DO     语音识别过程中，asr识别错误
 
                         break;
                     case CALL_BACK_SDK_WAKE_UP_ERROR:
-                        //TO-DO   唤醒失败
+                        //TO-DO     唤醒失败
 
+                        break;
+                    case CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR:
+                        //TO-DO     网络返回失败，非200
                         break;
                 }
             }

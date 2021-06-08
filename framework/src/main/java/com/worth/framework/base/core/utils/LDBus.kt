@@ -23,6 +23,7 @@ object LDBus {
     private const val async = 2
 
     private val map : HashMap<String, Function1<Any,Any>> = HashMap()
+    private val map2 : HashMap<String, Function2<Any,Any,Any>> = HashMap()
 
     private val handler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -66,6 +67,16 @@ object LDBus {
     fun  sendSpecial(key: String, data : Any) {
         map[key]?.run {
             invoke(data)
+        }
+    }
+
+    fun observer2(key: String, block : (Any, Any)->Unit){
+        map2[key] = block
+    }
+
+    fun  sendSpecial2(key: String, data : Any, params: Any) {
+        map2[key]?.run {
+            invoke(data, params)
         }
     }
 
