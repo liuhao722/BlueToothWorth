@@ -70,10 +70,16 @@ object LDBus {
         }
     }
 
+    /**
+     * 新增 增加两个回调参数的返回值类型
+     */
     fun observer2(key: String, block : (Any, Any)->Unit){
         map2[key] = block
     }
 
+    /**
+     * 新增 增加两个参数的发送类型
+     */
     fun  sendSpecial2(key: String, data : Any, params: Any) {
         map2[key]?.run {
             invoke(data, params)
