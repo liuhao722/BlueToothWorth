@@ -50,7 +50,7 @@ class RetrofitUtils private constructor() {
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
-                val result = retrofitApi.login(body)?.await()
+                val result = retrofitApi.getRefResult(body)?.await()
                 result?.run {
                     L.e(TAG, result.toString())
                     block.invoke(result.result)

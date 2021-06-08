@@ -15,9 +15,11 @@ import retrofit2.http.Path
  * Description: This is ApiServices
  */
 interface ApiServices {
-    @POST("/api/v1/service/chat")
-    fun login(@Body map: RequestBody?): Call<ResultData?>?
-
-    @GET("/api/v1/service/chat/{owner}/{repo}")
-    suspend fun test(@Path("owner") owner: String?, @Path("repo") repo: String?): Call<ResultData?>?
+    /**
+     * 获取网络查询内容的返回值
+     */
+    @POST
+    fun getRefResult(@Body map: RequestBody?): Call<ResultData?>?
+//    @POST("/api/v1/service/chat")
+//    fun getRefResult(@Body map: RequestBody?): Call<ResultData?>?
 }

@@ -3,6 +3,7 @@ package com.worth.bluetooth;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSdk() {
-        String host = "http://192.168.0.103:8080";
+        String host = "http://192.168.0.103:8080/api/v1/service/chat";
         String uid = "testUid_1001";
         Map header = new HashMap<>();
         header.put("testHeader", "1234");
@@ -62,7 +63,33 @@ public class MainActivity extends AppCompatActivity {
                 switch (code) {
                     case CALL_BACK_NET_WORKER_ERROR:
                         //TO-DO   网络监测错误返回的回调code
+                        Log.e("Error","initObserver-1");
+                        break;
+                    case CALL_BACK_SDK_SPEAK_ERROR:
+                        //TO-DO   语音合成过程中出错回调
 
+                        break;
+                    case CALL_BACK_SDK_RECORD_ERROR:
+                        //TO-DO   语音识别过程中，asr识别错误
+
+                        break;
+                    case CALL_BACK_SDK_WAKE_UP_ERROR:
+                        //TO-DO   唤醒失败
+
+                        break;
+                }
+            }
+            return null;
+        });
+
+        LDBus.INSTANCE.observer(ContactsKt.ERROR_CALL_BACK, objResult -> {
+            if (objResult != null) {
+                L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
+                int code = (int) objResult;
+                switch (code) {
+                    case CALL_BACK_NET_WORKER_ERROR:
+                        //TO-DO   网络监测错误返回的回调code
+                        Log.e("Error","initObserver-2");
                         break;
                     case CALL_BACK_SDK_SPEAK_ERROR:
                         //TO-DO   语音合成过程中出错回调

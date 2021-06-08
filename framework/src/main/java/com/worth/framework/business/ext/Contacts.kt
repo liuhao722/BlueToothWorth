@@ -19,10 +19,10 @@ const val WAKEUP_XIAO_BANG_SDK_SUCCESS = 0x1000_300                             
 
 const val WAKEUP_XIAO_BANG_SDK_EROOR = 0x1000_301                                                   //  唤醒失败
 
-const val EVENT_WITH_USER_INPUT_RESULT = "event_with_input_result"                                  //  网络请求返回后发送LDBus进行事件的回调
+const val EVENT_WITH_USER_INPUT_RESULT = "event_with_input_result"                                  //  网络请求返回后发送LDBus进行事件的回调，dialog中进行展示
 const val EVENT_WITH_INPUT_ASR_RESULT = "event_with_input_asr_result"                               //  网络请求ASR的返回结果
 
-const val ERROR_CALL_BACK = "error_call_back"                                                       //  网络失败-针对网络请求应答部分
+const val ERROR_CALL_BACK = "error_call_back"                                                       //  网络失败-返回给app端自定义处理操作
 const val CALL_BACK_NET_WORKER_ERROR = 0x1000_400                                                   //  网络失败-针对网络请求应答部分
 const val CALL_BACK_SDK_SPEAK_ERROR = 0x1000_401                                                    //  播放语音部分Sdk失败
 const val CALL_BACK_SDK_RECORD_ERROR = 0x1000_402                                                   //  录音的asr过程中Sdk执行失败

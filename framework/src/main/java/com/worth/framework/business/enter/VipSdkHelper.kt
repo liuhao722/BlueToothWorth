@@ -3,7 +3,10 @@ package com.worth.framework.business.enter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
+import com.worth.framework.base.core.utils.LDBus.sendSpecial
 import com.worth.framework.base.core.utils.application
+import com.worth.framework.business.ext.CALL_BACK_NET_WORKER_ERROR
+import com.worth.framework.business.ext.ERROR_CALL_BACK
 import com.worth.framework.business.utils.GlobalHandler
 import com.worth.framework.business.utils.RecordUtils
 import com.worth.framework.business.utils.SpeakUtils
@@ -47,7 +50,13 @@ class VipSdkHelper private constructor() {
         httpHeaders: MutableMap<String, Any>?,
         httpBody: MutableMap<String, Any>?
     ): VipSdkHelper {
-        host?.run { MeKV.setHost(this) } ?: run { MeKV.setHost("") }
+        host?.run {
+            if (!endsWith("/")) {
+                MeKV.setHost("$this/")
+            } else {
+                MeKV.setHost(this)
+            }
+        } ?: run { MeKV.setHost("") }
         uid?.run { MeKV.setUserId(this) } ?: run { MeKV.setUserId("") }
         mHttpHeaders = httpHeaders
         mHttpBody = httpBody
@@ -65,7 +74,13 @@ class VipSdkHelper private constructor() {
      * 单独设置host or 初始化时候设置
      */
     fun setHost(host: String?) {
-        host?.run { MeKV.setHost(this) } ?: run { MeKV.setHost("") }
+        host?.run {
+            if (!endsWith("/")) {
+                MeKV.setHost("$this/")
+            } else {
+                MeKV.setHost(this)
+            }
+        } ?: run { MeKV.setHost("") }
     }
 
     /**
@@ -125,6 +140,8 @@ class VipSdkHelper private constructor() {
      */
     fun wakeUpWithClickBtn() {
         WakeUpUtils.ins().wakeUp()
+        sendSpecial(ERROR_CALL_BACK, CALL_BACK_NET_WORKER_ERROR)
+
     }
 
     /**
