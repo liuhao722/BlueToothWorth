@@ -14,11 +14,13 @@ import com.worth.framework.base.core.utils.ARouterUtilsKt;
 import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.enter.VipSdkHelper;
+import com.worth.framework.business.ext.ToAppContactsCodes;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.worth.framework.business.ext.ContactsKt.MAIN_DIALOG_RE_WAKE_UP;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SDK_TO_APP_EVENT_CODES;
 
 /**
  * Author:  LiuHao
@@ -39,6 +41,8 @@ public class WakeUpUtils {
      */
     public void wakeUp() {
         LDBus.INSTANCE.sendSpecial(MAIN_DIALOG_RE_WAKE_UP,"");
+        LDBus.INSTANCE.sendSpecial2(SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.MAIN_DIALOG_RE_WAKE_UP,"");
+
         RecordUtils.ins().stopRecord();
         RecordUtils.ins().cancel();
         stopListener();

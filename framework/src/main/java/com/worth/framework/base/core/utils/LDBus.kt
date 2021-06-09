@@ -71,14 +71,14 @@ object LDBus {
     }
 
     /**
-     * 新增 增加两个回调参数的返回值类型
+     * 新增 增加两个回调参数的返回值类型--提供给app端使用的一个方法
      */
     fun observer2(key: String, block : (Any, Any)->Unit){
         map2[key] = block
     }
 
     /**
-     * 新增 增加两个参数的发送类型
+     * 新增 增加两个参数的发送类型--提供给app端使用的一个方法
      */
     fun  sendSpecial2(key: String, data : Any, params: Any) {
         map2[key]?.run {

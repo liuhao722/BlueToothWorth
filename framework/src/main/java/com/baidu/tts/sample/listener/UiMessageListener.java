@@ -4,9 +4,15 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.baidu.tts.client.SpeechError;
-import com.worth.framework.base.core.storage.MeKV;
 import com.worth.framework.base.core.utils.L;
+import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.ext.ContactsKt;
+import com.worth.framework.business.ext.ToAppContactsCodes;
+
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_ERROR;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_FINISH;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_PROCESS;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_START;
 
 /**
  * 在 MessageListener的基础上，和UI配合。
@@ -28,12 +34,16 @@ public class UiMessageListener extends MessageListener {
     public void onSynthesizeStart(String utteranceId) {
         super.onSynthesizeStart(utteranceId);
         mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_START);
+        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, SPEAK_UTILS_PLAY_START, utteranceId);
+
     }
 
     @Override
     public void onError(String utteranceId, SpeechError speechError) {
         super.onError(utteranceId, speechError);
         mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_ERROR);
+        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, SPEAK_UTILS_PLAY_ERROR, speechError);
+
     }
 
     /**
@@ -62,8 +72,10 @@ public class UiMessageListener extends MessageListener {
      */
     @Override
     public void onSpeechProgressChanged(String utteranceId, int progress) {
-        mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_INPUT_TEXT_SELECTION, progress, 0));
+//        mainHandler.sendMessage(mainHandler.obtainMessage(UI_CHANGE_INPUT_TEXT_SELECTION, progress, 0));
         mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_PROCESS);
+        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, SPEAK_UTILS_PLAY_PROCESS, progress);
+
 
     }
 
@@ -71,6 +83,7 @@ public class UiMessageListener extends MessageListener {
     public void onSpeechFinish(String utteranceId) {
         super.onSpeechFinish(utteranceId);
         mainHandler.sendEmptyMessage(ContactsKt.SPEAK_UTILS_PLAY_FINISH);
+        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, SPEAK_UTILS_PLAY_FINISH, utteranceId);
     }
 
     protected void sendMessage(String message) {

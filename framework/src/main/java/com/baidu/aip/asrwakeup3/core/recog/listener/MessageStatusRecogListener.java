@@ -8,9 +8,11 @@ import com.baidu.speech.asr.SpeechConstant;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.ext.ContactsKt;
+import com.worth.framework.business.ext.ToAppContactsCodes;
 
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.ERROR_CALL_BACK;
+import static com.worth.framework.business.ext.ToAppContactsCodes.USER_INPUT_SPEAK_ASR_FINISH;
 
 /**
  * Created by fujiayi on 2017/6/16.
@@ -76,6 +78,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
             msg.what = ContactsKt.USER_INPUT_SPEAK_ASR_FINISH;
             msg.obj = results[0];
             handler.sendMessage(msg);
+            LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, USER_INPUT_SPEAK_ASR_FINISH, results[0]);
         }
 //        L.e("onAsrFinalResult-2", "result:" + results[0]);
 //        L.e("onAsrFinalResult-2", "原始json:" + recogResult.getOrigalJson());
@@ -99,6 +102,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
                                  RecogResult recogResult) {
         super.onAsrFinishError(errorCode, subErrorCode, descMessage, recogResult);
         LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_SDK_RECORD_ERROR);
+
         String message = "【asr.finish事件】识别错误, 错误码：" + errorCode + " ," + subErrorCode + " ; " + descMessage;
         sendStatusMessage(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL, message);
         if (speechEndTime > 0) {
@@ -109,6 +113,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
         sendMessage(message, status, true);
         speechEndTime = 0;
 
+        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.RECORD_ERROR, message);
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.base.core.utils.NetworkUrilsKt;
 import com.worth.framework.base.network.RetrofitUtils;
 import com.worth.framework.business.ext.ContactsKt;
+import com.worth.framework.business.ext.ToAppContactsCodes;
 
 import java.lang.ref.WeakReference;
 
@@ -28,6 +29,8 @@ import static com.worth.framework.business.ext.ContactsKt.NET_WORK_REQUEST_FINIS
 import static com.worth.framework.business.ext.ContactsKt.NET_WORK_REQUEST_START;
 import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.WAKEUP_XIAO_BANG_SDK_SUCCESS;
+import static com.worth.framework.business.ext.ToAppContactsCodes.NETWORK_RESULT_OK;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SDK_TO_APP_EVENT_CODES;
 import static com.worth.framework.business.global.GlobalVarKt.speakFinishWhenWakeUpCall;
 
 /**
@@ -46,7 +49,6 @@ public class GlobalHandler {
                 case WAKEUP_XIAO_BANG_SDK_SUCCESS:                                                  //  唤醒sdk小帮成功
                     if (MeKV.INSTANCE.wakeUpSwitchIsOpen()) {
                         WakeUpUtils.ins().wakeUp();
-
                     }
                     break;
                 case WAKEUP_XIAO_BANG_SDK_ERROR:                                                    //  唤醒sdk小帮失败
@@ -61,11 +63,12 @@ public class GlobalHandler {
                         String result = msg.obj.toString();
                         L.e(TAG, "语音识别结果：" + result);
                         LDBus.INSTANCE.sendSpecial(EVENT_WITH_INPUT_ASR_RESULT, result);            //  发送ars识别的结果给页面进行展示
+                        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.EVENT_WITH_INPUT_ASR_RESULT, result);
                         requestServer(result);
                     }
                     break;
 
-                case ContactsKt.NETWORK_RESULT:                                                     //  网络返回结果
+                case ContactsKt.NETWORK_RESULT_OK:                                                     //  网络返回结果
                     String result = msg.obj == null ? null : msg.obj.toString();
                     // 需要合成的文本text的长度不能超过1024个GBK字节。
                     SpeakUtils.ins().speak(result, false);
@@ -73,6 +76,7 @@ public class GlobalHandler {
                         result = getString(R.string.str_sdk_def_ref);
                     }
                     LDBus.INSTANCE.sendSpecial(EVENT_WITH_USER_INPUT_RESULT, result);
+                    LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.EVENT_WITH_USER_INPUT_RESULT, result);
                     WakeUpUtils.ins().startListener();
                     break;
 
@@ -105,16 +109,24 @@ public class GlobalHandler {
 
     public void requestServer(String msg) {
         LDBus.INSTANCE.sendSpecial(NET_WORK_REQUEST_START,"");
+        LDBus.INSTANCE.sendSpecial2(SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.NET_WORK_REQUEST_START,"");
+
         if (NetworkUrilsKt.isNetConnected()) {
             RetrofitUtils.ins().requestServer(msg, result -> {
-                LDBus.INSTANCE.sendSpecial(NET_WORK_REQUEST_FINISH,"");
-                Message resultMsg = mHandler.get().obtainMessage(ContactsKt.NETWORK_RESULT, result);
+                LDBus.INSTANCE.sendSpecial(NET_WORK_REQUEST_FINISH,result);
+                LDBus.INSTANCE.sendSpecial2(SDK_TO_APP_EVENT_CODES,ToAppContactsCodes.NET_WORK_REQUEST_FINISH,result);
+
+                Message resultMsg = mHandler.get().obtainMessage(ContactsKt.NETWORK_RESULT_OK, result);
                 mHandler.get().sendMessage(resultMsg);
+                LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, NETWORK_RESULT_OK, result);
                 return null;
             });
         } else {
             LDBus.INSTANCE.sendSpecial(NET_WORK_REQUEST_FINISH,"");
+            LDBus.INSTANCE.sendSpecial2(SDK_TO_APP_EVENT_CODES,ToAppContactsCodes.NET_WORK_REQUEST_FINISH,"");
+
             LDBus.INSTANCE.sendSpecial(ERROR_CALL_BACK, CALL_BACK_NET_WORKER_DISCONNECT);
+            LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.NET_WORKER_DISCONNECT, "");
         }
     }
 
@@ -128,5 +140,9 @@ public class GlobalHandler {
 
     public static GlobalHandler ins() {
         return SingletonHolder.instance;
+    }
+
+    public void test(){
+        LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES,"","");
     }
 }

@@ -2,11 +2,11 @@ package com.worth.framework.base.network
 
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.L
-import com.worth.framework.base.core.utils.LDBus
+import com.worth.framework.base.core.utils.LDBus.sendSpecial2
 import com.worth.framework.base.network.apiServices.ApiServices
 import com.worth.framework.business.enter.VipSdkHelper
-import com.worth.framework.business.ext.CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR
-import com.worth.framework.business.ext.ERROR_CALL_BACK
+import com.worth.framework.business.ext.ToAppContactsCodes
+import com.worth.framework.business.ext.ToAppContactsCodes.SDK_TO_APP_EVENT_CODES
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -58,12 +58,13 @@ class RetrofitUtils private constructor() {
                     L.e(TAG, toString())
                     when (code) {
                         200 -> {
-                            block.invoke(result.result)
+                            block.invoke(this.result)
                         }
                         else -> {
-                            LDBus.sendSpecial(
-                                ERROR_CALL_BACK,
-                                CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR
+                            sendSpecial2(
+                                SDK_TO_APP_EVENT_CODES,
+                                ToAppContactsCodes.NET_WORKER_REQUEST_ERROR,
+                                this
                             )
                             block.invoke("")
                         }

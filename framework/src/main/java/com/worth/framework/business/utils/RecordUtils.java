@@ -10,7 +10,6 @@ import com.baidu.aip.asrwakeup3.core.recog.listener.IRecogListener;
 import com.baidu.aip.asrwakeup3.core.recog.listener.MessageStatusRecogListener;
 import com.baidu.aip.asrwakeup3.uiasr.params.CommonRecogParams;
 import com.baidu.aip.asrwakeup3.uiasr.params.OnlineRecogParams;
-import com.worth.framework.base.core.utils.AppManagerKt;
 
 import java.util.Map;
 

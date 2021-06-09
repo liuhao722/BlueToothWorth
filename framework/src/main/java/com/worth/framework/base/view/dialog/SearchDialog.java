@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 
 import com.worth.framework.R;
 import com.worth.framework.base.core.utils.LDBus;
+import com.worth.framework.business.ext.ToAppContactsCodes;
 import com.worth.framework.business.utils.GlobalHandler;
 import com.worth.framework.business.utils.RecordUtils;
 import com.worth.framework.business.utils.SpeakUtils;
@@ -131,6 +132,7 @@ public class SearchDialog extends Dialog implements TextView.OnEditorActionListe
             RecordUtils.ins().cancel();
             GlobalHandler.ins().requestServer(content);
             LDBus.INSTANCE.sendSpecial(EVENT_WITH_INPUT_ASR_RESULT, content);            //  发送ars识别的结果给页面进行展示
+            LDBus.INSTANCE.sendSpecial2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, ToAppContactsCodes.EVENT_WITH_INPUT_ASR_RESULT, content);
             dismiss();
         }else {
             Toast.makeText(mContext,"输入内容为空，请重新输入",Toast.LENGTH_SHORT).show();

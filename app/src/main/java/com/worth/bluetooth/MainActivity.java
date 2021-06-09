@@ -3,7 +3,6 @@ package com.worth.bluetooth;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -12,21 +11,30 @@ import androidx.core.content.ContextCompat;
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.enter.VipSdkHelper;
-import com.worth.framework.business.ext.ContactsKt;
+import com.worth.framework.business.ext.ToAppContactsCodes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
+import static com.worth.framework.business.ext.ToAppContactsCodes.EVENT_WITH_INPUT_ASR_RESULT;
+import static com.worth.framework.business.ext.ToAppContactsCodes.EVENT_WITH_USER_INPUT_RESULT;
+import static com.worth.framework.business.ext.ToAppContactsCodes.MAIN_DIALOG_RE_WAKE_UP;
+import static com.worth.framework.business.ext.ToAppContactsCodes.NETWORK_RESULT_OK;
+import static com.worth.framework.business.ext.ToAppContactsCodes.NET_WORKER_DISCONNECT;
+import static com.worth.framework.business.ext.ToAppContactsCodes.NET_WORKER_REQUEST_ERROR;
+import static com.worth.framework.business.ext.ToAppContactsCodes.NET_WORK_REQUEST_FINISH;
+import static com.worth.framework.business.ext.ToAppContactsCodes.NET_WORK_REQUEST_START;
+import static com.worth.framework.business.ext.ToAppContactsCodes.RECORD_ERROR;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_ERROR;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_FINISH;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_PROCESS;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SPEAK_UTILS_PLAY_START;
+import static com.worth.framework.business.ext.ToAppContactsCodes.USER_INPUT_SPEAK_ASR_FINISH;
+import static com.worth.framework.business.ext.ToAppContactsCodes.WAKEUP_XIAO_BANG_SDK_ERROR;
+import static com.worth.framework.business.ext.ToAppContactsCodes.WAKEUP_XIAO_BANG_SDK_SUCCESS;
 
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_NET_WORKER_DISCONNECT;
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR;
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_SPEAK_ERROR;
-import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_WAKE_UP_ERROR;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -60,55 +68,77 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initObserver() {
-        LDBus.INSTANCE.observer(ContactsKt.ERROR_CALL_BACK, objResult -> {
+        LDBus.INSTANCE.observer2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, (objResult, objResult1) -> {
             if (objResult != null) {
                 L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
-                int code = (int) objResult;
-                switch (code) {
-                    case CALL_BACK_NET_WORKER_DISCONNECT:
-                        //TO-DO   网络监测错误返回的回调code
-                        Log.e("Error", "initObserver-1");
-                        break;
-                    case CALL_BACK_SDK_SPEAK_ERROR:
-                        //TO-DO   语音合成过程中出错回调
-
-                        break;
-                    case CALL_BACK_SDK_RECORD_ERROR:
-                        //TO-DO   语音识别过程中，asr识别错误
-
-                        break;
-                    case CALL_BACK_SDK_WAKE_UP_ERROR:
-                        //TO-DO   唤醒失败
-
-                        break;
+                if (objResult1 != null) {
+                    L.e(TAG, "sdk返回错误附带信息，有可能没有内容：" + objResult1.toString());
                 }
-            }
-            return null;
-        });
-
-        LDBus.INSTANCE.observer(ContactsKt.ERROR_CALL_BACK, objResult -> {
-            if (objResult != null) {
-                L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
                 int code = (int) objResult;
                 switch (code) {
-                    case CALL_BACK_NET_WORKER_DISCONNECT:
-                        //TO-DO     网络监测错误返回的回调code-未连接网络
-                        Log.e("Error", "initObserver-2");
-                        break;
-                    case CALL_BACK_SDK_SPEAK_ERROR:
-                        //TO-DO     语音合成过程中出错回调
+                    case SPEAK_UTILS_PLAY_FINISH:
+                        //TO-DO     播放一段指定的音频结束
 
                         break;
-                    case CALL_BACK_SDK_RECORD_ERROR:
-                        //TO-DO     语音识别过程中，asr识别错误
+                    case SPEAK_UTILS_PLAY_START:
+                        //TO-DO     开始播放一段指定的语音
 
                         break;
-                    case CALL_BACK_SDK_WAKE_UP_ERROR:
+                    case SPEAK_UTILS_PLAY_PROCESS:
+                        //TO-DO     播放中
+
+                        break;
+                    case SPEAK_UTILS_PLAY_ERROR:
+                        //TO-DO     播放失败-语音合成过程中出错回调
+
+                        break;
+                    case USER_INPUT_SPEAK_ASR_FINISH:
+                        //TO-DO     检测到用户输入的语言结束
+
+                        break;
+                    case NETWORK_RESULT_OK:
+                        //TO-DO     根据用户请求的数据返回结果了
+
+                        break;
+                    case WAKEUP_XIAO_BANG_SDK_SUCCESS:
+                        //TO-DO     唤醒成功
+
+                        break;
+                    case WAKEUP_XIAO_BANG_SDK_ERROR:
                         //TO-DO     唤醒失败
 
                         break;
-                    case CALL_BACK_SDK_NET_WORKER_REQUEST_ERROR:
+                    case EVENT_WITH_USER_INPUT_RESULT:
+                        //TO-DO     网络请求返回后发送LDBus进行事件的回调，dialog中进行展示
+
+                        break;
+                    case EVENT_WITH_INPUT_ASR_RESULT:
+                        //TO-DO     网络请求ASR的返回结果
+
+                        break;
+                    case NET_WORKER_DISCONNECT:
+                        //TO-DO     网络监测错误返回的回调code-未连接网络
+
+                        break;
+                    case RECORD_ERROR:
+                        //TO-DO     语音识别过程中，asr识别错误
+
+                        break;
+                    case NET_WORKER_REQUEST_ERROR:
                         //TO-DO     网络返回失败，非200
+
+                        break;
+                    case NET_WORK_REQUEST_START:
+                        //TO-DO     网络请求开始--给dialog内容显示用的
+
+                        break;
+                    case NET_WORK_REQUEST_FINISH:
+                        //TO-DO     网络请求结束--给dialog内容显示用的
+
+                        break;
+                    case MAIN_DIALOG_RE_WAKE_UP:
+                        //TO-DO     再次呼叫--如果开关是开的状态，可以被唤醒的
+
                         break;
                 }
             }
@@ -120,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.wakeUp).setOnClickListener(v -> {
             vipSdkHelper.wakeUpWithClickBtn();
             {
-                // 唤醒语音之后，可直接语音的输入，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
+                // 唤醒语音之后，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }
         });
     }
