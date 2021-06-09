@@ -61,8 +61,8 @@ class VipSdkHelper private constructor() {
     /**
      * 设置ai指令集
      */
-    fun setAiInstructionSet(aiListKey: String) {
-        aiListKey?.run { MeKV.setAiInstructionSet(this) }
+    fun setAiInstructionSet(aiInstructionSetKey: String) {
+        aiInstructionSetKey?.let { MeKV.setAiInstructionSet(it) }
     }
 
     /**
