@@ -62,10 +62,25 @@ public class MainActivity extends AppCompatActivity {
         header.put("testHeader", "1234");
         Map body = new HashMap<>();
         body.put("testBody", "lili");
-        vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, uid, header, body)
+        vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, header, body)
                 .switchSdkWakeUp(true)
                 .setQuickEnterList(Arrays.asList("点餐", "催菜", "结账", "呼叫服务员", "猜谜语", "叫老板"));
     }
+
+    /**
+     * 设置ai指令集
+     */
+    private void setAiInstructionSet(String aiInstructionSetKey) {
+        vipSdkHelper.setAiInstructionSet(aiInstructionSetKey);
+    }
+
+    /**
+     * 单独设置快捷入口信息
+     */
+    private void setQuickEnterList(){
+        vipSdkHelper.setQuickEnterList(new ArrayList<>());
+    }
+
 
     private void initObserver() {
         LDBus.INSTANCE.observer2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, (objResult, objResult1) -> {

@@ -12,6 +12,7 @@ import com.worth.framework.base.core.utils.LDBus
 import com.worth.framework.base.view.dialog.SearchDialog
 import com.worth.framework.business.enter.VipSdkHelper
 import com.worth.framework.business.ext.*
+import com.worth.framework.business.global.mQuickList
 import com.worth.framework.databinding.SdkActivityDialogLayoutBinding
 
 @Route(path = DIALOG_ACTIVITY, name = "全局的弹窗dialogActivity")
@@ -111,7 +112,7 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
             }
             sdkTvCenterContent.setOnClickListener(View.OnClickListener {
                 val dialog = SearchDialog(this@MainDialogActivity)
-                dialog.setTags(VipSdkHelper.instance.mQuickList)
+                dialog.setTags(mQuickList)
                 dialog.show()
             })
         }

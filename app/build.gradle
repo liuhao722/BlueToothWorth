@@ -65,7 +65,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
 //    api project(':framework')
-    api files('libs/framework-release-1.aar')
+    api files('libs/framework-release-2.aar')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'

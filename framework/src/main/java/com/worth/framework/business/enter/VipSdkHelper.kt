@@ -4,6 +4,9 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.application
+import com.worth.framework.business.global.mHttpBody
+import com.worth.framework.business.global.mHttpHeaders
+import com.worth.framework.business.global.mQuickList
 import com.worth.framework.business.utils.GlobalHandler
 import com.worth.framework.business.utils.RecordUtils
 import com.worth.framework.business.utils.SpeakUtils
@@ -16,10 +19,6 @@ import com.worth.framework.business.utils.WakeUpUtils
  * Description: This is VipSdkHelper
  */
 class VipSdkHelper private constructor() {
-    var mHttpHeaders: MutableMap<String, Any>? = null   //  获取用户设置的header
-    var mHttpBody: MutableMap<String, Any>? = null      //  获取用户设置的body
-    var mQuickList: MutableList<String>? = null         //  获取用户设置的快捷入口
-
     /**
      * 初始化操作
      */
@@ -61,14 +60,15 @@ class VipSdkHelper private constructor() {
     /**
      * 设置ai指令集
      */
-    fun setAiInstructionSet(aiInstructionSetKey: String) {
+    fun setAiInstructionSet(aiInstructionSetKey: String): VipSdkHelper {
         aiInstructionSetKey?.let { MeKV.setAiInstructionSet(it) }
+        return this
     }
 
     /**
      * 单独设置host or 初始化时候设置
      */
-    fun setHost(host: String?) {
+    fun setHost(host: String?): VipSdkHelper {
         host?.run {
             if (!endsWith("/")) {
                 MeKV.setHost("$this/")
@@ -76,6 +76,7 @@ class VipSdkHelper private constructor() {
                 MeKV.setHost(this)
             }
         } ?: run { MeKV.setHost("") }
+        return this
     }
 
     /**

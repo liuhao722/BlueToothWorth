@@ -7,6 +7,8 @@ import com.worth.framework.base.network.apiServices.ApiServices
 import com.worth.framework.business.enter.VipSdkHelper
 import com.worth.framework.business.ext.ToAppContactsCodes
 import com.worth.framework.business.ext.ToAppContactsCodes.SDK_TO_APP_EVENT_CODES
+import com.worth.framework.business.global.mHttpBody
+import com.worth.framework.business.global.mHttpHeaders
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -40,7 +42,7 @@ class RetrofitUtils private constructor() {
             val retrofitApi = retrofit.create(ApiServices::class.java)
             var map: HashMap<String, Any?> = HashMap()
             map[MeKV.getAiInstructionSetKey()] = queryWord
-            VipSdkHelper.instance.mHttpBody?.mapKeys {
+            mHttpBody?.mapKeys {
                 map.put(it.key, it.value)
             }
 
@@ -77,7 +79,7 @@ class RetrofitUtils private constructor() {
      * 对头部进行操作
      */
     private fun addHeaders(): OkHttpClient {
-        val header = VipSdkHelper.instance.mHttpHeaders
+        val header = mHttpHeaders
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor { chain ->
             val original = chain.request()
