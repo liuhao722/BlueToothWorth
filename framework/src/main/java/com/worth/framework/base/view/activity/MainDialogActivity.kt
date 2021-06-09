@@ -13,6 +13,10 @@ import com.worth.framework.base.view.dialog.SearchDialog
 import com.worth.framework.business.enter.VipSdkHelper
 import com.worth.framework.business.ext.*
 import com.worth.framework.business.global.mQuickList
+import com.worth.framework.business.global.speakFinishWhenWakeUpCall
+import com.worth.framework.business.utils.RecordUtils
+import com.worth.framework.business.utils.SpeakUtils
+import com.worth.framework.business.utils.WakeUpUtils
 import com.worth.framework.databinding.SdkActivityDialogLayoutBinding
 
 @Route(path = DIALOG_ACTIVITY, name = "全局的弹窗dialogActivity")
@@ -120,5 +124,18 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
 
     override fun initData() {
 
+    }
+
+    override fun onDestroy() {
+        if (speakFinishWhenWakeUpCall) {                                                //  是被wakeUp唤醒
+            WakeUpUtils.ins().startListener()
+            SpeakUtils.ins().stopSpeak()
+            RecordUtils.ins().stopRecord()
+        } else {                                                                        //  网络返回的发声
+            SpeakUtils.ins().stopSpeak()
+            RecordUtils.ins().stopRecord()
+            WakeUpUtils.ins().stopListener()
+        }
+        super.onDestroy()
     }
 }
