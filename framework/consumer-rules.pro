@@ -123,6 +123,7 @@
 -keep class  com.worth.framework.base.network.**{*;}
 -keep class  com.worth.framework.business.enter.**{*;}
 -keep class  com.worth.framework.business.ext.ContactsKt{*;}
+-keep class  com.worth.framework.business.ext.ToAppContactsCodes{*;}
 -keep class  com.worth.framework.base.core.storage.**{*;}
 -keep class  com.tencent.mmkv.**{*;}
 -keep class  okhttp3.**{*;}
