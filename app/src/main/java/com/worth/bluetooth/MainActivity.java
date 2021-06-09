@@ -71,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
         LDBus.INSTANCE.observer2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, (objResult, objResult1) -> {
             if (objResult != null) {
                 L.e(TAG, "sdk返回错误code结果：" + objResult.toString());
-                if (objResult1 != null) {
-                    L.e(TAG, "sdk返回错误附带信息，有可能没有内容：" + objResult1.toString());
-                }
                 int code = (int) objResult;
                 switch (code) {
                     case SPEAK_UTILS_PLAY_FINISH:
