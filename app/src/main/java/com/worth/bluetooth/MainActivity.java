@@ -45,13 +45,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initPermission();       //  初始化百度sdk依赖的权限
-
         initView();
-
         initSdk();              //  初始化sdk
-
         initObserver();         //  监听sdk错误的返回
     }
 
@@ -80,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
     private void setQuickEnterList(){
         vipSdkHelper.setQuickEnterList(new ArrayList<>());
     }
-
 
     private void initObserver() {
         LDBus.INSTANCE.observer2(ToAppContactsCodes.SDK_TO_APP_EVENT_CODES, (objResult, objResult1) -> {
