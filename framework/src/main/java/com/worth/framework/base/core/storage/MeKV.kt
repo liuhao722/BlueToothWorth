@@ -3,33 +3,31 @@ package com.worth.framework.base.core.storage
 /**
  * 封装简化获取存储的数据
  */
-const val USER_ID = "me_kv_user_id"
-const val APP_HOST = "me_kv_app_host"
+const val APP_HOST = "app_set_app_host"
+const val AI_LIST = "app_set_ai_list"
 const val WAKE_UP_SWITCH = "app_set_wake_up_switch"
-const val QUICK_ENTER_LIST = "app_set_quick_enter_list"
-const val SDK_HTTP_HEADER = "sdk_http_header"
-const val SDK_HTTP_BODY = "sdk_http_body"
 
 /**
  * 存储类
  */
 object MeKV {
-    /**
-     *设置用户id
-     */
-    fun setUserId(padType: String) = MeKVUtil.set(USER_ID, padType)
-
-    /**
-     *获取用户id
-     */
-    fun getUserId(): String = MeKVUtil.get(USER_ID, "1001")
-
 
     /**********************************************************************************************/
     /**
      * 获取当前的host
      */
-    fun getHost() = MeKVUtil.get(APP_HOST, "http://192.168.0.103:8080")
+    fun getAiInstructionSetKey() = MeKVUtil.get(AI_LIST, "query")
+
+    /**
+     * 设置当前的host
+     */
+    fun setAiInstructionSet(aiSet: String) = MeKVUtil.set(AI_LIST, aiSet)
+
+    /**********************************************************************************************/
+    /**
+     * 获取当前的host
+     */
+    fun getHost() = MeKVUtil.get(APP_HOST, "http://192.168.0.103:8080/api/v1/service/chat")
 
     /**
      * 设置当前的host

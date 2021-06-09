@@ -222,7 +222,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        vipSdkHelper.destroy();
+        if (vipSdkHelper!=null){
+            vipSdkHelper.destroy();
+        }
         super.onDestroy();
     }
 }

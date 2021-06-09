@@ -16,8 +16,6 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.await
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * Author:  LiuHao
@@ -41,11 +39,7 @@ class RetrofitUtils private constructor() {
                 .build()
             val retrofitApi = retrofit.create(ApiServices::class.java)
             var map: HashMap<String, Any?> = HashMap()
-
-            map["logId"] = UUID.randomUUID()
-            map["query"] = queryWord
-            map["userId"] = MeKV.getUserId()
-
+            map[MeKV.getAiInstructionSetKey()] = queryWord
             VipSdkHelper.instance.mHttpBody?.mapKeys {
                 map.put(it.key, it.value)
             }

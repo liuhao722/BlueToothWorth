@@ -43,7 +43,6 @@ class VipSdkHelper private constructor() {
     @JvmOverloads
     fun initSdk(
         host: String?,
-        uid: String?,
         httpHeaders: MutableMap<String, Any>?,
         httpBody: MutableMap<String, Any>?
     ): VipSdkHelper {
@@ -54,17 +53,16 @@ class VipSdkHelper private constructor() {
                 MeKV.setHost(this)
             }
         } ?: run { MeKV.setHost("") }
-        uid?.run { MeKV.setUserId(this) } ?: run { MeKV.setUserId("") }
         mHttpHeaders = httpHeaders
         mHttpBody = httpBody
         return this
     }
 
     /**
-     * 单独设置uid or 初始化时候设置
+     * 设置ai指令集
      */
-    fun setUserId(uid: String?) {
-        uid?.run { MeKV.setUserId(this) } ?: run { MeKV.setUserId("") }
+    fun setAiInstructionSet(aiListKey: String) {
+        aiListKey?.run { MeKV.setAiInstructionSet(this) }
     }
 
     /**
