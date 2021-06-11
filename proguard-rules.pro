@@ -19,6 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--dontwarn com.baidu.tts.tools.cuid.util.CommonParam
--keep class com.baidu.tts.**{*;}
--keep class com.baidu.speechsynthesizer.**{*;}

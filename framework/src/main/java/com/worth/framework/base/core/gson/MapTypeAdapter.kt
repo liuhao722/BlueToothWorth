@@ -1,4 +1,4 @@
-package com.tpln.core.utils.gson
+package com.worth.framework.base.core.gson
 
 import com.google.gson.TypeAdapter
 import com.google.gson.internal.LinkedTreeMap
@@ -9,8 +9,6 @@ import java.util.*
 
 /**
  * Description : gson 转换 map 类型
- * Created by YW on 2019-12-26.
- * Email：1809267944@qq.com
  */
 class MapTypeAdapter : TypeAdapter<Any>() {
 

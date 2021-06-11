@@ -3,15 +3,12 @@ package com.worth.framework.base.core.gson
 import android.text.TextUtils
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.tpln.core.utils.gson.MapTypeAdapter
 import com.worth.framework.base.core.exts.notnullTo
 import java.lang.reflect.Type
 import java.util.*
 
 /**
  * Description : json 转换工具类
- * Created by YW on 2019-12-26.
- * Email：1809267944@qq.com
  */
 object JsonUtil {
     private var mGson: Gson? = Gson()
