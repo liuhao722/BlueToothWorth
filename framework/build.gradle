@@ -75,7 +75,6 @@ dependencies {
     api files('libs/com.baidu.tts_2.6.2.2.20200629_44818d4.jar')
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["gson"]
-    api rootProject.ext.dependencies["logger"]
     api rootProject.ext.dependencies["MMKV"]
     api rootProject.ext.dependencies["appdesign"]
 
@@ -103,20 +102,6 @@ dependencies {
     api rootProject.ext.dependencies["tagCloudView"]
 
     implementation autosize
-
-
-//    api rootProject.ext.jetpackConfig["lifecycleviewmodel"]
-//    api rootProject.ext.jetpackConfig["lifecycleextensions"]
-//    api rootProject.ext.jetpackConfig["livedata"]
-//    api rootProject.ext.jetpackConfig["lifecycleruntimektx"]
-
-//    api rootProject.ext.dependencies["ARouter-api"]
-//    kapt rootProject.ext.dependencies["ARouter-compiler"]
-//    annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
-
-//    api ("com.lzy.net:okgo:3.0.4") {
-//        exclude group: 'com.squareup.okhttp3',module: 'okhttp'
-//    }
 
     //  room
 //    api "androidx.room:room-runtime:$room_version"
