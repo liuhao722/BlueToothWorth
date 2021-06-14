@@ -26,7 +26,7 @@ ext {
 
     self = [
             "core"  : "com.github.liuhao722:YZCore:0.0.5-SNAPSHOT",
-            "appSdk": "com.github.liuhao722:BlueToothWorth:0.0.2-SNAPSHOT",
+            "appSdk": "com.github.liuhao722:BlueToothWorth:0.0.3-SNAPSHOT",
     ]
 
     httpDependencies = [
