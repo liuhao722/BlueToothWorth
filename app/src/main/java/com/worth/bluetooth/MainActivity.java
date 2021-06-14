@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSdk() {
         String host = "http://192.168.0.103:8080/api/v1/service/chat";
-        String uid = "testUid_1001";
         Map header = new HashMap<>();
         header.put("testHeader", "1234");
         Map body = new HashMap<>();

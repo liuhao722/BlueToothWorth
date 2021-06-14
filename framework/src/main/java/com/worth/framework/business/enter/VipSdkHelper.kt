@@ -1,8 +1,6 @@
 package com.worth.framework.business.enter
 
-import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.storage.MeKV
-import com.worth.framework.base.core.storage.MeKVUtil
 import com.worth.framework.base.core.utils.application
 import com.worth.framework.business.global.mHttpBody
 import com.worth.framework.business.global.mHttpHeaders
@@ -24,8 +22,6 @@ class VipSdkHelper private constructor() {
      */
     init {
         application?.let {
-            ARouter.init(it)
-            MeKVUtil.initMMKV(it)
             SpeakUtils.ins().init(it)
             WakeUpUtils.ins().init(it)
             RecordUtils.ins().init(it)
@@ -39,11 +35,10 @@ class VipSdkHelper private constructor() {
      * @param httpHeaders httpHeader要在app中设置的内容
      * @param httpBody  body要设置的内容
      */
-    @JvmOverloads
     fun initSdk(
         host: String?,
-        httpHeaders: MutableMap<String, Any>?,
-        httpBody: MutableMap<String, Any>?
+        httpHeaders: MutableMap<String, Any>? = mutableMapOf(),
+        httpBody: MutableMap<String, Any>? = mutableMapOf()
     ): VipSdkHelper {
         host?.run {
             if (!endsWith("/")) {

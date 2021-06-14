@@ -64,11 +64,11 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-//    api project(':framework')
-    api files('libs/framework-release-2.aar')
+    api project(':framework')
+//    api files('libs/framework-release-2.aar')
 
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["appdesign"]
 
     api rootProject.ext.dependencies["MMKV"]
     api rootProject.ext.httpDependencies["retrofit"]
@@ -82,5 +82,6 @@ dependencies {
     kapt rootProject.ext.dependencies["ARouter-compiler"]
     annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
     implementation autosize
+    implementation rootProject.ext.self["core"]
 
 }
