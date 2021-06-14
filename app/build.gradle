@@ -64,24 +64,24 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    api project(':framework')
-//    api files('libs/framework-release-2.aar')
+//    api project(':framework')
+    api files('libs/framework-release.aar')
 
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["appdesign"]
 
     api rootProject.ext.dependencies["MMKV"]
-    api rootProject.ext.httpDependencies["retrofit"]
-    api rootProject.ext.httpDependencies["okhttp"]
-    api rootProject.ext.httpDependencies["converter-gson"]
-    api rootProject.ext.kotlinConfig["kotlin_stdlib"]
-    api rootProject.ext.kotlinConfig["core"]
-    api rootProject.ext.kotlinConfig["activityktx"]
-    api rootProject.ext.dependencies["tagCloudView"]
+//    api rootProject.ext.httpDependencies["retrofit"]
+//    api rootProject.ext.httpDependencies["okhttp"]
+//    api rootProject.ext.httpDependencies["converter-gson"]
+//    api rootProject.ext.kotlinConfig["kotlin_stdlib"]
+//    api rootProject.ext.kotlinConfig["core"]
+//    api rootProject.ext.kotlinConfig["activityktx"]
+//    api rootProject.ext.dependencies["tagCloudView"]
     api rootProject.ext.dependencies["ARouter-api"]
     kapt rootProject.ext.dependencies["ARouter-compiler"]
     annotationProcessor rootProject.ext.dependencies["ARouter-compiler"]
     implementation autosize
-    implementation rootProject.ext.self["core"]
+    api rootProject.ext.self["core"]
 
 }
