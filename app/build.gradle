@@ -67,9 +67,9 @@ dependencies {
         api project(':framework')
 //        api files('libs/framework-release.aar')
     } else {
-        implementation rootProject.ext.self["core"]
         implementation rootProject.ext.self["appSdk"]
     }
+    implementation rootProject.ext.self["core"]
 }
 //configurations.all() {
 //    Configuration configuration ->
