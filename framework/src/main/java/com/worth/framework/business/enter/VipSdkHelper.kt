@@ -1,7 +1,9 @@
 package com.worth.framework.business.enter
 
 import com.worth.framework.base.core.storage.MeKV
+import com.worth.framework.base.core.utils.LDBus
 import com.worth.framework.base.core.utils.application
+import com.worth.framework.business.ext.LD_BUS_CLICK_KEY
 import com.worth.framework.business.global.mHttpBody
 import com.worth.framework.business.global.mHttpHeaders
 import com.worth.framework.business.global.mQuickList
@@ -25,6 +27,10 @@ class VipSdkHelper private constructor() {
             SpeakUtils.ins().init(it)
             WakeUpUtils.ins().init(it)
             RecordUtils.ins().init(it)
+        }
+
+        LDBus.observer(LD_BUS_CLICK_KEY){
+            wakeUpWithClickBtn()
         }
     }
 
