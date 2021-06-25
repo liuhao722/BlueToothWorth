@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.wakeUpWithInputText).setOnClickListener(v -> {
-            vipSdkHelper.wakeUpWithInputText("干嘛呢");
+            vipSdkHelper.wakeUpWithInputText("干嘛呢?111");
             {
                 // 唤醒语音之后，也会在上面的initObserver返回对应的网络结果，进行检测并展示即可
             }

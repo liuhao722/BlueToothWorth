@@ -21,7 +21,6 @@ const val WAKEUP_XIAO_BANG_SDK_ERROR = 0x1000_301                               
 
 const val EVENT_WITH_USER_INPUT_RESULT = "event_with_input_result"                                  //  网络请求返回后发送LDBus进行事件的回调，dialog中进行展示用的
 const val EVENT_WITH_INPUT_ASR_RESULT = "event_with_input_asr_result"                               //  网络请求ASR的返回结果
-const val EVENT_WITH_INPUT_TXT = "event_with_input_txt"                                             //  用户输入的内容展示在评不上
 
 const val ERROR_CALL_BACK = "error_call_back"                                                       //  网络失败-返回给app端自定义处理操作
 const val CALL_BACK_NET_WORKER_DISCONNECT = 0x1000_400                                              //  网络失败-网络未连接

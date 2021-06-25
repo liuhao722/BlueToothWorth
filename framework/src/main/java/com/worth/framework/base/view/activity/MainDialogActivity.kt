@@ -9,8 +9,8 @@ import com.worth.framework.R
 import com.worth.framework.base.core.base.activity.BaseActivity
 import com.worth.framework.base.core.base.constants.ARouterPath.DIALOG_ACTIVITY
 import com.worth.framework.base.core.utils.LDBus
+import com.worth.framework.base.core.utils.LDBus.sendSpecial
 import com.worth.framework.base.view.dialog.SearchDialog
-import com.worth.framework.business.enter.VipSdkHelper
 import com.worth.framework.business.ext.*
 import com.worth.framework.business.global.mQuickList
 import com.worth.framework.business.global.speakFinishWhenWakeUpCall
@@ -88,18 +88,6 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
                 }
             }
         }
-
-        LDBus.observer(EVENT_WITH_INPUT_TXT) {
-            if (!isFinishing && !isDestroyed) {
-                binding?.sdkTvCenterDef?.visibility = View.GONE
-                binding?.sdkTvCenterDef1?.visibility = View.GONE
-                binding?.ivBottom?.visibility = View.GONE
-                it?.run {                                           //  网络请求ASR的返回结果
-                    binding?.sdkTvCenterContent?.visibility = View.VISIBLE
-                    setContent(it.toString())
-                }
-            }
-        }
     }
 
     override fun initViewAndListener() {
@@ -126,16 +114,17 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
                     sdkTvCenterContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                 }
             }
-            sdkTvCenterContent.setOnClickListener(View.OnClickListener {
+            sdkTvCenterContent.setOnClickListener {
                 val dialog = SearchDialog(this@MainDialogActivity)
                 dialog.setTags(mQuickList)
                 dialog.show()
-            })
+            }
         }
     }
 
     override fun initData() {
-
+        val msg = intent.getStringExtra("input_msg")
+        msg?.let { sendSpecial(EVENT_WITH_INPUT_ASR_RESULT, it) } //  发送ars识别的结果给页面进行展示
     }
 
     override fun onDestroy() {

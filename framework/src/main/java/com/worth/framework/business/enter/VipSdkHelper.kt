@@ -4,9 +4,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.worth.framework.base.core.base.constants.ARouterPath
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.LDBus
-import com.worth.framework.base.core.utils.LDBus.sendSpecial
 import com.worth.framework.base.core.utils.application
-import com.worth.framework.business.ext.EVENT_WITH_INPUT_TXT
 import com.worth.framework.business.ext.LD_BUS_CLICK_KEY
 import com.worth.framework.business.global.mHttpBody
 import com.worth.framework.business.global.mHttpHeaders
@@ -129,13 +127,12 @@ class VipSdkHelper private constructor() {
      * 唤醒，用户输入了内容，直接调用sdk方法进行查询结果进行返回--sdk内部调用
      */
     fun wakeUpWithInputText(text: String) {
+        ARouter.getInstance().build(ARouterPath.DIALOG_ACTIVITY).withString("input_msg", text).navigation()
         SpeakUtils.ins().stopSpeak()
         WakeUpUtils.ins().stopListener()
         RecordUtils.ins().stopRecord()
         RecordUtils.ins().cancel()
-        ARouter.getInstance().build(ARouterPath.DIALOG_ACTIVITY).navigation()
         toNetWork(text)
-        sendSpecial(EVENT_WITH_INPUT_TXT, text) //  发送ars识别的结果给页面进行展示
     }
 
     /**
