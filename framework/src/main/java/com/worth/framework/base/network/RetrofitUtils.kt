@@ -45,19 +45,15 @@ class RetrofitUtils private constructor() {
             val retrofitApi = retrofit.create(ApiServices::class.java)
             var map: HashMap<String, Any?> = HashMap()
             map[MeKV.getAiInstructionSetKey()] = queryWord
-            Log.e(TAG, "1")
             mHttpBody?.mapKeys {
                 Log.e(TAG, it.key + it.value)
                 map.put(it.key, it.value)
             }
-            Log.e(TAG, "2")
 
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
                 val result = retrofitApi.getRefResult(body)?.await()
-                Log.e(TAG, "3$result")
-
                 result?.run {           //  返回结果不为空
                     L.e(TAG, toString())
                     when (code) {

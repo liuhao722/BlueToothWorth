@@ -134,8 +134,8 @@ class VipSdkHelper private constructor() {
         RecordUtils.ins().stopRecord()
         RecordUtils.ins().cancel()
         ARouter.getInstance().build(ARouterPath.DIALOG_ACTIVITY).navigation()
-        sendSpecial(EVENT_WITH_INPUT_TXT, text) //  发送ars识别的结果给页面进行展示
         toNetWork(text)
+        sendSpecial(EVENT_WITH_INPUT_TXT, text) //  发送ars识别的结果给页面进行展示
     }
 
     /**
