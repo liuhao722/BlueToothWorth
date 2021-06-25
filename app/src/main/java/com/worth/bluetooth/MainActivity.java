@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSdk() {
-        String host = "http://192.168.0.103:8080/api/v1/service/chat";
+        String host = "https://darwin-app-api.bangbangyouxin.cn/darwin-boot/appapi/member/submitAiInstructions/";
+//        String host = "http://192.168.0.103:8080/api/v1/service/chat";
         Map header = new HashMap<>();
         header.put("testHeader", "1234");
         Map body = new HashMap<>();

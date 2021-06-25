@@ -16,7 +16,7 @@ interface ApiServices {
     /**
      * 获取网络查询内容的返回值
      */
-    @POST
+    @POST("/")
     fun getRefResult(@Body requestBody: RequestBody?): Call<ResultData?>?
 //    @POST("/api/v1/service/chat")
 //    fun getRefResult(@Body requestBody: RequestBody?): Call<ResultData?>?

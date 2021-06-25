@@ -92,6 +92,7 @@ dependencies {
 
     api rootProject.ext.httpDependencies["retrofit"]
     api rootProject.ext.httpDependencies["okhttp"]
+    api rootProject.ext.httpDependencies["logging"]
     api rootProject.ext.httpDependencies["converter-gson"]
     api rootProject.ext.httpDependencies["adapter-rxjava2"]
 

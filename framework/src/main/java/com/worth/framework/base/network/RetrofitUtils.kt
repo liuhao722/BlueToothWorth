@@ -1,5 +1,7 @@
 package com.worth.framework.base.network
 
+import android.text.TextUtils
+import android.util.Log
 import com.worth.framework.base.core.storage.MeKV
 import com.worth.framework.base.core.utils.L
 import com.worth.framework.base.core.utils.LDBus.sendSpecial2
@@ -14,6 +16,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.await
@@ -42,14 +45,19 @@ class RetrofitUtils private constructor() {
             val retrofitApi = retrofit.create(ApiServices::class.java)
             var map: HashMap<String, Any?> = HashMap()
             map[MeKV.getAiInstructionSetKey()] = queryWord
+            Log.e(TAG, "1")
             mHttpBody?.mapKeys {
+                Log.e(TAG, it.key + it.value)
                 map.put(it.key, it.value)
             }
+            Log.e(TAG, "2")
 
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
                 val result = retrofitApi.getRefResult(body)?.await()
+                Log.e(TAG, "3$result")
+
                 result?.run {           //  返回结果不为空
                     L.e(TAG, toString())
                     when (code) {
@@ -75,6 +83,8 @@ class RetrofitUtils private constructor() {
         }
     }
 
+    private val logEnable: Boolean = true   //  日志开关
+
     /**
      * 对头部进行操作
      */
@@ -85,13 +95,32 @@ class RetrofitUtils private constructor() {
             val original = chain.request()
             val request = original.newBuilder()
             header?.mapKeys {
-                request.header(it.key, it?.value as String)
+                if (!it.key.isNullOrEmpty() && it.value != null){
+                    request.header(it.key, it.value as String)
+                }
             }
             request.method(original.method(), original.body())
             chain.proceed(request.build())
-        }
+        }.addInterceptor(HttpLoggingInterceptor().apply {
+            level = when (logEnable) {
+                true -> HttpLoggingInterceptor.Level.BODY
+                false -> HttpLoggingInterceptor.Level.BASIC
+            }
+        })
         return httpClient.build()
     }
+
+    /**
+     *
+     * .addInterceptor(HttpLoggingInterceptor().apply {
+    level = when (logEnable) {
+    true -> HttpLoggingInterceptor.Level.BODY
+    false -> HttpLoggingInterceptor.Level.BASIC
+    }
+    }).addInterceptor(ErrorInterceptor())
+    //            .addInterceptor(RequestHeadInterceptor())
+    .retryOnConnectionFailure(true).build()
+     */
 
     private object SingletonHolder {
         var instance = RetrofitUtils()
