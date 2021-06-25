@@ -88,6 +88,18 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
                 }
             }
         }
+
+        LDBus.observer(EVENT_WITH_INPUT_TXT) {
+            if (!isFinishing && !isDestroyed) {
+                binding?.sdkTvCenterDef?.visibility = View.GONE
+                binding?.sdkTvCenterDef1?.visibility = View.GONE
+                binding?.ivBottom?.visibility = View.GONE
+                it?.run {                                           //  网络请求ASR的返回结果
+                    binding?.sdkTvCenterContent?.visibility = View.VISIBLE
+                    setContent(it.toString())
+                }
+            }
+        }
     }
 
     override fun initViewAndListener() {
@@ -134,7 +146,8 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
         } else {                                                                        //  网络返回的发声
             SpeakUtils.ins().stopSpeak()
             RecordUtils.ins().stopRecord()
-            WakeUpUtils.ins().stopListener()
+//            WakeUpUtils.ins().stopListener()
+            WakeUpUtils.ins().startListener()
         }
         super.onDestroy()
     }

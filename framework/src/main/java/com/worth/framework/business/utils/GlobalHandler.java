@@ -85,10 +85,13 @@ public class GlobalHandler {
                         WakeUpUtils.ins().stopListener();
                         SpeakUtils.ins().stopSpeak();
                         RecordUtils.ins().startRecord();
-                    } else {                                                                        //  网络返回的发声
+                    } else {                                                                        //  网络返回的发声-返回发声后继续监听语音输入内容
                         SpeakUtils.ins().stopSpeak();
-                        RecordUtils.ins().stopRecord();
-                        WakeUpUtils.ins().startListener();
+                        RecordUtils.ins().startRecord();
+                        WakeUpUtils.ins().stopListener();
+//                        SpeakUtils.ins().stopSpeak();                                             //  网络返回的发声-返回发生后 不再监听语音输入内容，换为监听wakeup
+//                        RecordUtils.ins().stopRecord();
+//                        WakeUpUtils.ins().startListener();
                     }
                     break;
 
