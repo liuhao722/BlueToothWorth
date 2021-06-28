@@ -60,16 +60,17 @@ android {
         dataBinding = true
     }
 }
-def isDebug = true
+def isDebug = false
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     if (isDebug) {
         api project(':framework')
-//        api files('libs/framework-release.aar')
     } else {
-        implementation rootProject.ext.self["appSdk"]
+        api files('libs/framework-release-202106181217.aar')
     }
     implementation rootProject.ext.self["core"]
+    api rootProject.ext.dependencies["tagCloudView"]
+
 }
 //configurations.all() {
 //    Configuration configuration ->
