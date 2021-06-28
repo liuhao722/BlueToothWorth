@@ -60,7 +60,7 @@ android {
         dataBinding = true
     }
 }
-def isDebug = false
+def isDebug = true
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     if (isDebug) {
