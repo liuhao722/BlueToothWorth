@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import com.worth.framework.base.core.utils.L;
 import com.worth.framework.base.core.utils.LDBus;
+import com.worth.framework.base.core.utils.SdkConfigsKt;
 import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ToAppContactsCodes;
 
@@ -49,15 +50,20 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initSdk();              //  初始化sdk
         initObserver();         //  监听sdk错误的返回
+        L.e("info", "日志开关结果：" + (SdkConfigsKt.getLogEnable() == 1));
+
     }
 
     private void initSdk() {
+//        String host = "https://darwin-app-api.bangbangyouxin.cn/";
         String host = "https://darwin-app-api.bangbangyouxin.cn/darwin-boot/appapi/member/submitAiInstructions/";
 //        String host = "http://192.168.0.103:8080/api/v1/service/chat";
         Map header = new HashMap<>();
         header.put("testHeader", "1234");
         Map body = new HashMap<>();
-        body.put("testBody", "lili");
+        body.put("instructions", "呵呵");
+        body.put("memberNo", "210686824704");
+        body.put("shopNo", "2105736333");
         vipSdkHelper = VipSdkHelper.Companion.getInstance().initSdk(host, header, body)
                 .switchSdkWakeUp(true)
                 .setQuickEnterList(Arrays.asList("点餐", "催菜", "结账", "呼叫服务员", "猜谜语", "叫老板"));
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 单独设置快捷入口信息
      */
-    private void setQuickEnterList(){
+    private void setQuickEnterList() {
         vipSdkHelper.setQuickEnterList(new ArrayList<>());
     }
 
@@ -241,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (vipSdkHelper!=null){
+        if (vipSdkHelper != null) {
             vipSdkHelper.destroy();
         }
         super.onDestroy();

@@ -53,7 +53,7 @@ class RetrofitUtils private constructor() {
             try {
                 val jsonStr = JSONObject(map).toString()
                 val body = RequestBody.create(json, jsonStr)
-                val result = retrofitApi.getRefResult(body)?.await()
+                val result = retrofitApi.getRefResult(baseUrl, body)?.await()
                 result?.run {           //  返回结果不为空
                     L.e(TAG, toString())
                     when (code) {

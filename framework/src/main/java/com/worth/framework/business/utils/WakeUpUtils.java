@@ -10,10 +10,7 @@ import com.baidu.aip.asrwakeup3.core.wakeup.listener.RecogWakeupListener;
 import com.baidu.speech.asr.SpeechConstant;
 import com.worth.framework.R;
 import com.worth.framework.base.core.base.constants.ARouterPath;
-import com.worth.framework.base.core.utils.ARouterUtilsKt;
-import com.worth.framework.base.core.utils.AppManagerKt;
 import com.worth.framework.base.core.utils.LDBus;
-import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ToAppContactsCodes;
 
 import java.util.HashMap;
