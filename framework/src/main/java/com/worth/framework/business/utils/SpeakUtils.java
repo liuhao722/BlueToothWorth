@@ -5,12 +5,15 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.baidu.tts.chainofresponsibility.logger.LoggerProxy;
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
 import com.baidu.tts.sample.control.InitConfig;
 import com.baidu.tts.sample.control.MySyntherizer;
+import com.baidu.tts.sample.control.NonBlockSyntherizer;
 import com.baidu.tts.sample.listener.FileSaveListener;
+import com.baidu.tts.sample.listener.UiMessageListener;
 import com.baidu.tts.sample.util.Auth;
 import com.baidu.tts.sample.util.FileUtil;
 import com.baidu.tts.sample.util.IOfflineResourceConst;
@@ -41,9 +44,7 @@ public class SpeakUtils {
     public String sn; // 纯离线合成SDK授权码；离在线合成SDK没有此参数
     // TtsMode.MIX; 离在线融合，在线优先； TtsMode.ONLINE 纯在线； TtsMode.OFFLINE 纯离线合成，需要纯离线SDK
     public TtsMode ttsMode = IOfflineResourceConst.DEFAULT_SDK_TTS_MODE;
-    public boolean isOnlineSDK = TtsMode.ONLINE.equals(IOfflineResourceConst.DEFAULT_SDK_TTS_MODE);
     // 在线合成sdk下面的参数不生效
-    public String offlineVoice = OfflineResource.VOICE_MALE;
     private Handler mHandler = GlobalHandler.ins().mHandler.get();
     /**********************************************************************************************/
     /**
@@ -113,16 +114,12 @@ public class SpeakUtils {
      * FileSaveListener 在UiMessageListener的基础上，使用 onSynthesizeDataArrived回调，获取音频流
      */
     private void initialTts() {
-        String tmpDir = FileUtil.createTmpDir(context);
+        LoggerProxy.printable(true); // 日志打印在logcat中
         // 设置初始化参数
         // 此处可以改为 含有您业务逻辑的SpeechSynthesizerListener的实现类
-        SpeechSynthesizerListener listener = new FileSaveListener(mHandler, tmpDir);
-
-        // appId appKey secretKey 网站上您申请的应用获取。注意使用离线合成功能的话，需要应用中填写您app的包名。包名在build.gradle中获取。
-        InitConfig initConfig = getInitConfig(listener);
-        if (synthesizer == null) {
-            synthesizer = new MySyntherizer(context, initConfig, mHandler); // 此处可以改为MySyntherizer 了解调用过程
-        }
+        SpeechSynthesizerListener listener = new UiMessageListener(mHandler);
+        InitConfig config = getInitConfig(listener);
+        synthesizer = new NonBlockSyntherizer(context, config, mHandler); // 此处可以改为MySyntherizer 了解调用过程
     }
 
     /**
@@ -141,13 +138,6 @@ public class SpeakUtils {
         params.put(SpeechSynthesizer.PARAM_SPEED, "5");
         // 设置合成的语调，0-15 ，默认 5
         params.put(SpeechSynthesizer.PARAM_PITCH, "5");
-        if (!isOnlineSDK) {
-            // 离线资源文件， 从assets目录中复制到临时目录，需要在initTTs方法前完成
-            OfflineResource offlineResource = createOfflineResource(offlineVoice);
-            // 声学模型文件路径 (离线引擎使用), 请确认下面两个文件存在
-            params.put(SpeechSynthesizer.PARAM_TTS_TEXT_MODEL_FILE, offlineResource.getTextFilename());
-            params.put(SpeechSynthesizer.PARAM_TTS_SPEECH_MODEL_FILE, offlineResource.getModelFilename());
-        }
         return params;
     }
 
@@ -162,24 +152,6 @@ public class SpeakUtils {
             initConfig = new InitConfig(appId, appKey, secretKey, sn, ttsMode, params, listener);
         }
         return initConfig;
-    }
-
-    private OfflineResource createOfflineResource(String voiceType) {
-        OfflineResource offlineResource = null;
-        try {
-            offlineResource = new OfflineResource(context, voiceType);
-        } catch (IOException e) {
-            // IO 错误自行处理
-            e.printStackTrace();
-            log("【error】:copy files from assets failed." + e.getMessage());
-        }
-        return offlineResource;
-    }
-
-    /**********************************************************************************************/
-
-    private void log(String msg) {
-        L.e(msg);
     }
 
     /**********************************************************************************************/
