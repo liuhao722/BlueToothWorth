@@ -12,22 +12,14 @@ import com.baidu.tts.client.TtsMode;
 import com.baidu.tts.sample.control.InitConfig;
 import com.baidu.tts.sample.control.MySyntherizer;
 import com.baidu.tts.sample.control.NonBlockSyntherizer;
-import com.baidu.tts.sample.listener.FileSaveListener;
 import com.baidu.tts.sample.listener.UiMessageListener;
 import com.baidu.tts.sample.util.Auth;
-import com.baidu.tts.sample.util.FileUtil;
 import com.baidu.tts.sample.util.IOfflineResourceConst;
-import com.baidu.tts.sample.util.OfflineResource;
 import com.worth.framework.R;
-import com.worth.framework.base.core.utils.L;
-import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.global.GlobalVarKt;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.worth.framework.business.ext.ContactsKt.EVENT_WITH_USER_INPUT_RESULT;
 
 /**
  * Author:  LiuHao
