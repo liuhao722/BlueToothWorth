@@ -21,6 +21,8 @@ import com.worth.framework.databinding.SdkActivityDialogLayoutBinding
 
 @Route(path = DIALOG_ACTIVITY, name = "全局的弹窗dialogActivity")
 class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
+    private var dialog: SearchDialog? = null
+
     override fun initBefore() {
     }
 
@@ -48,6 +50,12 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
                 binding?.sdkTvCenterRef?.text = ""
                 binding?.sdkTvCenterContent?.visibility = View.GONE
                 binding?.sdkTvCenterContent?.text = ""
+            }
+        }
+        LDBus.observer(ASR_EXIT) {                                  //  语音对话结束
+            if (!isFinishing && !isDestroyed) {
+                dialog?.dismiss()
+                finish()
             }
         }
         LDBus.observer(NET_WORK_REQUEST_START) {                    //  网络请求开始
@@ -115,9 +123,11 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
                 }
             }
             sdkTvCenterContent.setOnClickListener {
-                val dialog = SearchDialog(this@MainDialogActivity)
-                dialog.setTags(mQuickList)
-                dialog.show()
+                dialog = SearchDialog(this@MainDialogActivity)
+                dialog?.run {
+                    setTags(mQuickList)
+                    show()
+                }
             }
         }
     }
@@ -132,9 +142,11 @@ class MainDialogActivity : BaseActivity<SdkActivityDialogLayoutBinding>() {
             WakeUpUtils.ins().startListener()
             SpeakUtils.ins().stopSpeak()
             RecordUtils.ins().stopRecord()
+            RecordUtils.ins().cancel()
         } else {                                                                        //  网络返回的发声
             SpeakUtils.ins().stopSpeak()
             RecordUtils.ins().stopRecord()
+            RecordUtils.ins().cancel()
 //            WakeUpUtils.ins().stopListener()
             WakeUpUtils.ins().startListener()
         }

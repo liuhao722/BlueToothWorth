@@ -13,6 +13,8 @@ import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.base.core.utils.SdkConfigsKt;
 import com.worth.framework.business.enter.VipSdkHelper;
 import com.worth.framework.business.ext.ToAppContactsCodes;
+import com.worth.framework.business.utils.RecordUtils;
+import com.worth.framework.business.utils.WakeUpUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -241,6 +243,13 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         // 此处为android 6.0以上动态授权的回调，用户自行实现。
         if (requestCode == PERMISSION_REQUEST_CODE) {
+            for (String perm : permissions) {
+                if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm)) {
+                    if (Manifest.permission.RECORD_AUDIO == perm){  //  如果第一次想启动小帮唤醒功能，在之后加入这个
+                        WakeUpUtils.ins().startListener();
+                    }
+                }
+            }
 
         }
     }

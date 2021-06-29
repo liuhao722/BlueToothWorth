@@ -32,6 +32,7 @@ const val CALL_BACK_SDK_WAKE_UP_ERROR = 0x1000_403                              
 const val NET_WORK_REQUEST_START = "net_work_request_start"                                         //  网络请求开始--给dialog内容显示用的
 const val NET_WORK_REQUEST_FINISH = "net_work_request_finish"                                       //  网络请求结束--给dialog内容显示用的
 const val MAIN_DIALOG_RE_WAKE_UP = "main_dialog_re_wake_up"                                         //  再次呼叫--开关是开的状态，所以是可以被唤醒的
+const val ASR_EXIT = "asr_exit"                                                                     //  asr识别结束
 
 
 const val LD_BUS_CLICK_KEY = "ld_bus_click_key"                                                     //  监听会员卡点击一次的事件传递，会在蓝牙sdk中进行一个传递，此时应该监听进行唤醒

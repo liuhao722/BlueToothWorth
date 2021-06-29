@@ -25,5 +25,6 @@ object ToAppContactsCodes {
     const val NET_WORK_REQUEST_START = 10000_014                                                    //  网络请求开始--给dialog内容显示用的
     const val NET_WORK_REQUEST_FINISH = 10000_015                                                   //  网络请求结束--给dialog内容显示用的
     const val MAIN_DIALOG_RE_WAKE_UP = 10000_016                                                    //  再次呼叫--开关是开的状态，可以被唤醒的
+    const val ASR_EXIT_TO_APP = 10000_017                                                           //  asr识别空闲状态，结束识别时候发送
 
 }

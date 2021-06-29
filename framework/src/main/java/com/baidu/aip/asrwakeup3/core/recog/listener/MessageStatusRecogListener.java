@@ -10,8 +10,11 @@ import com.worth.framework.base.core.utils.LDBus;
 import com.worth.framework.business.ext.ContactsKt;
 import com.worth.framework.business.ext.ToAppContactsCodes;
 
+import static com.worth.framework.business.ext.ContactsKt.ASR_EXIT;
 import static com.worth.framework.business.ext.ContactsKt.CALL_BACK_SDK_RECORD_ERROR;
 import static com.worth.framework.business.ext.ContactsKt.ERROR_CALL_BACK;
+import static com.worth.framework.business.ext.ToAppContactsCodes.ASR_EXIT_TO_APP;
+import static com.worth.framework.business.ext.ToAppContactsCodes.SDK_TO_APP_EVENT_CODES;
 import static com.worth.framework.business.ext.ToAppContactsCodes.USER_INPUT_SPEAK_ASR_FINISH;
 
 /**
@@ -165,22 +168,22 @@ public class MessageStatusRecogListener extends StatusRecogListener {
 
     private void sendStatusMessage(String eventName, String message) {
         message = "[" + eventName + "]" + message;
+        if (message.contains("3101")) {
+            LDBus.INSTANCE.sendSpecial(ASR_EXIT, "");
+            LDBus.INSTANCE.sendSpecial2(SDK_TO_APP_EVENT_CODES, ASR_EXIT_TO_APP, "");
+        }
         switch (eventName) {
             case "asr.begin":           //  检测到用户说话
-
                 break;
             case "asr.partial":         //  临时识别结果
-
                 break;
             case "asr.finish":          //  识别一段话结束。
-
                 break;
             case "asr.exit":            //  识别引擎结束并空闲中
-
                 break;
 
         }
-        L.e("RecordUtils-Listener", "liuhao:-->" + message);
+        L.i(TAG, "RecordUtils-Listener-->" + message);
         sendMessage(message, status);
     }
 

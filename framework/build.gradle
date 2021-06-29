@@ -70,9 +70,8 @@ android {
 
 dependencies {
 //    api fileTree(exclude: '*.bak', dir: 'libs')//在线语音
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    api files('libs/bdasr_V3_20201116_93b546d.jar')
-    api files('libs/com.baidu.tts_2.6.2.2.20200629_44818d4.jar')
+    api fileTree(include: ['*.jar','*.bak'], dir: 'libs')
+//    implementation fileTree(dir: "libs", include: ["*.jar"])
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["MMKV"]
