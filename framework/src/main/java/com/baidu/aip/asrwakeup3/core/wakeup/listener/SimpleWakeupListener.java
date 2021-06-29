@@ -24,7 +24,7 @@ public class SimpleWakeupListener implements IWakeupListener {
 
     @Override
     public void onError(int errorCode, String errorMessge, WakeUpResult result) {
-        MyLogger.info(TAG, "唤醒错误：" + errorCode + ";错误消息：" + errorMessge + "; 原始返回" + result.getOrigalJson());
+        MyLogger.error(TAG, "唤醒错误：" + errorCode + ";错误消息：" + errorMessge + "; 原始返回" + result.getOrigalJson());
     }
 
     @Override

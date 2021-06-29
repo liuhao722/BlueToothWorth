@@ -47,10 +47,11 @@ public class MyLogger {
             return;
         }
         if (level.equals(INFO)) {
-            Log.i(tag, message);
-
+            L.i(tag, message);
         } else if (level.equals(ERROR)) {
             L.e(tag, message);
+        } else {
+            L.d(tag, message);
         }
         if (handler != null) {
             Message msg = Message.obtain();

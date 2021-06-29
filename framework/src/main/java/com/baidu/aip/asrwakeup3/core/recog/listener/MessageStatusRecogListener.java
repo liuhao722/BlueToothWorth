@@ -180,7 +180,7 @@ public class MessageStatusRecogListener extends StatusRecogListener {
                 break;
 
         }
-//        L.e("sendStatusMessage", "liuhao:-->" + message);
+        L.e("RecordUtils-Listener", "liuhao:-->" + message);
         sendMessage(message, status);
     }
 
