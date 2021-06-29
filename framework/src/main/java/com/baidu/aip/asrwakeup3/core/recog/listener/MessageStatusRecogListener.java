@@ -168,7 +168,20 @@ public class MessageStatusRecogListener extends StatusRecogListener {
 
     private void sendStatusMessage(String eventName, String message) {
         message = "[" + eventName + "]" + message;
-        if (message.contains("3101")) {
+        if (
+                message.contains("识别错误")  // 全部过滤
+//                message.contains("100")
+//                || message.contains("200")
+//                || message.contains("2100")
+//                || message.contains("300")
+//                || message.contains("310")
+//                || message.contains("400")
+//                || message.contains("500")
+//                || message.contains("600")
+//                || message.contains("700")
+//                || message.contains("800")
+//                || message.contains("900")
+        ) {
             LDBus.INSTANCE.sendSpecial(ASR_EXIT, "");
             LDBus.INSTANCE.sendSpecial2(SDK_TO_APP_EVENT_CODES, ASR_EXIT_TO_APP, "");
         }
